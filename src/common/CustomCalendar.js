@@ -8,13 +8,21 @@ class CustomCalendar extends Component {
 
     constructor(props) {
         super();
-        const startDate = props.startDate || '2019-08-12' || null;
-        const endDate = props.endDate || '2019-08-15' || null;
+        const startDate = props.startDate || null;
+        const endDate = props.endDate || null;
+        const startDateIsHalf = props.startDateIsHalf || false;
+        const endDateIsHalf = props.endDateIsHalf || false;
 
         this.state = {
-            startDate: startDate, endDate: endDate,
-            startDateNoon: null, endDateNoon: null,
-            markedDates: (startDate && endDate) ? this.getMarkedDates(startDate, endDate, null, null) : {},
+            startDate,
+            endDate,
+            startDateIsHalf,
+            endDateIsHalf,
+            markedDates:
+                (startDate && endDate) ?
+                    this.getMarkedDates(startDate, endDate, startDateIsHalf, endDateIsHalf)
+                    :
+                    {},
             showCalendar: false
         };
 
@@ -22,12 +30,31 @@ class CustomCalendar extends Component {
 
     // =-========== Related Range Calendar
 
+
+    /**
+     * Handle the process when the user clicked a day in the calendar
+     */
+
     selectDate = async (day) => {
 
+        // if a user clicks the same date, then clear selection
+        if (this.state.startDate == day.dateString ||
+            this.state.endDate == day.dateString) {
+            await this.setState({
+                markedDates: {},
+                startDate: null, endDate: null,
+                startDateIsHalf: false, endDateIsHalf: false
+            })
+            return;
+        }
+
+        // In case when the user chose the both of startDate and endDate
         if (this.state.startDate && this.state.endDate) {
             this.selectDateWithNoon(day, 'NONE');
         }
         else {
+
+            // We need to show the popover to ask the user select "All day, Before Noon, Afternoon"
             ActionSheet.hide();
             ActionSheet.show([
                 { title: 'All day', onPress: () => this.selectDateWithNoon(day, 'ALL_DAY') },
@@ -39,34 +66,47 @@ class CustomCalendar extends Component {
         }
     };
 
+
+    /**
+     * After a user chose one of items(All day, beforenoon, afternoon)
+     */
     selectDateWithNoon = async (day, noon) => {
         const date = day.dateString;
         let markedDates = {};
 
+        // If startDate is null, it means that he didn't choose any day yet.
+        // So we need to select a start day here.
         if (this.state.startDate === null) {
+
+            // If the user selected "Before noon" of startdate,
+            // it means All day in same aspect.
             let _noon = (noon === 'BEFORE_NOON' ? 'ALL_DAY' : noon);
             await this.setState({
                 startDate: date,
-                startDateNoon: _noon
+                startDateIsHalf: _noon === 'AFTER_NOON'
             });
             markedDates[`${date}`] =
                 {
                     startingDay: true, endingDay: true,
                     selected: true, color: SELECTED_COLOR, textColor: 'black',
-                    customStyles: this.getCustomStyles(true, false, true)
+                    customStyles: this.getCustomStyles(true, false, _noon === 'AFTER_NOON')
                 };
         } else if (this.state.endDate === null) {
             let _noon = (noon === 'AFTER_NOON' ? 'ALL_DAY' : noon);
             if (new Date(date) < new Date(this.state.startDate)) {
                 await this.setState({
                     startDate: date, endDate: this.state.startDate,
-                    endDateNoon: _noon
+                    startDateIsHalf: !this.state.startDateIsHalf,
+                    endDateIsHalf: !(_noon === 'BEFORE_NOON')
                 });
             } else {
-                await this.setState({ endDate: date,
-                    endDateNoon: _noon });
+                await this.setState({
+                    endDate: date,
+                    endDateNoon: _noon,
+                    endDateIsHalf: _noon === 'BEFORE_NOON'
+                });
             }
-            markedDates = this.getMarkedDates(this.state.startDate, this.state.endDate, this.state.startDateNoon, this.state.endDateNoon);
+            markedDates = this.getMarkedDates(this.state.startDate, this.state.endDate, this.state.startDateIsHalf, this.state.endDateIsHalf);
         } else {
             await this.setState({ startDate: null, endDate: null });
         }
@@ -74,7 +114,20 @@ class CustomCalendar extends Component {
         await this.setState({ markedDates: markedDates })
     };
 
-    getMarkedDates = (startDate, endDate, startDateNoon, endDateNoon) => {
+    /**
+     * Get the dates to be marked in Calendar
+     * Params: 
+     *  startDate, endDate, startDateIsHalf, endDateIsHalf
+     *  Where startDateIsHalf means that a user chose the startDate's afternoon
+     *  And endDateIsHaf means that a user chose the endDate's beforenoon
+     * Return:
+     *  Object-array including customStyles
+     *    selected: true, color, startingDay: true/false, endingDay: true/false
+     *    customStyles: refer to the method 'getCustomStyles'
+     * 
+     */
+    getMarkedDates = (startDate, endDate, startDateIsHalf, endDateIsHalf) => {
+
         const date1 = Math.min(new Date(startDate), new Date(endDate))
         const date2 = Math.max(new Date(startDate), new Date(endDate))
         let _date = 0; let index = 0;
@@ -85,12 +138,20 @@ class CustomCalendar extends Component {
             _date = new Date(date1 + 1000 * 3600 * 24 * index)
             isStart = index === 0;
             isEnd = _date >= date2;
+            let customStyles;
+            if (isStart) {
+                customStyles = this.getCustomStyles(true, false, startDateIsHalf);
+            } else if (isEnd) {
+                customStyles = this.getCustomStyles(false, true, endDateIsHalf);
+            } else {
+                customStyles = this.getCustomStyles(false, false, false);
+            }
+
             markedDates[`${_date.toISOString().substr(0, 10)}`] =
                 {
                     selected: true,
-                    color: SELECTED_COLOR, textColor: 'black',
                     startingDay: isStart, endingDay: isEnd,
-                    customStyles: this.getCustomStyles(isStart, isEnd)
+                    customStyles: customStyles
                 };
             index++;
             if (_date >= date2) break;
@@ -98,56 +159,91 @@ class CustomCalendar extends Component {
         return markedDates;
     };
 
-    getCustomStyles = (isStart, isEnd, alone = false) => {
+    getCustomStyles = (isStart, isEnd, isHalf = true) => {
         return {
             container: {
-                backgroundColor: alone ? '' : SELECTED_COLOR,
-                height: 33,
-                width: isStart ? 40 : 47,
-                marginLeft: isStart ? 7 : 0,
+                backgroundColor: SELECTED_COLOR,
+                height: 32,
+                width:
+                    isStart ?
+                        isHalf ? 40 : 47 : 47,
+                marginLeft:
+                    isStart ?
+                        isHalf ? 7 : 0 : 0,
                 alignItems:
                     isStart ?
-                        'flex-start'
+                        !isHalf ? 'center' : 'flex-start'
                         :
                         isEnd ?
-                            'flex-end'
+                            !isHalf ? 'center' : 'flex-end'
                             :
                             'center',
                 borderRadius: 0,
-                // borderTopRightRadius: isEnd ? 10 : 0,
-                // borderBottomRightRadius: isEnd ? 10 : 0,
+                borderTopLeftRadius:
+                    isStart ?
+                        isHalf ? 0 : 30 : 0,
+                borderBottomLeftRadius:
+                    isStart ?
+                        isHalf ? 0 : 30 : 0,
+                borderTopRightRadius:
+                    isEnd ?
+                        isHalf ? 0 : 30 : 0,
+                borderBottomRightRadius:
+                    isEnd ?
+                        isHalf ? 0 : 30 : 0,
             },
             text:
                 isStart ?
-                    {
-                        position: 'absolute', top: -4,
-                        lineHeight: 32,
-                        textAlign: 'center',
-                        width: 0, height: 0,
-                        borderBottomWidth: 33,
-                        borderBottomColor: SELECTED_COLOR,
-                        borderLeftWidth: 32,
-                        borderLeftColor: 'white'
-                    } :
-                    isEnd ?
+                    isHalf ?
                         {
-                            position: 'absolute', top: -4,
+                            position: 'absolute', top: -5,
                             lineHeight: 32,
                             textAlign: 'center',
                             width: 0, height: 0,
-                            borderTopWidth: 33,
-                            borderTopColor: SELECTED_COLOR,
-                            borderRightWidth: 32,
-                            borderRightColor: 'white',
+                            borderBottomWidth: 33,
+                            borderBottomColor: SELECTED_COLOR,
+                            borderLeftWidth: 32,
+                            borderLeftColor: 'white'
                         }
                         :
                         {
-                            position: 'absolute', top: -4,
+                            position: 'absolute', top: -5,
+                            lineHeight: 32,
+                            textAlign: 'center',
+                        }
+                    :
+                    isEnd ?
+                        isHalf ?
+                            {
+                                position: 'absolute', top: -5,
+                                lineHeight: 32,
+                                textAlign: 'center',
+                                width: 0, height: 0,
+                                borderTopWidth: 33,
+                                borderTopColor: SELECTED_COLOR,
+                                borderRightWidth: 32,
+                                borderRightColor: 'white',
+                            }
+                            :
+                            {
+                                position: 'absolute', top: -5,
+                                lineHeight: 32,
+                                textAlign: 'center',
+                            }
+                        :
+                        {
+                            position: 'absolute', top: -5,
                             lineHeight: 32,
                             height: 34,
                             textAlign: 'center',
                         }
         }
+    };
+
+    confirm = () => {
+        const { startDate, endDate, startDateIsHalf, endDateIsHalf } = this.state;
+        this.props.onConfirm &&
+            this.props.onConfirm(startDate, endDate, startDateIsHalf, endDateIsHalf);
     };
     // =-========== Related Range Calendar : end
 
@@ -190,7 +286,7 @@ class CustomCalendar extends Component {
                     flexDirection: 'row'
                 }}>
                     <TouchableOpacity
-                        onPress={() => this.props.onConfirm && this.props.onConfirm(this.state.startDate, this.state.endDate)}
+                        onPress={() => this.confirm()}
                         style={{
                             width: '50%',
                             height: 35, alignItems: 'center', backgroundColor: 'green',

@@ -21,7 +21,9 @@ class AbsenceDetail extends Component {
     this.state = {
       date: "", date1: "",
       selectedSpecialDay: '',
-      rangeStarted: false, startDate: null, endDate: null,
+      rangeStarted: false, 
+      startDate: null, endDate: null,
+      startDateIsHalf: null, endDateIsHalf: null,
       markedDates: {},
       showCalendar: false
     };
@@ -34,15 +36,19 @@ class AbsenceDetail extends Component {
 
         {this.state.showCalendar &&
           <CustomCalendar
-            onConfirm={(startDate, endDate) =>
+            onConfirm={(startDate, endDate, startDateIsHalf, endDateIsHalf) =>
               this.setState({
                 showCalendar: false,
                 startDate,
-                endDate
+                endDate,
+                startDateIsHalf,
+                endDateIsHalf
               })
             }
             startDate={this.state.startDate}
             endDate={this.state.endDate}
+            startDateIsHalf={this.state.startDateIsHalf}
+            endDateIsHalf={this.state.endDateIsHalf}
             onCancel={() => this.setState({ showCalendar: false })}
           />
         }
