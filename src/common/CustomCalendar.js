@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from 'react-native';
 import { CalendarList } from 'react-native-calendars';
-
+import { hidden } from "ansi-colors";
+const SELECTED_COLOR = 'lightgreen';
 class CustomCalendar extends Component {
 
     constructor(props) {
         super();
-        const startDate = props.startDate || null;
-        const endDate = props.endDate || null;
+        const startDate = props.startDate || '2019-08-12' || null;
+        const endDate = props.endDate || '2019-08-15' || null;
 
         this.state = {
             startDate: startDate, endDate: endDate,
@@ -26,11 +27,13 @@ class CustomCalendar extends Component {
         if (this.state.startDate === null) {
             await this.setState({ startDate: date });
             markedDates[`${date}`] =
-                { startingDay: true, endingDay: true,
-                    selected: true, color: 'green', textColor: 'white' };
+                {
+                    startingDay: true, endingDay: true,
+                    selected: true, color: SELECTED_COLOR, textColor: 'black'
+                };
         } else if (this.state.endDate === null) {
             if (new Date(date) < new Date(this.state.startDate)) {
-                await this.setState({ 
+                await this.setState({
                     startDate: date, endDate: this.state.startDate
                 });
             } else {
@@ -42,6 +45,12 @@ class CustomCalendar extends Component {
         }
 
         await this.setState({ markedDates: markedDates })
+    };
+
+    selectDateHalf = (day) => {
+        const date = day.dateString;
+        let markedDates = {};
+
 
     };
 
@@ -50,10 +59,66 @@ class CustomCalendar extends Component {
         const date2 = Math.max(new Date(startDate), new Date(endDate))
         let _date = 0; let index = 0;
         let markedDates = {};
+        let isStart = false, isEnd = false;
+        
         while (true) {
             _date = new Date(date1 + 1000 * 3600 * 24 * index)
+            isStart = index === 0;
+            isEnd = _date >= date2;
             markedDates[`${_date.toISOString().substr(0, 10)}`] =
-                { selected: true, startingDay: index === 0, endingDay: _date >= date2, color: 'green', textColor: 'white' };
+                {
+                    selected: true,
+                    color: SELECTED_COLOR, textColor: 'black',
+                    startingDay: isStart, endingDay: isEnd,
+                    customStyles: {
+                        container: {
+                            backgroundColor: SELECTED_COLOR,
+                            height: 34,
+                            width: isStart ? 40 : 47,
+                            marginLeft: isStart ? 7 : 0,
+                            flexDirection: 'column',
+                            flex: 1,
+                            alignItems:
+                                isStart ?
+                                    'flex-start'
+                                    :
+                                    isEnd ?
+                                        'flex-end'
+                                        :
+                                        'center',
+                            borderRadius: 0,
+                            // borderTopRightRadius: isEnd ? 10 : 0,
+                            // borderBottomRightRadius: isEnd ? 10 : 0,
+                        },
+                        text:
+                            isStart ?
+                                {
+                                    position: 'absolute', top: -4,
+                                    lineHeight: 32,
+                                    textAlign: 'center',
+                                    width: 0, height: 0,
+                                    borderBottomWidth: 33,
+                                    borderBottomColor: SELECTED_COLOR,
+                                    borderLeftWidth: 32,
+                                    borderLeftColor: 'white'
+                                } :
+                                isEnd ?
+                                    {
+                                        position: 'absolute', top: -4,
+                                        lineHeight: 32,
+                                        textAlign: 'center',
+                                        width: 0, height: 0,
+                                        borderTopWidth: 33,
+                                        borderTopColor: SELECTED_COLOR,
+                                        borderRightWidth: 32,
+                                        borderRightColor: 'white'
+                                    }
+                                    :
+                                    {
+
+                                    }
+                    }
+                };
             index++;
             if (_date >= date2) break;
         }
@@ -66,9 +131,10 @@ class CustomCalendar extends Component {
             <View style={{
                 position: 'absolute', zIndex: 1000,
                 backgroundColor: 'white',
-                flex: 1, height: '100%'
+                flex: 1, height: '100%',
             }}>
                 <CalendarList
+                    onDayLongPress={(day) => this.selectDateHalf(day)}
                     onDayPress={(day) => this.selectDate(day)}
                     style={{ marginBottom: 40 }}
                     // Max amount of months allowed to scroll to the past. Default = 50
@@ -89,11 +155,11 @@ class CustomCalendar extends Component {
                                 overflow: 'hidden',
                                 height: 34,
                                 alignItems: 'center',
-                                width: 38
+                                width: 38,
                             }
                         }
-                    }}
-                />
+                    }} />
+
                 <View style={{
                     position: 'absolute', bottom: 0,
                     height: 35,
