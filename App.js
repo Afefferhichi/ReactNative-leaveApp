@@ -13,7 +13,13 @@ import Holiday from "./src/Screens/Holiday";
 import Setting from "./src/Screens/Setting";
 import AbsenceTeamList from "./src/Screens/AbsenceTeamList";
 import Login from './src/Screens/Login';
+import ExitDetail from "./src/Screens/ExitDetail";
 import Icon from "react-native-vector-icons/Ionicons";
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from './src/config/createApolloClient'
+
+
+
 
 console.disableYellowBox = true;
 
@@ -21,7 +27,7 @@ const AppStackNavigator = createStackNavigator({
   Login: {
     screen: Login
   },
-  
+
   Absence: {
     screen: Absence
   },
@@ -33,10 +39,13 @@ const AppStackNavigator = createStackNavigator({
   },
   Holiday: {
     screen: Holiday
+  },
+  ExitDetail: {
+    screen: ExitDetail
   }
 }, {
-  initialRouteName: 'Login'
-});
+    initialRouteName: 'Login'
+  });
 const appDrawerNavigator = createDrawerNavigator(
   {
     Absence: {
@@ -78,11 +87,13 @@ const AppContainer = createAppContainer(appDrawerNavigator);
 
 
 class App extends Component {
-  
+
   render() {
-    
-    return <AppContainer />;
+    return (
+      <ApolloProvider client={client} >
+        <AppContainer />
+      </ApolloProvider>
+    )
   }
 }
-
 export default App;

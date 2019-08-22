@@ -452,7 +452,7 @@ export default class Absence extends Component {
                               marginRight: 20
                             }}
                             onPress={() =>
-                              this.props.navigation.navigate("AbsenceDetail")
+                              this.props.navigation.navigate("ExitDetail")
                             }
                           >
                             <Text style={{ color: "white" }}>OPEN</Text>

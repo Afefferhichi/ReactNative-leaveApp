@@ -4,9 +4,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Header from "../common/Header";
 import ProfileCard from "../common/ProfileCard";
 import { ScrollView } from "react-native-gesture-handler";
+//import {withEmployees} from '../hocs'
 
 class AbsenceTeamList extends Component {
   render() {
+    console.log('This is props ===>>>',this.props)
     return (
       <View>
         <View
@@ -98,5 +100,5 @@ class AbsenceTeamList extends Component {
     );
   }
 }
-
-export default AbsenceTeamList;
+  export default AbsenceTeamList;
+//export default withEmployees(AbsenceTeamList);
