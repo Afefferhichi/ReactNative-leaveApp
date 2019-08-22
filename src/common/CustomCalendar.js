@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from 'react-native';
 import { CalendarList } from 'react-native-calendars';
-import { hidden } from "ansi-colors";
+import { ActionSheet } from 'teaset';
+
 const SELECTED_COLOR = 'lightgreen';
 class CustomCalendar extends Component {
 
@@ -12,7 +13,8 @@ class CustomCalendar extends Component {
 
         this.state = {
             startDate: startDate, endDate: endDate,
-            markedDates: (startDate && endDate) ? this.getMarkedDates(startDate, endDate) : {},
+            startDateNoon: null, endDateNoon: null,
+            markedDates: (startDate && endDate) ? this.getMarkedDates(startDate, endDate, null, null) : {},
             showCalendar: false
         };
 
@@ -21,25 +23,50 @@ class CustomCalendar extends Component {
     // =-========== Related Range Calendar
 
     selectDate = async (day) => {
+
+        if (this.state.startDate && this.state.endDate) {
+            this.selectDateWithNoon(day, 'NONE');
+        }
+        else {
+            ActionSheet.hide();
+            ActionSheet.show([
+                { title: 'All day', onPress: () => this.selectDateWithNoon(day, 'ALL_DAY') },
+                { title: 'Before noon', onPress: () => this.selectDateWithNoon(day, 'BEFORE_NOON') },
+                { title: 'After noon', onPress: () => this.selectDateWithNoon(day, 'AFTER_NOON') },
+            ], {
+                    title: 'Cancel'
+                });
+        }
+    };
+
+    selectDateWithNoon = async (day, noon) => {
         const date = day.dateString;
         let markedDates = {};
 
         if (this.state.startDate === null) {
-            await this.setState({ startDate: date });
+            let _noon = (noon === 'BEFORE_NOON' ? 'ALL_DAY' : noon);
+            await this.setState({
+                startDate: date,
+                startDateNoon: _noon
+            });
             markedDates[`${date}`] =
                 {
                     startingDay: true, endingDay: true,
-                    selected: true, color: SELECTED_COLOR, textColor: 'black'
+                    selected: true, color: SELECTED_COLOR, textColor: 'black',
+                    customStyles: this.getCustomStyles(true, false, true)
                 };
         } else if (this.state.endDate === null) {
+            let _noon = (noon === 'AFTER_NOON' ? 'ALL_DAY' : noon);
             if (new Date(date) < new Date(this.state.startDate)) {
                 await this.setState({
-                    startDate: date, endDate: this.state.startDate
+                    startDate: date, endDate: this.state.startDate,
+                    endDateNoon: _noon
                 });
             } else {
-                await this.setState({ endDate: date });
+                await this.setState({ endDate: date,
+                    endDateNoon: _noon });
             }
-            markedDates = this.getMarkedDates(this.state.startDate, this.state.endDate);
+            markedDates = this.getMarkedDates(this.state.startDate, this.state.endDate, this.state.startDateNoon, this.state.endDateNoon);
         } else {
             await this.setState({ startDate: null, endDate: null });
         }
@@ -47,20 +74,13 @@ class CustomCalendar extends Component {
         await this.setState({ markedDates: markedDates })
     };
 
-    selectDateHalf = (day) => {
-        const date = day.dateString;
-        let markedDates = {};
-
-
-    };
-
-    getMarkedDates = (startDate, endDate) => {
+    getMarkedDates = (startDate, endDate, startDateNoon, endDateNoon) => {
         const date1 = Math.min(new Date(startDate), new Date(endDate))
         const date2 = Math.max(new Date(startDate), new Date(endDate))
         let _date = 0; let index = 0;
         let markedDates = {};
         let isStart = false, isEnd = false;
-        
+
         while (true) {
             _date = new Date(date1 + 1000 * 3600 * 24 * index)
             isStart = index === 0;
@@ -70,59 +90,64 @@ class CustomCalendar extends Component {
                     selected: true,
                     color: SELECTED_COLOR, textColor: 'black',
                     startingDay: isStart, endingDay: isEnd,
-                    customStyles: {
-                        container: {
-                            backgroundColor: SELECTED_COLOR,
-                            height: 34,
-                            width: isStart ? 40 : 47,
-                            marginLeft: isStart ? 7 : 0,
-                            flexDirection: 'column',
-                            flex: 1,
-                            alignItems:
-                                isStart ?
-                                    'flex-start'
-                                    :
-                                    isEnd ?
-                                        'flex-end'
-                                        :
-                                        'center',
-                            borderRadius: 0,
-                            // borderTopRightRadius: isEnd ? 10 : 0,
-                            // borderBottomRightRadius: isEnd ? 10 : 0,
-                        },
-                        text:
-                            isStart ?
-                                {
-                                    position: 'absolute', top: -4,
-                                    lineHeight: 32,
-                                    textAlign: 'center',
-                                    width: 0, height: 0,
-                                    borderBottomWidth: 33,
-                                    borderBottomColor: SELECTED_COLOR,
-                                    borderLeftWidth: 32,
-                                    borderLeftColor: 'white'
-                                } :
-                                isEnd ?
-                                    {
-                                        position: 'absolute', top: -4,
-                                        lineHeight: 32,
-                                        textAlign: 'center',
-                                        width: 0, height: 0,
-                                        borderTopWidth: 33,
-                                        borderTopColor: SELECTED_COLOR,
-                                        borderRightWidth: 32,
-                                        borderRightColor: 'white'
-                                    }
-                                    :
-                                    {
-
-                                    }
-                    }
+                    customStyles: this.getCustomStyles(isStart, isEnd)
                 };
             index++;
             if (_date >= date2) break;
         }
         return markedDates;
+    };
+
+    getCustomStyles = (isStart, isEnd, alone = false) => {
+        return {
+            container: {
+                backgroundColor: alone ? '' : SELECTED_COLOR,
+                height: 33,
+                width: isStart ? 40 : 47,
+                marginLeft: isStart ? 7 : 0,
+                alignItems:
+                    isStart ?
+                        'flex-start'
+                        :
+                        isEnd ?
+                            'flex-end'
+                            :
+                            'center',
+                borderRadius: 0,
+                // borderTopRightRadius: isEnd ? 10 : 0,
+                // borderBottomRightRadius: isEnd ? 10 : 0,
+            },
+            text:
+                isStart ?
+                    {
+                        position: 'absolute', top: -4,
+                        lineHeight: 32,
+                        textAlign: 'center',
+                        width: 0, height: 0,
+                        borderBottomWidth: 33,
+                        borderBottomColor: SELECTED_COLOR,
+                        borderLeftWidth: 32,
+                        borderLeftColor: 'white'
+                    } :
+                    isEnd ?
+                        {
+                            position: 'absolute', top: -4,
+                            lineHeight: 32,
+                            textAlign: 'center',
+                            width: 0, height: 0,
+                            borderTopWidth: 33,
+                            borderTopColor: SELECTED_COLOR,
+                            borderRightWidth: 32,
+                            borderRightColor: 'white',
+                        }
+                        :
+                        {
+                            position: 'absolute', top: -4,
+                            lineHeight: 32,
+                            height: 34,
+                            textAlign: 'center',
+                        }
+        }
     };
     // =-========== Related Range Calendar : end
 
@@ -134,7 +159,6 @@ class CustomCalendar extends Component {
                 flex: 1, height: '100%',
             }}>
                 <CalendarList
-                    onDayLongPress={(day) => this.selectDateHalf(day)}
                     onDayPress={(day) => this.selectDate(day)}
                     style={{ marginBottom: 40 }}
                     // Max amount of months allowed to scroll to the past. Default = 50
@@ -148,9 +172,9 @@ class CustomCalendar extends Component {
                     markedDates={
                         this.state.markedDates
                     }
-                    markingType={'period'}
+                    markingType={'custom'}
                     theme={{
-                        'stylesheet.day.period': {
+                        'stylesheet.day.custom': {
                             base: {
                                 overflow: 'hidden',
                                 height: 34,
