@@ -89,7 +89,7 @@ class CustomCalendar extends Component {
                 {
                     startingDay: true, endingDay: true,
                     selected: true, color: SELECTED_COLOR, textColor: 'black',
-                    customStyles: this.getCustomStyles(true, false, _noon === 'AFTER_NOON')
+                    customStyles: this.getCustomStyles(true, true, _noon === 'AFTER_NOON')
                 };
         } else if (this.state.endDate === null) {
             let _noon = (noon === 'AFTER_NOON' ? 'ALL_DAY' : noon);
@@ -215,7 +215,7 @@ class CustomCalendar extends Component {
                     isEnd ?
                         isHalf ?
                             {
-                                position: 'absolute', top: -5,
+                                position: 'absolute', top: -4,
                                 lineHeight: 32,
                                 textAlign: 'center',
                                 width: 0, height: 0,
@@ -253,7 +253,7 @@ class CustomCalendar extends Component {
                 position: 'absolute', zIndex: 1000,
                 backgroundColor: 'white',
                 flex: 1, height: '100%',
-                width: 360, alignSelf: 'center',
+                
             }}>
                 <CalendarList
                     // onLayout={(event)=>alert(event.nativeEvent.layout.width)}
@@ -277,7 +277,7 @@ class CustomCalendar extends Component {
                                 overflow: 'hidden',
                                 height: 34,
                                 alignItems: 'center',
-                                width: 38,
+                                width: 36,
                             }
                         }
                     }} />
