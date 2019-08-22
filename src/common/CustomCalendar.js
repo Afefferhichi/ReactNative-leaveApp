@@ -255,6 +255,7 @@ class CustomCalendar extends Component {
                 flex: 1, height: '100%',
             }}>
                 <CalendarList
+                    onLayout={(event)=>alert(event.nativeEvent.layout.width)}
                     onDayPress={(day) => this.selectDate(day)}
                     style={{ marginBottom: 40 }}
                     // Max amount of months allowed to scroll to the past. Default = 50
