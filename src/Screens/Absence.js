@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
+import { ActionSheet } from 'teaset';
 import Header from "../common/Header";
 import Icon from "react-native-vector-icons/Ionicons";
 import AbsenceCard from "../common/AbsenceCard";
@@ -23,6 +24,24 @@ export default class Absence extends Component {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }
+
+
+
+
+  // ============== Confirmation ===============
+  showConfirmationButtons = () => {
+    ActionSheet.hide();
+    let items = [
+      { title: 'Approve', onPress: () => this.props.navigation.navigate("AbsenceConfirm", { mode: 'APPROVE' }) },
+      { title: 'Reject', onPress: () => this.props.navigation.navigate("AbsenceConfirm", { mode: 'REJECT' }) }
+    ];
+    let cancelItem = { title: 'Cancel' };
+    ActionSheet.show(items, cancelItem);
+  };
+  // ============== Confirmation:End ===============
+
+
+
 
   changeLayout = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -265,45 +284,48 @@ export default class Absence extends Component {
                   <View
                     style={{
                       height: 40,
-                      width: "50%",
                       backgroundColor: "white",
                       flexDirection: "row",
                       alignItems: "center",
                       alignSelf: 'center',
+                      paddingLeft: 55
                     }}
                   >
-                    <View style={{ flexDirection: 'row', marginLeft: 40 }}>
-                      <TouchableOpacity
-                        style={{
-                          height: 30,
-                          width: 90,
-                          backgroundColor: "#a39c9b",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginLeft: 5,
-                          borderRadius: 3,
-                          marginRight: 20
-                        }}
-                        onPress={() =>
-                          this.props.navigation.navigate("AbsenceDetail")
-                        }
-                      >
-                        <Text style={{ color: "white" }}>OPEN </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{
-                          height: 30,
-                          width: 50,
-                          backgroundColor: "#a39c9b",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginLeft: 5,
-                          borderRadius: 3
-                        }}
-                      >
-                        <Icon name="md-menu" size={30} style={{ color: "white" }} />
-                      </TouchableOpacity>
-                    </View>
+
+                    <TouchableOpacity
+                      style={{
+                        height: 30,
+                        width: 90,
+                        backgroundColor: "#a39c9b",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginLeft: 5,
+                        borderRadius: 3,
+                        marginRight: 20
+                      }}
+                      onPress={() =>
+                        this.props.navigation.navigate("AbsenceDetail")
+                      }
+                    >
+                      <Text style={{ color: "white" }}>OPEN</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        height: 30,
+                        width: 50,
+                        backgroundColor: "#a39c9b",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginLeft: 5,
+                        borderRadius: 3
+                      }}
+                      onPress={() =>
+                        this.showConfirmationButtons()
+                      }
+                    >
+                      <Icon name="md-menu" size={30} style={{ color: "white" }} />
+                    </TouchableOpacity>
+
                   </View>
                   {/*  */}
                 </View>
@@ -345,7 +367,7 @@ export default class Absence extends Component {
                           overflow: "hidden"
                         }}
                       >
-                        
+
                         {/*  */}
                         <View
                           style={{
@@ -407,20 +429,38 @@ export default class Absence extends Component {
                           <Text style={{ fontWeight: "bold" }}>Remaning: </Text>
                           <Text>18.00 Days</Text>
                         </View>
+
+
                         <View
                           style={{
                             height: 40,
-                            width: "100%",
                             backgroundColor: "white",
                             flexDirection: "row",
-                            alignItems: "center",
-                            // justifyContent:'center'
+                            alignItems: "center"
                           }}
                         >
+
                           <TouchableOpacity
                             style={{
                               height: 30,
                               width: 90,
+                              backgroundColor: "#a39c9b",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              marginLeft: 5,
+                              borderRadius: 3,
+                              marginRight: 20
+                            }}
+                            onPress={() =>
+                              this.props.navigation.navigate("AbsenceDetail")
+                            }
+                          >
+                            <Text style={{ color: "white" }}>OPEN</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={{
+                              height: 30,
+                              width: 50,
                               backgroundColor: "#a39c9b",
                               justifyContent: "center",
                               alignItems: "center",
@@ -428,24 +468,12 @@ export default class Absence extends Component {
                               borderRadius: 3
                             }}
                             onPress={() =>
-                              this.props.navigation.navigate("AbsenceDetail")
+                              this.showConfirmationButtons()
                             }
-                          >
-                            <Text style={{ color: "white" }}>OPEN </Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            style={{
-                              height: 30,
-                              width: 90,
-                              backgroundColor: "#a39c9b",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              marginLeft: 5,
-                              borderRadius: 3
-                            }}
                           >
                             <Icon name="md-menu" size={30} style={{ color: "white" }} />
                           </TouchableOpacity>
+
                         </View>
                         {/*  */}
                       </View>

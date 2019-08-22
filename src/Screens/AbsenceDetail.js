@@ -30,12 +30,7 @@ class AbsenceDetail extends Component {
         '2019-08-24': { selected: true, endingDay: true, color: 'green', textColor: 'white' }
       }
     };
-
-
-
   }
-
-
 
     // =-========== Related Range Calendar
 

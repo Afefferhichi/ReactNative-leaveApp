@@ -8,6 +8,7 @@ import {
 } from "react-navigation";
 import Profile from "./src/Screens/Profile";
 import AbsenceDetail from "./src/Screens/AbsenceDetail";
+import AbsenceConfirm from "./src/Screens/AbsenceConfirm";
 import Holiday from "./src/Screens/Holiday";
 import Setting from "./src/Screens/Setting";
 import AbsenceTeamList from "./src/Screens/AbsenceTeamList";
@@ -27,6 +28,9 @@ const AppStackNavigator = createStackNavigator({
   AbsenceDetail: {
     screen: AbsenceDetail
   },
+  AbsenceConfirm: {
+    screen: AbsenceConfirm
+  },
   Holiday: {
     screen: Holiday
   }
@@ -42,7 +46,6 @@ const appDrawerNavigator = createDrawerNavigator(
         drawerIcon: <Icon name="md-home" size={30} style={{ color: "black" }} />
       }
     },
-   
     Setting: {
       screen: Setting,
       navigationOptions: {
