@@ -10,84 +10,46 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Overlay } from 'teaset';
-import RangeDatepicker from 'react-native-range-datepicker';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-import Header from "../common/Header";
 import Icon from "react-native-vector-icons/Ionicons";
-import DatePicker from "react-native-datepicker";
-import { thisTypeAnnotation } from "@babel/types";
+import CustomCalendar from "../common/CustomCalendar";
+
 // import console = require("console");
 
 class AbsenceDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: "", date1: "", 
-      selectedSpecialDay: '', 
+      date: "", date1: "",
+      selectedSpecialDay: '',
       rangeStarted: false, startDate: null, endDate: null,
-      markedDates: {
-        '2019-08-23': { selected: true, startingDay: true, color: 'green', textColor: 'white' },
-        '2019-08-24': { selected: true, endingDay: true, color: 'green', textColor: 'white' }
-      }
+      markedDates: {},
+      showCalendar: false
     };
   }
-
-    // =-========== Related Range Calendar
-
-    selectDate = async (date) => {
-      alert(JSON.stringify(date));
-      if (!this.state.rangeStarted) {
-        // This means you clicked the start date
-        await this.setState({ startDate: date })
-      } else {
-        // This means that you clicked the end date
-        await this.setState({ endDate: date });
-      }
-      await this.setState({ rangeStarted: !this.state.rangeStarted });
-
-      let markedDates = {};
-      markedDates[this.state.startDate] = { selected: true, startingDay: true, color: 'green', textColor: 'white' };
-      markedDates[this.state.endDate] = { selected: true, endingDay: true, color: 'green', textColor: 'white' };
-      await this.setState({markedDates: markedDates})
-    };
-    // =-========== Related Range Calendar : end
-
-  modal = (options = {}) => {
-
-    const overlayView2 = (
-      <Overlay.View
-        modal={true}
-        ref={v => this.overlayView2 = v}
-      >
-        <View style={{
-          width: '100%', height: '100%', backgroundColor: 'white',
-          flexDirection: 'column'
-        }}>
-          <View style={{ width: '100%', height: '100%', paddingBottom: 52 }}>
-            {/* <RangeDatepicker /> */}
-
-            <Calendar
-              // Collection of dates that have to be colored in a special way. Default = {}
-              markedDates={this.state.markedDates}
-              // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
-              markingType={'period'}
-              onDayPress={(day) => this.selectDate(day)}
-            />
-
-            <Button title="Close" onPress={() => this.overlayView2 && this.overlayView2.close()} />
-          </View>
-        </View>
-      </Overlay.View>
-    );
-
-    Overlay.show(overlayView2);
-
-  };
 
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, height: '100%', backgroundColor: 'white' }}>
+
+        {this.state.showCalendar &&
+          <CustomCalendar
+            onConfirm={(startDate, endDate) =>
+              this.setState({
+                showCalendar: false,
+                startDate,
+                endDate
+              })
+            }
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            onCancel={() => this.setState({ showCalendar: false })}
+          />
+        }
+
+
+
+
         <ScrollView style={{ height: "90%" }}>
           <View
             style={{
@@ -130,16 +92,24 @@ class AbsenceDetail extends Component {
           <View
             style={{ borderTopWidth: 1, borderBottomWidth: 1, padding: 10 }}
           >
-            <Text style={{ fontWeight: "bold" }}>From - To</Text>
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "space-around"
+                justifyContent: "flex-start"
               }}
             >
-              <Icon name="md-calendar" style={{ width: "10%" }} size={30} />
-              <Button title="Calender" onPress={() => this.modal()} />
+              <Text style={{ fontWeight: "bold" }}>From - To</Text>
+              <TouchableOpacity 
+                style={{marginLeft: 15, flexDirection: 'row'}}
+                onPress={() => this.setState({ showCalendar: true })}>
+                <Icon name="md-calendar" size={25} />
+                {this.state.startDate && 
+                  <Text style={{lineHeight: 25, marginLeft: 10}}>
+                    {this.state.startDate} - {this.state.endDate}
+                  </Text>
+                }
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -189,24 +159,24 @@ class AbsenceDetail extends Component {
 
             />
           </View>
-          <TouchableOpacity
-            onPress={this._onPressButton}
-            onShowUnderlay={() => {
-              alert("onShowUnderlay button !");
-            }}
-            style={{
-              width: "90%",
-              height: 45,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "tomato",
-              marginTop: 5,
-              alignSelf: "center"
-            }}
-          >
-            <Text style={{ color: "white" }}>Send Request</Text>
-          </TouchableOpacity>
         </ScrollView>
+        <TouchableOpacity
+          onPress={this._onPressButton}
+          onShowUnderlay={() => {
+            alert("onShowUnderlay button !");
+          }}
+          style={{
+            width: "90%",
+            height: 45,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "tomato",
+            marginVertical: 5,
+            alignSelf: "center"
+          }}
+        >
+          <Text style={{ color: "white" }}>Send Request</Text>
+        </TouchableOpacity>
       </View>
     );
   }
