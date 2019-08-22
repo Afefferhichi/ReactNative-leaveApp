@@ -7,8 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "apollo-boost": "^0.4.4",
+    "graphql": "^14.4.2",
     "color": "^3.1.0",
     "react": "16.8.6",
+    "react-apollo": "^3.0.1",
     "react-native": "0.59.7",
     "react-native-calendar-select": "^0.1.2",
     "react-native-calendars": "^1.210.0",
