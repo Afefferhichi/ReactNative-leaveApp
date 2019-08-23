@@ -5,6 +5,7 @@ import { ActionSheet } from "teaset";
 import constants from "./constants";
 
 const SELECTED_COLOR = "lightgreen";
+const CALENDAR_WIDTH = 360;
 
 class CustomCalendar extends Component {
   constructor(props) {
@@ -191,8 +192,8 @@ class CustomCalendar extends Component {
       container: {
         backgroundColor: SELECTED_COLOR,
         height: 32,
-        width: isStart ? (isHalf ? 40 : 47) : 47,
-        marginLeft: isStart ? (isHalf ? 7 : 0) : 0,
+        width: (!isStart && !isEnd) ? '150%' : 33,
+        zIndex: (isStart || isEnd) ? 2:1,
         alignItems: isStart
           ? !isHalf
             ? "center"
@@ -217,7 +218,7 @@ class CustomCalendar extends Component {
               textAlign: "center",
               width: 0,
               height: 0,
-              borderBottomWidth: 33,
+              borderBottomWidth: 32,
               borderBottomColor: SELECTED_COLOR,
               borderLeftWidth: 32,
               borderLeftColor: "white"
@@ -237,7 +238,7 @@ class CustomCalendar extends Component {
               textAlign: "center",
               width: 0,
               height: 0,
-              borderTopWidth: 33,
+              borderTopWidth: 32,
               borderTopColor: SELECTED_COLOR,
               borderRightWidth: 32,
               borderRightColor: "white"
@@ -270,13 +271,17 @@ class CustomCalendar extends Component {
       <View
         style={{
           position: "absolute",
-          zIndex: 1000,
+          zIndex: 10000,
           backgroundColor: "white",
           flex: 1,
-          height: "100%"
+          height: "100%",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "center"
         }}
       >
         <CalendarList
+          _calendarWidth={CALENDAR_WIDTH}
           // onLayout={(event)=>alert(event.nativeEvent.layout.width)}
           onDayPress={day => this.selectDate(day)}
           style={{ marginBottom: 40 }}
@@ -307,6 +312,7 @@ class CustomCalendar extends Component {
             position: "absolute",
             bottom: 0,
             height: 35,
+            width: "100%",
             flexDirection: "row"
           }}
         >
