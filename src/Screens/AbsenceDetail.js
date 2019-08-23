@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity
 } from "react-native";
-import { Overlay } from 'teaset';
+import { Overlay } from "teaset";
 import Icon from "react-native-vector-icons/Ionicons";
 import CustomCalendar from "../common/CustomCalendar";
 
@@ -19,42 +19,40 @@ class AbsenceDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: "", date1: "",
-      selectedSpecialDay: '',
-      rangeStarted: false, 
-      startDate: null, endDate: null,
-      startDateIsHalf: null, endDateIsHalf: null,
+      date: "",
+      date1: "",
+      selectedSpecialDay: "",
+      rangeStarted: false,
+      startDate: null,
+      endDate: null,
+      startDateIsHalf: null,
+      endDateIsHalf: null,
       markedDates: {},
       showCalendar: false
     };
   }
 
-
   render() {
     return (
-      <View style={{ flex: 1, height: '100%', backgroundColor: 'white' }}>
-
-        {this.state.showCalendar &&
+      <View style={{ flex: 1, height: "100%", backgroundColor: "white" }}>
+        {this.state.showCalendar && (
           <CustomCalendar
-            onConfirm={(startDate, endDate, startDateIsHalf, endDateIsHalf) =>
-              this.setState({
+            onConfirm={async (startDate, endDate, startDateIsHalf, endDateIsHalf) => {
+              await this.setState({
                 showCalendar: false,
                 startDate,
                 endDate,
                 startDateIsHalf,
                 endDateIsHalf
-              })
-            }
+              });
+            }}
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             startDateIsHalf={this.state.startDateIsHalf}
             endDateIsHalf={this.state.endDateIsHalf}
             onCancel={() => this.setState({ showCalendar: false })}
           />
-        }
-
-
-
+        )}
 
         <ScrollView style={{ height: "90%" }}>
           <View
@@ -92,7 +90,8 @@ class AbsenceDetail extends Component {
           >
             <Icon name="md-cog" size={30} />
             <Text style={{ color: "#000000", marginLeft: 10 }}>
-              This absence is currently approved. Tap here to request for a change.
+              This absence is currently approved. Tap here to request for a
+              change.
             </Text>
           </View>
           <View
@@ -106,15 +105,16 @@ class AbsenceDetail extends Component {
               }}
             >
               <Text style={{ fontWeight: "bold" }}>From - To</Text>
-              <TouchableOpacity 
-                style={{marginLeft: 15, flexDirection: 'row'}}
-                onPress={() => this.setState({ showCalendar: true })}>
+              <TouchableOpacity
+                style={{ marginLeft: 15, flexDirection: "row" }}
+                onPress={() => this.setState({ showCalendar: true })}
+              >
                 <Icon name="md-calendar" size={25} />
-                {this.state.startDate && 
-                  <Text style={{lineHeight: 25, marginLeft: 10}}>
+                {this.state.startDate && (
+                  <Text style={{ lineHeight: 25, marginLeft: 10 }}>
                     {this.state.startDate} - {this.state.endDate}
                   </Text>
-                }
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -125,10 +125,13 @@ class AbsenceDetail extends Component {
           >
             <Text style={{ fontWeight: "bold" }}>Reason</Text>
             <View style={{ alignItems: "center" }}>
-              <Picker style={{ width: "80%", borderWidth: 1 }}
-                onValueChange={value => this.setState({ selectedSpecialDay: value })}
-                selectedValue={this.state.selectedSpecialDay}>
-
+              <Picker
+                style={{ width: "80%", borderWidth: 1 }}
+                onValueChange={value =>
+                  this.setState({ selectedSpecialDay: value })
+                }
+                selectedValue={this.state.selectedSpecialDay}
+              >
                 <Picker.Item label="Holiday" value="Holiday" />
                 <Picker.Item label="Special Permits" value="Special Permits" />
                 <Picker.Item label="Sickness" value="Sickness" />
@@ -152,7 +155,8 @@ class AbsenceDetail extends Component {
               <Text style={{ fontWeight: "bold" }}>Note:</Text>
               {/* <Text>0.00 Days</Text> */}
             </View>
-            <TextInput multiline={true}
+            <TextInput
+              multiline={true}
               style={{
                 marginTop: 5,
                 width: "90%",
@@ -162,7 +166,6 @@ class AbsenceDetail extends Component {
                 alignSelf: "center",
                 marginBottom: 5
               }}
-
             />
           </View>
         </ScrollView>
