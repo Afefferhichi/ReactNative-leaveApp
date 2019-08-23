@@ -2,18 +2,21 @@ import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { ActionSheet } from "teaset";
-import constants from "./constants";
 
 const SELECTED_COLOR = "lightgreen";
 const CALENDAR_WIDTH = 360;
+
+const BEFORE_NOON = 1;
+const AFTER_NOON = 2;
+const ALL_DAY = 3;
 
 class CustomCalendar extends Component {
   constructor(props) {
     super();
     const startDate = props.startDate || null;
     const endDate = props.endDate || null;
-    const startDateIsHalf = props.startDateIsHalf || constants.ALL_DAY;
-    const endDateIsHalf = props.endDateIsHalf || constants.ALL_DAY;
+    const startDateIsHalf = props.startDateIsHalf || ALL_DAY;
+    const endDateIsHalf = props.endDateIsHalf || ALL_DAY;
 
     this.state = {
       selectStarted: false,
@@ -49,8 +52,8 @@ class CustomCalendar extends Component {
         markedDates: {},
         startDate: null,
         endDate: null,
-        startDateIsHalf: constants.ALL_DAY,
-        endDateIsHalf: constants.ALL_DAY
+        startDateIsHalf: ALL_DAY,
+        endDateIsHalf: ALL_DAY
       });
       return;
     }
@@ -65,15 +68,15 @@ class CustomCalendar extends Component {
         [
           {
             title: "All day",
-            onPress: () => this.selectDateWithNoon(day, constants.ALL_DAY)
+            onPress: () => this.selectDateWithNoon(day, ALL_DAY)
           },
           {
             title: "Before noon",
-            onPress: () => this.selectDateWithNoon(day, constants.BEFORE_NOON)
+            onPress: () => this.selectDateWithNoon(day, BEFORE_NOON)
           },
           {
             title: "After noon",
-            onPress: () => this.selectDateWithNoon(day, constants.AFTER_NOON)
+            onPress: () => this.selectDateWithNoon(day, AFTER_NOON)
           }
         ],
         {
@@ -108,7 +111,7 @@ class CustomCalendar extends Component {
         customStyles: this.getCustomStyles(
           true,
           true,
-          noon !== constants.ALL_DAY,
+          noon !== ALL_DAY,
           noon
         )
       };
@@ -139,8 +142,8 @@ class CustomCalendar extends Component {
       await this.setState({
         startDate: null,
         endDate: null,
-        startDateIsHalf: constants.ALL_DAY,
-        endDateIsHalf: constants.ALL_DAY
+        startDateIsHalf: ALL_DAY,
+        endDateIsHalf: ALL_DAY
       });
     }
 
@@ -178,15 +181,15 @@ class CustomCalendar extends Component {
           true,
           isEnd,
           isEnd
-            ? startDateIsHalf !== constants.ALL_DAY
-            : startDateIsHalf === constants.AFTER_NOON,
+            ? startDateIsHalf !== ALL_DAY
+            : startDateIsHalf === AFTER_NOON,
           startDateIsHalf
         );
       } else if (isEnd) {
         customStyles = this.getCustomStyles(
           isStart,
           true,
-          endDateIsHalf === constants.BEFORE_NOON,
+          endDateIsHalf === BEFORE_NOON,
           endDateIsHalf
         );
       } else {
@@ -209,9 +212,9 @@ class CustomCalendar extends Component {
     isStart,
     isEnd,
     isHalf = true,
-    noon = constants.BEFORE_NOON
+    noon = BEFORE_NOON
   ) => {
-    const isBeforeNoon = noon == constants.BEFORE_NOON ? true : false;
+    const isBeforeNoon = noon == BEFORE_NOON ? true : false;
     const triangleRightTop = {
       borderBottomWidth: 32,
       borderBottomColor: SELECTED_COLOR,
