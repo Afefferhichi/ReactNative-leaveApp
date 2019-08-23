@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import { Overlay } from "teaset";
 import Icon from "react-native-vector-icons/Ionicons";
-import CustomCalendar from "../common/CustomCalendar";
-
+import {HalfdayCalendar} from "react-native-halfday-calendar";
 // import console = require("console");
 
 class AbsenceDetail extends Component {
@@ -36,7 +35,7 @@ class AbsenceDetail extends Component {
     return (
       <View style={{ flex: 1, height: "100%", backgroundColor: "white" }}>
         {this.state.showCalendar && (
-          <CustomCalendar
+          <HalfdayCalendar
             onConfirm={async (startDate, endDate, startDateIsHalf, endDateIsHalf) => {
               await this.setState({
                 showCalendar: false,
