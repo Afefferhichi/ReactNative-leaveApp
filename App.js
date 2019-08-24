@@ -1,3 +1,5 @@
+
+    
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import Absence from "./src/Screens/Absence";
@@ -97,3 +99,4 @@ class App extends Component {
   }
 }
 export default App;
+

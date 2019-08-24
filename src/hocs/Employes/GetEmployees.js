@@ -2,6 +2,10 @@ import React from 'react'
 import {gql} from 'apollo-boost'
 import { Query } from 'react-apollo'
 
+
+
+
+
 export const GET_EMPLOYES = gql`
 {
   employees{

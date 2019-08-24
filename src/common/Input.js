@@ -21,12 +21,13 @@ switch(props.type){
 const styles = StyleSheet.create({
 
     input: {
-        width:"100%",
+        width:"80%",
         borderBottomWidth:1,
-        borderBottomColor:'blue',
+        borderBottomColor:'#F6E8B1',
         fontSize:16,
         padding:5,
-        marginTop:10
+        marginTop:10,
+        alignSelf:'auto'
 
     }
 })

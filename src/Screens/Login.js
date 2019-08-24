@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Button, ImageBackground} from 'react-native';
 import Input from '../common/Input';
 import validationRules from '../common/validationRules';
 
@@ -66,10 +66,10 @@ class Login extends Component {
     render(){
         const {navigate} = this.props.navigation;
         return(
-          <View>
+          <ImageBackground  style={{height:"100%", width:'100%', justifyContent:'center', alignItems:"center"}} source={require("../../assets/icons/img.png")}>
            <Input 
-                placeholder="Entrer amail"
-                placeholderTextColor="#cecece"
+                placeholder="Entrer email"
+                placeholderTextColor="#F6E8B1"
                 type={this.state.form.email.type}
                 value={this.state.form.email.value}
                 autoCapitalize={"none"}
@@ -78,7 +78,7 @@ class Login extends Component {
            />
           <Input 
                 placeholder="Entrer your password"
-                placeholderTextColor="#cecece"
+                placeholderTextColor="#F6E8B1"
                 type={this.state.form.password.type}
                 value={this.state.form.password.value}
                 onChangeText={ value => this.updateInput("password",value)}
@@ -92,6 +92,9 @@ class Login extends Component {
                  <View style={styles.button}>
                          <Button
                                  title="Login"
+                                 color="#183152"
+
+
                                  onPress={() =>
                                     this.props.navigation.navigate("Absence")}
 />
@@ -99,7 +102,7 @@ class Login extends Component {
           </View>
             </View>
 
-          </View>  
+          </ImageBackground>  
         )
     }
     }
@@ -111,7 +114,7 @@ class Login extends Component {
         marginBottom:10,
         marginTop:30,
         padding:10,
-        backgroundColor:'blue'
+        backgroundColor:'white'
     },
     errorLabel:{
         color:'#fff',
