@@ -2739,7 +2739,7 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.3
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.2.tgz#6f0952605d0140c1cfdb138ed005775b92d67b02"
   integrity sha512-IItsdsea19BoLC7ELy13q1iJFNmd7ofZH5+X/pJr90/nRoPEX0DJo1dHDbgtYWOhJhcCgMDTOw84RZ72q6lB+Q==
 
-graphql-tag@^2.4.2:
+graphql-tag@^2.10.1, graphql-tag@^2.4.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
@@ -5225,7 +5225,14 @@ react-native-gesture-handler@^1.3.0:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-halfday-calendar@0.0.3:
+react-native-halfday-calendar@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-halfday-calendar/-/react-native-halfday-calendar-0.0.4.tgz#e3df4e978086efcf006654bd4b575c3da9f38553"
+  integrity sha512-sf1Lznfp4WkTIiglAR1csNJIhX3OLY+8dZjY3IAIWiOD4Acr36E9ooH3CLmcVZxLWam8Soz+8NO65PpOaejYiw==
+  dependencies:
+    react-native-halfday-calendar "^0.0.3"
+
+react-native-halfday-calendar@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/react-native-halfday-calendar/-/react-native-halfday-calendar-0.0.3.tgz#210351503bd44e33ee5daeccfe161ad378d0de06"
   integrity sha512-NPKc7zVfSGwQtZRERi9Fjpk3JszrX8zul3kRNL9n7LkA5YwAcpf6jeuOSxlmvERvGmGkvFxTWNemDDHNlnaubA==

@@ -13,6 +13,7 @@ import {
 import { Overlay } from "teaset";
 import Icon from "react-native-vector-icons/Ionicons";
 import {HalfdayCalendar} from "react-native-halfday-calendar";
+// import HalfdayCalendar from "../common/HalfdayCalendar";
 // import console = require("console");
 
 class AbsenceDetail extends Component {

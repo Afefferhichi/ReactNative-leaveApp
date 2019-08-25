@@ -4,7 +4,7 @@
 
 import {AppRegistry} from 'react-native';
 import App from './App';
-// import App from './src/common/CustomCalendar';
+// import App from './src/common/HalfdayCalendar';
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);
