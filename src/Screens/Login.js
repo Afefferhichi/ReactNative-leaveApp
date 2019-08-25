@@ -66,9 +66,13 @@ class Login extends Component {
     render(){
         const {navigate} = this.props.navigation;
         return(
+            
           <ImageBackground  style={{height:"100%", width:'100%', justifyContent:'center', alignItems:"center"}} source={require("../../assets/icons/img.png")}>
+           <View>
+                <Text style={{color:"#183152", fontWeight:"bold", }}>Welcome TELNETTeam</Text>
+            </View>
            <Input 
-                placeholder="Entrer email"
+                placeholder="Entrer your username"
                 placeholderTextColor="#F6E8B1"
                 type={this.state.form.email.type}
                 value={this.state.form.email.value}
@@ -130,3 +134,7 @@ class Login extends Component {
      })
 
     export default Login;
+
+
+
+

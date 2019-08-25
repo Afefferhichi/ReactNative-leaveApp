@@ -149,15 +149,19 @@ export default class Absence extends Component {
 
   render() {
     return (
-      <View>
+      //<SafeAreaView
+      //StatusBar barStyle="light-content" backgroundColor="#6a51ae">
+        <View>
         <View
           style={{
             height: 58,
             backgroundColor: "white",
             borderWidth: 1,
-            borderColor: "#f3f3f3",
+            borderColor: "white",
             alignItems: "center",
-            flexDirection: "row"
+            flexDirection: "row",
+            borderBottomWidth:1,
+
           }}
         >
           <Icon
@@ -166,7 +170,7 @@ export default class Absence extends Component {
             style={{ paddingLeft: 10, paddingRight: 20 }}
             onPress={() => this.props.navigation.openDrawer()}
           />
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#000000" }}>
+          <Text style={{ fontSize: 20, fontWeight: "normal", color: "#696969" }}>
             Activity Feed
           </Text>
         </View>
@@ -190,12 +194,9 @@ export default class Absence extends Component {
                   }}
                 >
                   <AbsenceCard />
+                  <View style={{ marginLeft: 150 }}>{this.onButtonShow()}</View>
                   {/* {this.onButtonShow()} */}
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={{ fontWeight: "bold" }}>Duration: </Text>
-                    <Text>12/01/2018</Text>
-                    <View style={{ marginLeft: 40 }}>{this.onButtonShow()}</View>
-                  </View>
+                  
 
                   {/* /// */}
 
@@ -244,7 +245,7 @@ export default class Absence extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: "bold" }}>Entitlement: </Text>
+                        <Text style={{ fontWeight: "bold" }}>Reason: </Text>
                         <Text>20.0 days</Text>
                       </View>
                       <View
@@ -350,13 +351,10 @@ export default class Absence extends Component {
                     }}
                   >
                     <AbsenceCard />
+                    <View style={{ marginLeft: 150 }}>{this.onButtonShow2()}</View>
                     {/* {this.onButtonShow()} */}
 
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={{ fontWeight: "bold" }}>Duration: </Text>
-                      <Text>12/01/2018</Text>
-                      <View style={{ marginLeft: 40 }}>{this.onButtonShow2()}</View>
-                    </View>
+
 
                     {/* /// */}
 
@@ -379,6 +377,7 @@ export default class Absence extends Component {
                           <Text style={{ fontWeight: "bold" }}>From: </Text>
                           <Text>12/01/2018</Text>
                         </View>
+                        
                         <View
                           style={{
                             flexDirection: "row",
@@ -386,17 +385,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: "bold" }}>To: </Text>
-                          <Text>12/01/2018</Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            marginLeft: 5,
-                            marginBottom: 5
-                          }}
-                        >
-                          <Text style={{ fontWeight: "bold" }}>Absence Type: </Text>
+                          <Text style={{ fontWeight: "bold" }}>Time: </Text>
                           <Text>Holliday</Text>
                         </View>
                         <View
@@ -406,7 +395,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: "bold" }}>Entitlement: </Text>
+                          <Text style={{ fontWeight: "bold" }}>Absence Type: </Text>
                           <Text>20.0 days</Text>
                         </View>
                         <View
@@ -416,7 +405,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: "bold" }}>Token: </Text>
+                          <Text style={{ fontWeight: "bold" }}>Reason: </Text>
                           <Text>2.00 Days</Text>
                         </View>
                         <View
@@ -426,7 +415,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: "bold" }}>Remaning: </Text>
+                          <Text style={{ fontWeight: "bold" }}>date of recivery: </Text>
                           <Text>18.00 Days</Text>
                         </View>
 
@@ -486,7 +475,8 @@ export default class Absence extends Component {
             </View>
           </View>
         </ScrollView>
-      </View>
+       </View>
+        //</SafeAreaView>
     );
   }
 }

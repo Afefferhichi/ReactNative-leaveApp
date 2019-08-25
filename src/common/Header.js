@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons"
 class Header extends React.Component {
   render() {
     return (
@@ -7,13 +8,15 @@ class Header extends React.Component {
         style={{
           height: 40,
           width: "100%",
-          backgroundColor: "#add8e6",
+          backgroundColor: "#00bfff",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 10
+          borderRadius: 10,
+            flexDirection:'row'
         }}
       >
-        <Text>{this.props.HeaderText}</Text>
+        <Icon style={{alignSelf:'flex-start', paddingLeft:10}} name={this.props.Icon} size={29} onPress={this.props.onPress}/>
+        <Text style={{fontSize:22, color:'white'}}>{this.props.HeaderText}</Text>
       </View>
     );
   }

@@ -14,6 +14,27 @@ export const GET_EMPLOYES = gql`
   }
 }
 `
+function GetEmployees() {
+  const { loading, error, data } = useQuery(gql`
+    {
+     employees{
+       firstName
+       lastName
+     }
+    }
+  `);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return data.employees.map(({ currency, rate }) => (
+    <div key={currency}>
+      <p>
+        {currency}: {rate}
+      </p>
+    </div>
+  ));
+}
 
 const withEmployees = Component => props => (
   <Query query={GET_EMPLOYES}>

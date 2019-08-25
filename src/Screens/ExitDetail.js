@@ -9,6 +9,8 @@ import {
   TextInput,
   TouchableOpacity
 } from "react-native";
+import DateTimePicker from "react-native-modal-datetime-picker";
+import TimePicker from "react-native-24h-timepicker";
 import { Overlay } from 'teaset';
 import RangeDatepicker from 'react-native-range-datepicker';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
@@ -22,72 +24,107 @@ class ExitDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: "", date1: "", 
-      selectedSpecialDay: '', 
-      rangeStarted: false, startDate: null, endDate: null,
-      markedDates: {
-        '2019-08-23': { selected: true, startingDay: true, color: 'green', textColor: 'white' },
-        '2019-08-24': { selected: true, endingDay: true, color: 'green', textColor: 'white' }
-      }
+      isDateTimePickerVisible: false,
+      time:''
+      // date: "", date1: "", 
+      // selectedSpecialDay: '', 
+      // rangeStarted: false, startDate: null, endDate: null,
+      // markedDates: {
+      //   '2019-08-23': { selected: true, startingDay: true, color: 'green', textColor: 'white' },
+      //   '2019-08-24': { selected: true, endingDay: true, color: 'green', textColor: 'white' }
+      // }
     };
   }
 
     // =-========== Related Range Calendar
 
-    selectDate = async (date) => {
-      alert(JSON.stringify(date));
-      if (!this.state.rangeStarted) {
-        // This means you clicked the start date
-        await this.setState({ startDate: date })
-      } else {
-        // This means that you clicked the end date
-        await this.setState({ endDate: date });
-      }
-      await this.setState({ rangeStarted: !this.state.rangeStarted });
+  //   selectDate = async (date) => {
+  //     alert(JSON.stringify(date));
+  //     if (!this.state.rangeStarted) {
+  //       // This means you clicked the start date
+  //       await this.setState({ startDate: date })
+  //     } else {
+  //       // This means that you clicked the end date
+  //       await this.setState({ endDate: date });
+  //     }
+  //     await this.setState({ rangeStarted: !this.state.rangeStarted });
 
-      let markedDates = {};
-      markedDates[this.state.startDate] = { selected: true, startingDay: true, color: 'green', textColor: 'white' };
-      markedDates[this.state.endDate] = { selected: true, endingDay: true, color: 'green', textColor: 'white' };
-      await this.setState({markedDates: markedDates})
-    };
-    // =-========== Related Range Calendar : end
+  //     let markedDates = {};
+  //     markedDates[this.state.startDate] = { selected: true, startingDay: true, color: 'green', textColor: 'white' };
+  //     markedDates[this.state.endDate] = { selected: true, endingDay: true, color: 'green', textColor: 'white' };
+  //     await this.setState({markedDates: markedDates})
+  //   };
+  //   // =-========== Related Range Calendar : end
 
-  modal = (options = {}) => {
+  // modal = (options = {}) => {
 
-    const overlayView2 = (
-      <Overlay.View
-        modal={true}
-        ref={v => this.overlayView2 = v}
-      >
-        <View style={{
-          width: '100%', height: '100%', backgroundColor: 'white',
-          flexDirection: 'column'
-        }}>
-          <View style={{ width: '100%', height: '100%', paddingBottom: 52 }}>
-            {/* <RangeDatepicker /> */}
+  //   const overlayView2 = (
+  //     <Overlay.View
+  //       modal={true}
+  //       ref={v => this.overlayView2 = v}
+  //     >
+  //       <View style={{
+  //         width: '100%', height: '100%', backgroundColor: 'white',
+  //         flexDirection: 'column'
+  //       }}>
+  //         <View style={{ width: '100%', height: '100%', paddingBottom: 52 }}>
+  //           {/* <RangeDatepicker /> */}
 
-            <Calendar
-              // Collection of dates that have to be colored in a special way. Default = {}
-              markedDates={this.state.markedDates}
-              // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
-              markingType={'period'}
-              onDayPress={(day) => this.selectDate(day)}
-            />
+  //           <Calendar
+  //             // Collection of dates that have to be colored in a special way. Default = {}
+  //             markedDates={this.state.markedDates}
+  //             // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+  //             markingType={'period'}
+  //             onDayPress={(day) => this.selectDate(day)}
+  //           />
 
-            <Button title="Close" onPress={() => this.overlayView2 && this.overlayView2.close()} />
-          </View>
-        </View>
-      </Overlay.View>
-    );
+  //           <Button title="Close" onPress={() => this.overlayView2 && this.overlayView2.close()} />
+  //         </View>
+  //       </View>
+  //     </Overlay.View>
+  //   );
 
-    Overlay.show(overlayView2);
+  //   Overlay.show(overlayView2);
 
-  };
+
+
+
+// 
+
+onCancel() {
+  this.TimePicker.close();
+}
+onConfirm(hour, minute) {
+  this.setState({ time: `${hour}:${minute}` });
+  this.TimePicker.close();
+}
+
+// 
+
+showDateTimePicker = () => {
+  this.setState({ isDateTimePickerVisible: true });
+};
+
+hideDateTimePicker = () => {
+  this.setState({ isDateTimePickerVisible: false });
+};
+
+handleDatePicked = date => {
+  console.log("A date has been picked: ", date);
+  this.hideDateTimePicker();
+};
+
+
+// 
 
 
   render() {
     return (
       <View>
+       <View>
+       <Header HeaderText="Absence Detail"/>
+       </View>
+
         <ScrollView style={{ height: "90%" }}>
           <View
             style={{
@@ -138,8 +175,54 @@ class ExitDetail extends Component {
                 justifyContent: "space-around"
               }}
             >
-              <Icon name="md-calendar" style={{ width: "10%" }} size={30} />
-              <Button title="Calender" onPress={() => this.modal()} />
+              {/* <Icon name="md-calendar" style={{ width: "10%" }} size={30} />
+              <Button title="Calender" onPress={() => this.modal()} /> */}
+             <View style={{justifyContent:'center', alignItems:'center'}}>
+             <Icon
+               onPress={() => this.TimePicker.open()}
+               size={30}
+               name="md-time"
+              />
+              <Text>Time</Text>
+             </View>
+                {/* <TouchableOpacity
+          onPress={() => this.TimePicker.open()}
+          style={{padding:5, borderBottomWidth:1, borderBottomColor:"#000000"}}
+        >
+          <Text style={{color:'black'}}>Time</Text>
+        </TouchableOpacity > */}
+        <Text style={{color:'red'}}>{this.state.time}</Text>
+        <TimePicker
+          ref={ref => {
+            this.TimePicker = ref;
+          }}
+          onCancel={() => this.onCancel()}
+          onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
+        />
+
+
+
+              
+               {/* <TouchableOpacity 
+                style={{padding:5, borderBottomWidth:1, borderBottomColor:"#000000"}}
+                onPress={this.showDateTimePicker}>
+                 <Text>Date</Text>
+               </TouchableOpacity> */}
+
+               <View style={{justifyContent:'center', alignItems:'center'}}>
+             <Icon
+onPress={this.showDateTimePicker}               size={30}
+               name="md-calendar"
+              />
+              <Text>Date</Text>
+             </View>
+                  <Text style={{color:'red'}}>{this.state.isDateTimePickerVisible} </Text>
+
+               <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
+        />
             </View>
           </View>
 

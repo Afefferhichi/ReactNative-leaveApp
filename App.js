@@ -18,17 +18,17 @@ import Login from './src/Screens/Login';
 import ExitDetail from "./src/Screens/ExitDetail";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ApolloProvider } from '@apollo/react-hooks';
-import client from './src/config/createApolloClient'
+import client from './src/config/createApolloClient';
+// import CustomDatePickerAndroid from './src/Screens/CustomDatePickerAndroid'
+import TimePicker from './src/Screens/TimePicker'
 
 
 
 
 console.disableYellowBox = true;
 
+
 const AppStackNavigator = createStackNavigator({
-  Login: {
-    screen: Login
-  },
 
   Absence: {
     screen: Absence
@@ -44,13 +44,19 @@ const AppStackNavigator = createStackNavigator({
   },
   ExitDetail: {
     screen: ExitDetail
+  },
+  TimePicker:{
+    screen:TimePicker
   }
-}, {
-    initialRouteName: 'Login'
-  });
+},{
+  headerMode:'none'
+});
 const appDrawerNavigator = createDrawerNavigator(
+  
   {
+    
     Absence: {
+      
       screen: AppStackNavigator,
       navigationOptions: {
         darwerLable: "Telnet",
@@ -85,13 +91,25 @@ const appDrawerNavigator = createDrawerNavigator(
   }
 );
 
-const AppContainer = createAppContainer(appDrawerNavigator);
+const RootStack =createStackNavigator({
+  Login: {
+    screen: Login
+  },
+  appDrawerNavigator:{
+    screen: appDrawerNavigator
+  }
+},{
+  headerMode:'none'
+})
+const AppContainer = createAppContainer(RootStack);
+
 
 
 class App extends Component {
 
   render() {
     return (
+      
       <ApolloProvider client={client} >
         <AppContainer />
       </ApolloProvider>
