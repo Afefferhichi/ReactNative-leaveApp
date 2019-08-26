@@ -8,10 +8,10 @@ class Header extends React.Component {
         style={{
           height: 40,
           width: "100%",
-          backgroundColor: "#00bfff",
+          backgroundColor: "#5F8CA3",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 10,
+          borderRadius: 15,
             flexDirection:'row'
         }}
       >

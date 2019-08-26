@@ -60,13 +60,13 @@ class AbsenceConfirm extends Component {
                                 paddingVertical: 1, paddingHorizontal: 5, marginHorizontal: 5,
                                 borderRadius: 3
                             }}
-                            >Requesting</Text>
+                            >Pending</Text>
                             <Text>-></Text>
                             <Text style={{
                                 backgroundColor: '#3333aa', color: 'white',
                                 paddingVertical: 1, paddingHorizontal: 5, marginHorizontal: 5,
                                 borderRadius: 3
-                            }}>Pending</Text>
+                            }}>Approve</Text>
                         </View>
                     </View>
 

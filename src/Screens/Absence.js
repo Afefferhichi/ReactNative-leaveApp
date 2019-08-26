@@ -147,6 +147,7 @@ export default class Absence extends Component {
     }
   };
 
+
   render() {
     return (
       //<SafeAreaView
@@ -161,6 +162,7 @@ export default class Absence extends Component {
             alignItems: "center",
             flexDirection: "row",
             borderBottomWidth:1,
+            padding:10,
 
           }}
         >

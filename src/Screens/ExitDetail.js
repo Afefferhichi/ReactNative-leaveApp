@@ -7,6 +7,7 @@ import {
   Picker,
   ScrollView,
   TextInput,
+  TimePickerAndroid,
   TouchableOpacity
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -25,110 +26,76 @@ class ExitDetail extends Component {
     super(props);
     this.state = {
       isDateTimePickerVisible: false,
-      time:''
-      // date: "", date1: "", 
-      // selectedSpecialDay: '', 
-      // rangeStarted: false, startDate: null, endDate: null,
-      // markedDates: {
-      //   '2019-08-23': { selected: true, startingDay: true, color: 'green', textColor: 'white' },
-      //   '2019-08-24': { selected: true, endingDay: true, color: 'green', textColor: 'white' }
-      // }
+      time: null
     };
   }
 
-    // =-========== Related Range Calendar
-
-  //   selectDate = async (date) => {
-  //     alert(JSON.stringify(date));
-  //     if (!this.state.rangeStarted) {
-  //       // This means you clicked the start date
-  //       await this.setState({ startDate: date })
-  //     } else {
-  //       // This means that you clicked the end date
-  //       await this.setState({ endDate: date });
-  //     }
-  //     await this.setState({ rangeStarted: !this.state.rangeStarted });
-
-  //     let markedDates = {};
-  //     markedDates[this.state.startDate] = { selected: true, startingDay: true, color: 'green', textColor: 'white' };
-  //     markedDates[this.state.endDate] = { selected: true, endingDay: true, color: 'green', textColor: 'white' };
-  //     await this.setState({markedDates: markedDates})
-  //   };
-  //   // =-========== Related Range Calendar : end
-
-  // modal = (options = {}) => {
-
-  //   const overlayView2 = (
-  //     <Overlay.View
-  //       modal={true}
-  //       ref={v => this.overlayView2 = v}
-  //     >
-  //       <View style={{
-  //         width: '100%', height: '100%', backgroundColor: 'white',
-  //         flexDirection: 'column'
-  //       }}>
-  //         <View style={{ width: '100%', height: '100%', paddingBottom: 52 }}>
-  //           {/* <RangeDatepicker /> */}
-
-  //           <Calendar
-  //             // Collection of dates that have to be colored in a special way. Default = {}
-  //             markedDates={this.state.markedDates}
-  //             // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
-  //             markingType={'period'}
-  //             onDayPress={(day) => this.selectDate(day)}
-  //           />
-
-  //           <Button title="Close" onPress={() => this.overlayView2 && this.overlayView2.close()} />
-  //         </View>
-  //       </View>
-  //     </Overlay.View>
-  //   );
-
-  //   Overlay.show(overlayView2);
+  
 
 
 
+  onCancel() {
+    this.TimePicker.close();
+  }
+  onConfirm(hour, minute) {
+    this.TimePicker.close();
+  }
 
-// 
+  // 
 
-onCancel() {
-  this.TimePicker.close();
-}
-onConfirm(hour, minute) {
-  this.setState({ time: `${hour}:${minute}` });
-  this.TimePicker.close();
-}
+  showDatePicker = async () => {
+    this.setState({ isDatePickerVisible: true });
+  };
 
-// 
+  showTimePicker = async () => {
+    const original_time = this.state.time;
+    let original_hour, original_minute;
+    
+    if (original_time) {
+      original_hour = original_time.split(/\:/gi)[0];
+      original_minute = original_time.split(/\:/gi)[1];
+    } else {
+      const current_date = new Date();
+      original_hour = current_date.getHours();
+      original_minute = current_date.getMinutes(); 
+    }
+    try {
+      
+      const { action, hour, minute } = await TimePickerAndroid.open({
+        hour: parseInt(original_hour),
+        minute: parseInt(original_minute),
+        is24Hour: false, // Will display '2 PM'
+      });
+      if (action !== TimePickerAndroid.dismissedAction) {
+        await this.setState({ time: `${hour}:${minute}` });
+      }
+    } catch ({ code, message }) {
+      
+    }
+  };
 
-showDateTimePicker = () => {
-  this.setState({ isDateTimePickerVisible: true });
-};
+  hideDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: false });
+  };
 
-hideDateTimePicker = () => {
-  this.setState({ isDateTimePickerVisible: false });
-};
-
-handleDatePicked = date => {
-  console.log("A date has been picked: ", date);
-  this.hideDateTimePicker();
-};
+  handleDatePicked = date => {
+    console.log("A date has been picked: ", date);
+    this.hideDateTimePicker();
+  };
 
 
-// 
+  // 
 
 
   render() {
     return (
-      <View>
-       <View>
-       <Header HeaderText="Absence Detail"/>
-       </View>
+      <View style={{ backgroundColor: 'white' }}>
+
 
         <ScrollView style={{ height: "90%" }}>
           <View
             style={{
-              backgroundColor: "#87cefa",
+              backgroundColor: "white",
               padding: 10,
               margin: 10,
               flexDirection: "row"
@@ -140,23 +107,24 @@ handleDatePicked = date => {
                   "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
               }}
               style={{
-                width: 90,
-                height: 100,
+                width: 70,
+                height: 80,
                 backgroundColor: "#f2f2f2",
-                borderRadius: 15
+                borderRadius: 18
               }}
             />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ color: "white" }}>Nour </Text>
-              <Text style={{ color: "white" }}>Student</Text>
+            <View style={{ marginLeft: 10, alignSelf: "center" }}>
+              <Text style={{ color: "black", }}>Welcome Nour Al jinen </Text>
+              {/*<Text style={{ color: "white" }}>Student</Text>*/}
             </View>
           </View>
           <View
             style={{
-              backgroundColor: "#ffe4c4",
+              backgroundColor: "#C4D7ED",
               padding: 10,
               margin: 10,
-              flexDirection: "row"
+              flexDirection: "row",
+              borderRadius: 10,
             }}
           >
             <Icon name="md-cog" size={30} />
@@ -167,7 +135,7 @@ handleDatePicked = date => {
           <View
             style={{ borderTopWidth: 1, borderBottomWidth: 1, padding: 10 }}
           >
-            <Text style={{ fontWeight: "bold" }}>From - To</Text>
+            <Text style={{ fontWeight: "bold" }}>From </Text>
             <View
               style={{
                 flexDirection: "row",
@@ -175,68 +143,67 @@ handleDatePicked = date => {
                 justifyContent: "space-around"
               }}
             >
-              {/* <Icon name="md-calendar" style={{ width: "10%" }} size={30} />
-              <Button title="Calender" onPress={() => this.modal()} /> */}
-             <View style={{justifyContent:'center', alignItems:'center'}}>
-             <Icon
-               onPress={() => this.TimePicker.open()}
-               size={30}
-               name="md-time"
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Icon
+                  onPress={() => this.showTimePicker()}
+                  size={30}
+                  name="md-time"
+                />
+                <Text>Time</Text>
+              </View>
+              <Text style={{ color: '#183152' }}>{this.state.time}</Text>
+              <TimePicker
+                ref={ref => {
+                  this.TimePicker = ref;
+                }}
+                onCancel={() => this.onCancel()}
+                onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
               />
-              <Text>Time</Text>
-             </View>
-                {/* <TouchableOpacity
-          onPress={() => this.TimePicker.open()}
-          style={{padding:5, borderBottomWidth:1, borderBottomColor:"#000000"}}
-        >
-          <Text style={{color:'black'}}>Time</Text>
-        </TouchableOpacity > */}
-        <Text style={{color:'red'}}>{this.state.time}</Text>
-        <TimePicker
-          ref={ref => {
-            this.TimePicker = ref;
-          }}
-          onCancel={() => this.onCancel()}
-          onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
-        />
 
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Icon
+                  onPress={this.showDateTimePicker} size={30}
+                  name="md-calendar"
+                />
+                <Text>Date</Text>
+              </View>
+              <Text style={{ color: '#183152' }}>{this.state.isDateTimePickerVisible}</Text>
 
-
-              
-               {/* <TouchableOpacity 
-                style={{padding:5, borderBottomWidth:1, borderBottomColor:"#000000"}}
-                onPress={this.showDateTimePicker}>
-                 <Text>Date</Text>
-               </TouchableOpacity> */}
-
-               <View style={{justifyContent:'center', alignItems:'center'}}>
-             <Icon
-onPress={this.showDateTimePicker}               size={30}
-               name="md-calendar"
-              />
-              <Text>Date</Text>
-             </View>
-                  <Text style={{color:'red'}}>{this.state.isDateTimePickerVisible} </Text>
-
-               <DateTimePicker
-          isVisible={this.state.isDateTimePickerVisible}
-          onConfirm={this.handleDatePicked}
-          onCancel={this.hideDateTimePicker}
-        />
             </View>
           </View>
-
+          {/*  */}
+          <View
+            style={{ borderTopWidth: 0, borderBottomWidth: 1, padding: 10 }}
+          >
+            <Text style={{ fontWeight: "bold" }}>Recovery Date </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-around"
+              }}
+            >
+              <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: '-15%' }}>
+                <Icon
+                  onPress={this.showDateTimePicker} size={30}
+                  name="md-calendar"
+                />
+                <Text>Date</Text>
+              </View>
+              <Text style={{ color: 'red' }}>{this.state.isDateTimePickerVisible}</Text>
+            </View>
+          </View>
           {/*  */}
           <View
             style={{ borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10 }}
           >
-            <Text style={{ fontWeight: "bold" }}>Reason</Text>
+            <Text style={{ fontWeight: "bold" }}>Pattern</Text>
             <View style={{ alignItems: "center" }}>
               <Picker style={{ width: "80%", borderWidth: 1 }}
                 onValueChange={value => this.setState({ selectedSpecialDay: value })}
                 selectedValue={this.state.selectedSpecialDay}>
 
-                <Picker.Item label="Motifs" value="Motif" />
+
                 <Picker.Item label="30min" value="30min" />
                 <Picker.Item label="1h" value="1hr" />
                 <Picker.Item label="1h:30min" value="1h:30min" />
@@ -248,15 +215,8 @@ onPress={this.showDateTimePicker}               size={30}
           <View
             style={{ borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10 }}
           >
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontWeight: "bold" }}>Token:</Text>
-              <Text>0.00 Days</Text>
-            </View>
 
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontWeight: "bold" }}>Remaning:</Text>
-              <Text>44.00 Days</Text>
-            </View>
+
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontWeight: "bold" }}>Note:</Text>
               {/* <Text>0.00 Days</Text> */}
@@ -267,7 +227,7 @@ onPress={this.showDateTimePicker}               size={30}
                 width: "90%",
                 height: 80,
                 borderRadius: 10,
-                backgroundColor: "#f3f3f3",
+                backgroundColor: "#C4D7ED",
                 alignSelf: "center",
                 marginBottom: 5
               }}
@@ -280,13 +240,14 @@ onPress={this.showDateTimePicker}               size={30}
               alert("onShowUnderlay button !");
             }}
             style={{
-              width: "90%",
-              height: 45,
+              width: "70%",
+              height: 39,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "tomato",
-              marginTop: 5,
-              alignSelf: "center"
+              backgroundColor: "#183152",
+              marginVertical: 30,
+              alignSelf: "center",
+
             }}
           >
             <Text style={{ color: "white" }}>Send Request</Text>

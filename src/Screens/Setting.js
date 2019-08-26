@@ -7,31 +7,34 @@ class Setting extends Component {
   render() {
     return (
       <View>
+      <View
+        style={{
+          height: 58,
+          backgroundColor: "white",
+          borderWidth: 1,
+          borderColor: "white",
+          alignItems: "center",
+          flexDirection: "row",
+          borderBottomWidth:1,
+          padding:10,
+
+        }}
+      >
+        <Icon
+          name="md-menu"
+          size={30}
+          style={{ paddingLeft: 10, paddingRight: 20 }}
+          onPress={() => this.props.navigation.openDrawer()}
+        />
+        <Text style={{ fontSize: 20, fontWeight: "normal", color: "#696969" }}>
+          Settings
+        </Text>
+      </View>
+        
         <View
           style={{
-            height: 58,
-            backgroundColor: "#f3f3f3",
-            borderWidth: 1,
-            borderColor: "white",
-            alignItems: "center",
-            // marginLeft: 10
-            flexDirection: "row"
-          }}
-        >
-          <Icon
-            name="md-menu"
-            size={30}
-            style={{ paddingLeft: 10, paddingRight: 20 }}
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#000000" }}>
-            Settings
-          </Text>
-        </View>
-        <Header HeaderText="My Account" />
-        <View
-          style={{
-            backgroundColor: "tomato",
+            backgroundColor: "#C4D7ED",
+            borderRadius: 15,
             padding: 10,
             margin: 10,
             flexDirection: "row"
@@ -51,7 +54,7 @@ class Setting extends Component {
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={{ color: "white" }}>Nour Al jenin</Text>
-            <Text style={{ color: "white" }}>Nour Al jenin</Text>
+            <Text style={{ color: "white" }}>Tranee</Text>
           </View>
           {/* <TouchableOpacity
             style={{
@@ -81,6 +84,8 @@ class Setting extends Component {
               name="md-log-out"
               size={30}
               style={{ alignSelf: "flex-end" }}
+              onPress={() =>
+                this.props.navigation.navigate("Login")}
             />
             {/* <Text style={{ fontSize: 12 }}>LOG OUT</Text> */}
           </View>

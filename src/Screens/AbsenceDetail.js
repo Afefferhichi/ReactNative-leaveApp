@@ -1,4 +1,5 @@
-   
+
+    
 import React, { Component } from "react";
 import {
   View,
@@ -58,7 +59,7 @@ class AbsenceDetail extends Component {
         <ScrollView style={{ height: "90%" }}>
           <View
             style={{
-              backgroundColor: "#87cefa",
+              backgroundColor: "white",
               padding: 10,
               margin: 10,
               flexDirection: "row"
@@ -70,22 +71,24 @@ class AbsenceDetail extends Component {
                   "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
               }}
               style={{
-                width: 90,
-                height: 100,
+                width: 70,
+                height: 80,
                 backgroundColor: "#f2f2f2",
-                borderRadius: 15
+                borderRadius: 18
               }}
             />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ color: "white" }}>Nour Al jenin</Text>
-              <Text style={{ color: "white" }}>Student</Text>
+            <View style={{ marginLeft: 20, alignSelf:"center" }}>
+              <Text style={{ color: "black" }}> Welcome Nour Al jinen</Text>
+              {/*<Text style={{ color: "black" }}>tranee</Text>*/}
             </View>
           </View>
           <View
             style={{
-              backgroundColor: "#ffe4c4",
+              backgroundColor: "#C4D7ED",
               padding: 10,
               margin: 10,
+              borderRadius: 10,
+
               flexDirection: "row"
             }}
           >
@@ -163,7 +166,7 @@ class AbsenceDetail extends Component {
                 width: "90%",
                 height: 80,
                 borderRadius: 10,
-                backgroundColor: "#f3f3f3",
+                backgroundColor: "#ABC8E2",
                 alignSelf: "center",
                 marginBottom: 5
               }}
@@ -176,13 +179,14 @@ class AbsenceDetail extends Component {
             alert("onShowUnderlay button !");
           }}
           style={{
-            width: "90%",
-            height: 45,
+            width: "70%",
+            height: 39,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "tomato",
-            marginVertical: 5,
-            alignSelf: "center"
+            backgroundColor: "#183152",
+            marginVertical:30,
+            alignSelf: "center",
+            
           }}
         >
           <Text style={{ color: "white" }}>Send Request</Text>
@@ -193,3 +197,4 @@ class AbsenceDetail extends Component {
 }
 
 export default AbsenceDetail;
+

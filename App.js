@@ -60,21 +60,21 @@ const appDrawerNavigator = createDrawerNavigator(
       screen: AppStackNavigator,
       navigationOptions: {
         darwerLable: "Telnet",
-        drawerIcon: <Icon name="md-home" size={30} style={{ color: "black" }} />
+        drawerIcon: <Icon name="md-home" size={30} style={{ color: "white" }} />
       }
     },
     Setting: {
       screen: Setting,
       navigationOptions: {
         darwerLable: "Telnet",
-        drawerIcon: <Icon name="md-cog" size={30} style={{ color: "black" }} />
+        drawerIcon: <Icon name="md-cog" size={30} style={{ color: "white" }} />
       }
     },
     AbsenceTeamList: {
       screen: AbsenceTeamList,
       navigationOptions: {
         darwerLable: "Telnet",
-        drawerIcon: <Icon name="md-list" size={30} style={{ color: "black" }} />
+        drawerIcon: <Icon name="md-list" size={30} style={{ color: "white" }} />
       }
     }
   },
@@ -82,11 +82,11 @@ const appDrawerNavigator = createDrawerNavigator(
   {
     initialRouteName: 'Absence',
     // hideStatusBar: true,
-    drawerBackgroundColor: "#ddd",
-    overlayColor: "#6b52ae",
+    drawerBackgroundColor: "#5F8CA3",
+    overlayColor: "#8CC6D7",
     contentOptions: {
       activeTintColor: "#fff",
-      activeBackgroundColor: "blue"
+      activeBackgroundColor: "#91BACF"
     }
   }
 );

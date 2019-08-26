@@ -29,11 +29,9 @@ function AbsenceTeamItem({item}){
     <ProfileCard
           onPress={() => this.props.navigation.navigate("AbsenceHistory")}
     name={`${item.firstName} ${item.lastName}`}
-    status="Trainee"
-    source={{
-      uri:
-        "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-    }}
+    status="Employee"
+    source={require("../../assets/icons/Capture.png")}
+    
   />
   )
 }

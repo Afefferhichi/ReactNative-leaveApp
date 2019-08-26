@@ -5168,6 +5168,14 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-24h-timepicker@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-24h-timepicker/-/react-native-24h-timepicker-1.0.0.tgz#7ae9f8b241fc03fe6a8744ccc1832dba30643176"
+  integrity sha512-TVxpHENtwBUxkeG4ZZClhqOTauBJjevYVMkklGbre88TKOIm38lQ3fPSL5m5rV6GNaMBXsB1t35FyJfAaTHApA==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-raw-bottom-sheet "^1.0.0"
+
 react-native-animatable@^1.3.1:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.2.tgz#4783ee1a73dc98815aef234ce6b819f80bfe7d80"
@@ -5237,7 +5245,15 @@ react-native-halfday-calendar@^0.0.3:
   resolved "https://registry.yarnpkg.com/react-native-halfday-calendar/-/react-native-halfday-calendar-0.0.3.tgz#210351503bd44e33ee5daeccfe161ad378d0de06"
   integrity sha512-NPKc7zVfSGwQtZRERi9Fjpk3JszrX8zul3kRNL9n7LkA5YwAcpf6jeuOSxlmvERvGmGkvFxTWNemDDHNlnaubA==
 
-react-native-modal@^11.3.1:
+react-native-modal-datetime-picker@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-7.5.0.tgz#415f02e29eedf283035867ae65d2e609af738abf"
+  integrity sha512-TtFS27IGhtg89LnIYIa8FrpNWbQENLiAAdfJPDdskv5VqIKgZSA0toOFYaAMRLeMiB8Urpf2/sAf0rdooCzu+g==
+  dependencies:
+    prop-types "^15.7.2"
+    react-native-modal "^11.0.2"
+
+react-native-modal@^11.0.2, react-native-modal@^11.3.1:
   version "11.3.1"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.3.1.tgz#9f67728b36fdc299f97d3da1d131190a0337b89b"
   integrity sha512-3rRuXwvObknVijVNS8iamjMXWLjlb9xK90o+WtEcJ3C7HKuR2SOH578SoltIC6ZmVjO3vZwOApGVdSfR3LtPQg==
@@ -5252,6 +5268,13 @@ react-native-range-datepicker@^1.9.1:
   dependencies:
     moment "^2.17.1"
     prop-types "^15.6.0"
+
+react-native-raw-bottom-sheet@^1.0.0:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-raw-bottom-sheet/-/react-native-raw-bottom-sheet-1.1.4.tgz#1f79bd1bf5b74fec3c9a97b108a5a527d5157318"
+  integrity sha512-rn9KZuxWLE/EwxuoVzVBrzuTTcUZyhUfOOmAXScuGc90W6sf2NgM38vx6+SkZ0pqWgXmAKnUALmjE3kdNnxAFQ==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-native-reanimated@^1.2.0:
   version "1.2.0"
