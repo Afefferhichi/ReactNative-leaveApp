@@ -42,38 +42,38 @@ class ExitDetail extends Component {
 
   showDatePicker = async (dateNum) => {
     if (Platform.OS === 'ios') {
-      this.setState({ 
+      this.setState({
         dateNum: dateNum,
         isPickerVisible: true,
         iosDatetimePickerMode: 'date'
       });
     } else {
 
-
       let original_date = new Date();
-      
+
       if( this.state.date1 != null ) {
         original_date = new Date(this.state.date1);
       }
-      
+
       if( this.state.date2 != null ) {
         original_date = new Date(this.state.date2);
       }
 
-      alert(dateNum + ":" + original_date + ":" + this.state.date1 + "," + this.state.date2)
 
       try {
         const { action, year, month, day } = await DatePickerAndroid.open({
           date: original_date
         });
         if (action !== DatePickerAndroid.dismissedAction) {
-          
+
+
+
           if ( dateNum === 1 ) {
-            await this.setState({ date1: `${year}-${month+1}-${day}` });
+            await this.setState({ date1: `${year}/${month+1}/${day}` });
           }
-          
+
           if ( dateNum === 2 ) {
-            await this.setState({ date2: `${year}-${month+1}-${day}` });
+            await this.setState({ date2: `${year}/${month+1}/${day}` });
           }
 
         }
@@ -90,7 +90,7 @@ class ExitDetail extends Component {
 
     if(Platform.OS === 'ios') {
 
-      this.setState({ 
+      this.setState({
         isPickerVisible: true,
         iosDatetimePickerMode: 'time'
       });
@@ -99,17 +99,17 @@ class ExitDetail extends Component {
 
       const original_time = this.state.time;
       let original_hour, original_minute;
-      
+
       if (original_time) {
         original_hour = original_time.split(/\:/gi)[0];
         original_minute = original_time.split(/\:/gi)[1];
       } else {
         const current_date = new Date();
         original_hour = current_date.getHours();
-        original_minute = current_date.getMinutes(); 
+        original_minute = current_date.getMinutes();
       }
       try {
-        
+
         const { action, hour, minute } = await TimePickerAndroid.open({
           hour: parseInt(original_hour),
           minute: parseInt(original_minute),
@@ -119,7 +119,7 @@ class ExitDetail extends Component {
           await this.setState({ time: `${hour}:${minute}` });
         }
       } catch ({ code, message }) {
-        
+
       }
 
     }
@@ -127,13 +127,13 @@ class ExitDetail extends Component {
   };
 
   onConfirm(hour, minute) {
-    this.setState({ 
+    this.setState({
       isPickerVisible: false,
     });
   }
 
   onCancel(hour, minute) {
-    this.setState({ 
+    this.setState({
       isPickerVisible: false,
     });
   }
@@ -154,7 +154,7 @@ class ExitDetail extends Component {
     } else if (this.state.dateNum === 2) {
       date2 = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     }
-    
+
     this.setState({
       ...(this.state.dateNum === 1?{date1: date1} : {}),
       ...(this.state.dateNum === 2?{date2: date2} : {}),
@@ -168,7 +168,7 @@ class ExitDetail extends Component {
   }
 
 
-  // 
+  //
 
 
   render() {
@@ -254,7 +254,7 @@ class ExitDetail extends Component {
               </View>
               <Text style={{ color: '#183152' }}>{this.state.date1}</Text>
 
-              {Platform.OS === 'ios' && 
+              {Platform.OS === 'ios' &&
                 <DateTimePicker
                   date={this.state.iosDefaultDate}
                   mode={this.state.iosDatetimePickerMode}
