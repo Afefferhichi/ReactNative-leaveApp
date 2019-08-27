@@ -78,22 +78,22 @@ class ExitDetail extends Component {
 
     } else {
 
-      const original_time = this.state.time;
-      let original_hour, original_minute;
+      const selected_time = this.state.time;
+      let selected_hour, selected_minute;
 
-      if (original_time) {
-        original_hour = original_time.split(/\:/gi)[0];
-        original_minute = original_time.split(/\:/gi)[1];
+      if (selected_time) {
+        selected_hour = selected_time.split(/\:/gi)[0];
+        selected_minute = selected_time.split(/\:/gi)[1];
       } else {
         const current_date = new Date();
-        original_hour = current_date.getHours();
-        original_minute = current_date.getMinutes();
+        selected_hour = current_date.getHours();
+        selected_minute = current_date.getMinutes();
       }
       try {
 
         const {action, hour, minute} = await TimePickerAndroid.open({
-          hour: parseInt(original_hour),
-          minute: parseInt(original_minute),
+          hour: parseInt(selected_hour),
+          minute: parseInt(selected_minute),
           is24Hour: false, // Will display '2 PM'
         });
         if (action !== TimePickerAndroid.dismissedAction) {
@@ -156,7 +156,7 @@ class ExitDetail extends Component {
     return (
       <View style={{backgroundColor: 'white'}}>
 
-        <ScrollView style={{height: '90%'}}>
+        <ScrollView style={{height: '95%'}}>
           <View
             style={{
               backgroundColor: 'white',
@@ -217,16 +217,6 @@ class ExitDetail extends Component {
                 <Text>Time</Text>
               </View>
               <Text style={{color: '#183152'}}>{this.state.time}</Text>
-              {/*
-    <TimePicker
-    ref={ref => {
-      this.TimePicker = ref;
-    }}
-    onCancel={() => this.onCancel()}
-    onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
-    />
-    */}
-
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Icon
                   onPress={() => this.showDatePicker(1)} size={30}
