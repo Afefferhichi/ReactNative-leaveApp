@@ -40,20 +40,11 @@ class ExitDetail extends Component {
       });
     } else {
 
-      let original_date = new Date();
-
-      if (this.state.date1 != null) {
-        original_date = new Date(this.state.date1);
-      }
-
-      if (this.state.date2 != null) {
-        original_date = new Date(this.state.date2);
-      }
-
+      let selected_date = new Date((dateNum === 1 ? this.state.date1 : this.state.date2) || (+new Date));
 
       try {
         const {action, year, month, day} = await DatePickerAndroid.open({
-          date: original_date
+          date: selected_date
         });
         if (action !== DatePickerAndroid.dismissedAction) {
 
@@ -190,7 +181,7 @@ class ExitDetail extends Component {
               <Text style={{color: 'black',}}>Welcome Nour Al jinen </Text>
               {/*<Text style={{ color: "white" }}>Student</Text>*/}
             </View>
-            
+
           </View>
           <View
             style={{
