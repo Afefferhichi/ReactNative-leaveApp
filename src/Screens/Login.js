@@ -13,18 +13,18 @@ class Login extends Component {
         hasErrors:false,
        form:{
            email:{
-               value:"",
+               value:'',
                valid:false,
-               type:"textinput",
+               type:'textinput',
                rules:{
                     isRequired:true,
                     isEmail:true
                }
             },
             password:{
-                value:"",
+                value:'',
                 valid:false,
-                type:"textinput",
+                type:'textinput',
                 rules:{
                     isRequired:true,
                     minLength:6
@@ -37,7 +37,7 @@ class Login extends Component {
             <Text style={styles.errorLabel}>Oops, check your info.</Text>
 
         </View>
-        :null
+        : null
    )
 
   updateInput = (name, value) => {
@@ -49,15 +49,15 @@ class Login extends Component {
 
        //rules
        let rules = formCopy[name].rules;
-       let valid = validationRules[value, rules, formCopy]
+       let valid = validationRules[value, rules, formCopy];
 
-       console.log(valid)
+       console.log(valid);
 
        formCopy[name].valid = valid;
 
        this.setState({
            form:formCopy
-       })
+       });
    }
    submitUser = () => {
 
@@ -65,49 +65,49 @@ class Login extends Component {
 
     render(){
         const {navigate} = this.props.navigation;
-        return(
-            
-          <ImageBackground  style={{height:"100%", width:'100%', justifyContent:'center', alignItems:"center"}} source={require("../../assets/icons/img.png")}>
+        return (
+
+          <ImageBackground  style={{height:'100%', width:'100%', justifyContent:'center', alignItems:'center'}} source={require('../../assets/icons/img.png')}>
            <View>
-                <Text style={{color:"#183152", fontWeight:"bold", }}>Welcome TELNETTeam</Text>
+                <Text style={{color:'#183152', fontWeight:'bold', }}>Welcome TELNETTeam</Text>
             </View>
-           <Input 
-                placeholder="Entrer your username"
-                placeholderTextColor="#F6E8B1"
+           <Input
+                placeholder='Entrer your username'
+                placeholderTextColor='#F6E8B1'
                 type={this.state.form.email.type}
                 value={this.state.form.email.value}
-                autoCapitalize={"none"}
-                keyboardType={"email-address"}
-                onChangeText={ value => this.updateInput("email",value)}
+                autoCapitalize={'none'}
+                keyboardType={'email-address'}
+                onChangeText={ value => this.updateInput('email',value)}
            />
-          <Input 
-                placeholder="Entrer your password"
-                placeholderTextColor="#F6E8B1"
+          <Input
+                placeholder='Entrer your password'
+                placeholderTextColor='#F6E8B1'
                 type={this.state.form.password.type}
                 value={this.state.form.password.value}
-                onChangeText={ value => this.updateInput("password",value)}
+                onChangeText={ value => this.updateInput('password',value)}
                 secureTextEntry
            />
-            
+
             {this.formHasErrors()}
-            
+
             <View style={{marginTop:20}}>
 
                  <View style={styles.button}>
                          <Button
-                                 title="Login"
-                                 color="#183152"
+                                 title='Login'
+                                 color='#183152'
 
 
                                  onPress={() =>
-                                    this.props.navigation.navigate("Absence")}
+                                    this.props.navigation.navigate('Absence')}
 />
-              
+
           </View>
             </View>
 
-          </ImageBackground>  
-        )
+          </ImageBackground>
+        );
     }
     }
 
@@ -131,7 +131,7 @@ class Login extends Component {
     }
 
 
-     })
+     });
 
     export default Login;
 

@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-import DayDetail from "../common/DayDetail";
+import React, { Component } from 'react';
+import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import DayDetail from '../common/DayDetail';
 
 
 class AbsenceConfirm extends Component {
     static navigationOptions = ({navigation}) => {
         return {
             title: navigation.getParam('mode')
-        }
+        };
     };
     constructor(props) {
         super();
@@ -35,12 +35,12 @@ class AbsenceConfirm extends Component {
                     <Image
                         source={{
                             uri:
-                                "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                                'https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'
                         }}
                         style={{
                             width: 50,
                             height: 50,
-                            backgroundColor: "#f2f2f2",
+                            backgroundColor: '#f2f2f2',
                             borderRadius: 50
                         }}
                     />
@@ -71,7 +71,7 @@ class AbsenceConfirm extends Component {
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Icon name="md-clock" size={14} />
+                        <Icon name='md-clock' size={14} />
                         <Text style={{ fontSize: 11, marginLeft: 5 }}>199 days ago</Text>
                     </View>
                 </View>
@@ -90,12 +90,12 @@ class AbsenceConfirm extends Component {
                         <Image
                             source={{
                                 uri:
-                                "https://s7img.ftdi.com/is/image/ProvideCommerce/PF_19_R299_LAY_SHP_V2?$proflowers-tile-wide-mv-new$"
+                                'https://s7img.ftdi.com/is/image/ProvideCommerce/PF_19_R299_LAY_SHP_V2?$proflowers-tile-wide-mv-new$'
                             }}
                             style={{
                                 width: 50,
                                 height: 50,
-                                backgroundColor: "#f2f2f2",
+                                backgroundColor: '#f2f2f2',
                                 borderRadius: 50
                             }}
                         />
@@ -125,17 +125,17 @@ class AbsenceConfirm extends Component {
                 }}>
                     <TouchableOpacity
                         onPress={()=>this.onConfirm()}
-                        style={{ 
+                        style={{
                             width: '50%', height: 33,
-                            backgroundColor: '#fff', 
+                            backgroundColor: '#fff',
                             alignItems: 'center', borderColor: '#aa0000', borderWidth: 1, borderRadius: 1 }}>
                         <Text style={{height: 33, color: '#aa0000', lineHeight: 28}}>Cancel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={()=>this.onCancel()}
-                        style={{ 
+                        style={{
                             width: '50%', height: 33,
-                            backgroundColor: '#aa0000', 
+                            backgroundColor: '#aa0000',
                             alignItems: 'center', borderColor: '#aa0000', borderWidth: 1, borderRadius: 1 }}>
                         <Text style={{height: 33, color: '#eee', lineHeight: 28}}>OK</Text>
                     </TouchableOpacity>

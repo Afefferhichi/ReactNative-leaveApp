@@ -1,16 +1,16 @@
-import React from "react";
-import { View, Text } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons"
+import React from 'react';
+import { View, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 class Header extends React.Component {
   render() {
     return (
       <View
         style={{
           height: 40,
-          width: "100%",
-          backgroundColor: "#5F8CA3",
-          alignItems: "center",
-          justifyContent: "center",
+          width: '100%',
+          backgroundColor: '#5F8CA3',
+          alignItems: 'center',
+          justifyContent: 'center',
           borderRadius: 15,
             flexDirection:'row'
         }}

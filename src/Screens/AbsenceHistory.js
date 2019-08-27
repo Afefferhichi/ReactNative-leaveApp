@@ -1,40 +1,37 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import Header from '../common/Header';
-import Icon from "react-native-vector-icons/Ionicons"
-import HistoryCard from '../common/HistoryCard'
+import Icon from 'react-native-vector-icons/Ionicons';
+import HistoryCard from '../common/HistoryCard';
 import { ScrollView } from 'react-native-gesture-handler';
 
 class AbsenceHistory extends React.Component{
    render(){
-       return(
+       return (
            <View>
-               <Header HeaderText="History"/>
+               <Header HeaderText='History'/>
                <View
         style={{
-          backgroundColor: "#f2f2f2",
+          backgroundColor: '#f2f2f2',
           padding: 10,
           //   margin: 10,
-          flexDirection: "row",
-          borderColor: "#ddd",
+          flexDirection: 'row',
+          borderColor: '#ddd',
           borderWidth: 1
         }}
       >
         <Image
-         source={require("../../assets/icons/img.png")}
+         source={require('../../assets/icons/img.png')}
           style={{
             width: 60,
             height: 60,
-            backgroundColor: "#f2f2f2",
+            backgroundColor: '#f2f2f2',
             borderRadius: 3
           }}
         />
-        <View style={{ marginLeft: 10, width:"60%" }}>
-        </View>
-        <View style={{alignItems:"center", alignSelf:'center'}}>
-       
-        </View>
-        
+        <View style={{ marginLeft: 10, width:'60%' }} />
+        <View style={{alignItems:'center', alignSelf:'center'}} />
+
     </View>
     <View>
         <View style={{height:40, width:'100%', borderColor:'#ddd'}}>
@@ -48,10 +45,10 @@ class AbsenceHistory extends React.Component{
             </View>
         </View>
     </View>
-   
-    
+
+
            </View>
-       )
+       );
    }
 }
 export default AbsenceHistory;

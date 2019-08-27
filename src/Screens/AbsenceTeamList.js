@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { View, Text, Image, TextInput,ActivityIndicator, FlatList } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-import Header from "../common/Header";
-import ProfileCard from "../common/ProfileCard";
-import { ScrollView, gestureHandlerRootHOC } from "react-native-gesture-handler";
+import React, { Component } from 'react';
+import { View, Text, Image, TextInput,ActivityIndicator, FlatList } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Header from '../common/Header';
+import ProfileCard from '../common/ProfileCard';
+import { ScrollView, gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 /*
 function AbsenceTeamList(){
   const { loading, error, data } = useQuery(gql`
@@ -27,13 +27,13 @@ console.log(loading);
 function AbsenceTeamItem({item}){
   return (
     <ProfileCard
-          onPress={() => this.props.navigation.navigate("AbsenceHistory")}
+          onPress={() => this.props.navigation.navigate('AbsenceHistory')}
     name={`${item.firstName} ${item.lastName}`}
-    status="Employee"
-    source={require("../../assets/icons/Capture.png")}
-    
+    status='Employee'
+    source={require('../../assets/icons/Capture.png')}
+
   />
-  )
+  );
 }
 
 function AbsenceTeamList() {
@@ -53,9 +53,9 @@ function AbsenceTeamList() {
       item={item}
     />
   );
-    console.log(error)
-  if (loading) return <ActivityIndicator />;
-  if (error) return <Text>Error </Text>;
+    console.log(error);
+  if (loading) {return <ActivityIndicator />;}
+  if (error) {return <Text>Error </Text>;}
 
 
   return (
@@ -63,37 +63,37 @@ function AbsenceTeamList() {
         <View
           style={{
             height: 58,
-            backgroundColor: "white",
+            backgroundColor: 'white',
             borderWidth: 1,
-            borderColor: "#f3f3f3",
-            alignItems: "center",
-            flexDirection: "row"
+            borderColor: '#f3f3f3',
+            alignItems: 'center',
+            flexDirection: 'row'
           }}
         >
           <Icon
-            name="md-menu"
+            name='md-menu'
             size={30}
             style={{ paddingLeft: 10, paddingRight: 20 }}
             onPress={() => this.props.navigation.openDrawer()}
           />
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#000000"  }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000000'  }}>
                            Team List
           </Text>
         </View>
         <TextInput
           style={{
-            backgroundColor: "white",
-            width: "90%",
-            alignSelf: "center",
-            borderColor: "#f3f3f3",
+            backgroundColor: 'white',
+            width: '90%',
+            alignSelf: 'center',
+            borderColor: '#f3f3f3',
             borderWidth: 1,
             marginTop: 5,
             marginBottom: 5,
             borderRadius: 20,
             height: 40,
-            justifyContent: "center"
+            justifyContent: 'center'
           }}
-          placeholder="Search here"
+          placeholder='Search here'
         />
         <FlatList
             data={data.employees}
@@ -102,7 +102,7 @@ function AbsenceTeamList() {
             renderItem={this._renderItem}
           />
       </View>
-  )
+  );
 }
 
 
@@ -204,4 +204,4 @@ function AbsenceTeamList() {
    }
  }*/
 //export default AbsenceTeamList;
-export default AbsenceTeamList
+export default AbsenceTeamList;

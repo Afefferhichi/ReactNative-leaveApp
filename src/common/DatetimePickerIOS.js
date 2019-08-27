@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { DatePickerIOS, Text, TouchableOpacity, View } from "react-native";
-import { ActionSheet } from "teaset";
+import React, { Component } from 'react';
+import { DatePickerIOS, Text, TouchableOpacity, View } from 'react-native';
+import { ActionSheet } from 'teaset';
 
 class DatetimePickerIOS extends Component {
   constructor(props) {
@@ -35,14 +35,14 @@ class DatetimePickerIOS extends Component {
     return (
       <View
         style={{
-          position: "absolute",
+          position: 'absolute',
           zIndex: 10000,
-          backgroundColor: "white",
+          backgroundColor: 'white',
           flex: 1,
-          height: "100%",
-          width: "100%",
-          flexDirection: "column",
-          justifyContent: "center"
+          height: '100%',
+          width: '100%',
+          flexDirection: 'column',
+          justifyContent: 'center'
         }}
       >
         <DatePickerIOS
@@ -54,31 +54,31 @@ class DatetimePickerIOS extends Component {
 
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             bottom: 0,
             height: 35,
-            width: "100%",
-            flexDirection: "row"
+            width: '100%',
+            flexDirection: 'row'
           }}
         >
           <TouchableOpacity
             onPress={() => this.confirm()}
             style={{
-              width: "50%",
+              width: '50%',
               height: 35,
-              alignItems: "center",
-              backgroundColor: "green"
+              alignItems: 'center',
+              backgroundColor: 'green'
             }}
           >
-            <Text style={{ color: "white", lineHeight: 33 }}>OK</Text>
+            <Text style={{ color: 'white', lineHeight: 33 }}>OK</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.onCancel && this.props.onCancel()}
             style={{
-              width: "50%",
+              width: '50%',
               height: 35,
-              alignItems: "center",
-              borderColor: "green",
+              alignItems: 'center',
+              borderColor: 'green',
               borderWidth: 1
             }}
           >

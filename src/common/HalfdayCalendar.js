@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { CalendarList } from "react-native-calendars";
-import { ActionSheet } from "teaset";
+import React, { Component } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { CalendarList } from 'react-native-calendars';
+import { ActionSheet } from 'teaset';
 
-const SELECTED_COLOR = "lightgreen";
+const SELECTED_COLOR = 'lightgreen';
 const CALENDAR_WIDTH = 360;
 
 const BEFORE_NOON = 1;
@@ -60,27 +60,27 @@ class HalfdayCalendar extends Component {
 
     // In case when the user chose the both of startDate and endDate
     if (this.state.startDate && this.state.endDate) {
-      this.selectDateWithNoon(day, "NONE");
+      this.selectDateWithNoon(day, 'NONE');
     } else {
       // We need to show the popover to ask the user select "All day, Before Noon, Afternoon"
       ActionSheet.hide();
       ActionSheet.show(
         [
           {
-            title: "All day",
+            title: 'All day',
             onPress: () => this.selectDateWithNoon(day, ALL_DAY)
           },
           {
-            title: "Before noon",
+            title: 'Before noon',
             onPress: () => this.selectDateWithNoon(day, BEFORE_NOON)
           },
           {
-            title: "After noon",
+            title: 'After noon',
             onPress: () => this.selectDateWithNoon(day, AFTER_NOON)
           }
         ],
         {
-          title: "Cancel"
+          title: 'Cancel'
         }
       );
     }
@@ -107,7 +107,7 @@ class HalfdayCalendar extends Component {
         endingDay: true,
         selected: true,
         color: SELECTED_COLOR,
-        textColor: "black",
+        textColor: 'black',
         customStyles: this.getCustomStyles(true, true, noon !== ALL_DAY, noon)
       };
     } else if (this.state.endDate === null) {
@@ -197,7 +197,7 @@ class HalfdayCalendar extends Component {
         customStyles: customStyles
       };
       index++;
-      if (_date >= date2) break;
+      if (_date >= date2) {break;}
     }
     return markedDates;
   };
@@ -214,30 +214,30 @@ class HalfdayCalendar extends Component {
       borderBottomWidth: 32,
       borderBottomColor: SELECTED_COLOR,
       borderLeftWidth: 32,
-      borderLeftColor: "white"
+      borderLeftColor: 'white'
     };
     const triangleLeftBottom = {
       borderTopWidth: 32,
       borderTopColor: SELECTED_COLOR,
       borderRightWidth: 32,
-      borderRightColor: "white"
+      borderRightColor: 'white'
     };
     return {
       container: {
         backgroundColor: SELECTED_COLOR,
         height: 32,
-        width: !isStart && !isEnd ? "150%" : 32,
-        ...(isWideLeft ? { width: "150%", left: -19 } : {}),
+        width: !isStart && !isEnd ? '150%' : 32,
+        ...(isWideLeft ? { width: '150%', left: -19 } : {}),
         zIndex: isStart ? 3 : isEnd ? 2 : 1,
         alignItems: isStart
           ? !isHalf
-            ? "center"
-            : "flex-start"
+            ? 'center'
+            : 'flex-start'
           : isEnd
           ? !isHalf
-            ? "center"
-            : "flex-end"
-          : "center",
+            ? 'center'
+            : 'flex-end'
+          : 'center',
         borderRadius: 0,
         borderTopLeftRadius: isStart ? (isHalf ? 0 : 30) : 0,
         borderBottomLeftRadius: isStart ? (isHalf ? 0 : 30) : 0,
@@ -247,45 +247,45 @@ class HalfdayCalendar extends Component {
       text: isStart
         ? isHalf
           ? {
-              position: "absolute",
+              position: 'absolute',
               top: -4,
               left: 0,
               lineHeight: 32,
-              textAlign: "center",
+              textAlign: 'center',
               width: 0,
               height: 0,
               ...(isBeforeNoon ? triangleLeftBottom : triangleRightTop)
             }
           : {
-              position: "absolute",
+              position: 'absolute',
               top: -5,
               lineHeight: 32,
-              textAlign: "center"
+              textAlign: 'center'
             }
         : isEnd
         ? isHalf
           ? {
-              position: "absolute",
+              position: 'absolute',
               top: -4,
               lineHeight: 32,
-              textAlign: "center",
+              textAlign: 'center',
               width: 0,
               height: 0,
               ...triangleLeftBottom
             }
           : {
-              position: "absolute",
+              position: 'absolute',
               top: -5,
               ...(isWideLeft ? {left: 45} : {}),
               lineHeight: 32,
-              textAlign: "center"
+              textAlign: 'center'
             }
         : {
-            position: "absolute",
+            position: 'absolute',
             top: -5,
             lineHeight: 32,
             height: 34,
-            textAlign: "center"
+            textAlign: 'center'
           }
     };
   };
@@ -306,14 +306,14 @@ class HalfdayCalendar extends Component {
     return (
       <View
         style={{
-          position: "absolute",
+          position: 'absolute',
           zIndex: 10000,
-          backgroundColor: "white",
+          backgroundColor: 'white',
           flex: 1,
-          height: "100%",
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "center"
+          height: '100%',
+          width: '100%',
+          flexDirection: 'row',
+          justifyContent: 'center'
         }}
       >
         <CalendarList
@@ -330,13 +330,13 @@ class HalfdayCalendar extends Component {
           // Enable or disable vertical scroll indicator. Default = false
           showScrollIndicator={true}
           markedDates={this.state.markedDates}
-          markingType={"custom"}
+          markingType={'custom'}
           theme={{
-            "stylesheet.day.custom": {
+            'stylesheet.day.custom': {
               base: {
-                overflow: "hidden",
+                overflow: 'hidden',
                 height: 34,
-                alignItems: "center",
+                alignItems: 'center',
                 width: 36
               }
             }
@@ -345,31 +345,31 @@ class HalfdayCalendar extends Component {
 
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             bottom: 0,
             height: 35,
-            width: "100%",
-            flexDirection: "row"
+            width: '100%',
+            flexDirection: 'row'
           }}
         >
           <TouchableOpacity
             onPress={() => this.confirm()}
             style={{
-              width: "50%",
+              width: '50%',
               height: 35,
-              alignItems: "center",
-              backgroundColor: "green"
+              alignItems: 'center',
+              backgroundColor: 'green'
             }}
           >
-            <Text style={{ color: "white", lineHeight: 33 }}>OK</Text>
+            <Text style={{ color: 'white', lineHeight: 33 }}>OK</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.onCancel && this.props.onCancel()}
             style={{
-              width: "50%",
+              width: '50%',
               height: 35,
-              alignItems: "center",
-              borderColor: "green",
+              alignItems: 'center',
+              borderColor: 'green',
               borderWidth: 1
             }}
           >
