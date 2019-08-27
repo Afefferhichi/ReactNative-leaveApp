@@ -7,6 +7,7 @@ import {
   Picker,
   ScrollView,
   TextInput,
+  DatePickerAndroid,
   TimePickerAndroid,
   TouchableOpacity,
   Platform
@@ -49,25 +50,35 @@ class ExitDetail extends Component {
     } else {
 
 
-      const original_date = dateNum === 1 ? this.state.date1 : this.state.date2;
+      let original_date = new Date();
       
+      if( this.state.date1 != null ) {
+        original_date = new Date(this.state.date1);
+      }
+      
+      if( this.state.date2 != null ) {
+        original_date = new Date(this.state.date2);
+      }
+
+      alert(dateNum + ":" + original_date + ":" + this.state.date1 + "," + this.state.date2)
+
       try {
         const { action, year, month, day } = await DatePickerAndroid.open({
           date: original_date
         });
-        if (action !== TimePickerAndroid.dismissedAction) {
+        if (action !== DatePickerAndroid.dismissedAction) {
           
           if ( dateNum === 1 ) {
-            await this.setState({ date1: `${year}-${month}-${day}` });
+            await this.setState({ date1: `${year}-${month+1}-${day}` });
           }
           
           if ( dateNum === 2 ) {
-            await this.setState({ date2: `${year}-${month}-${day}` });
+            await this.setState({ date2: `${year}-${month+1}-${day}` });
           }
 
         }
       } catch ({ code, message }) {
-        
+        // alert(message)
       }
 
 
