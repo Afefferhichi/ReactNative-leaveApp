@@ -1,1 +1,1 @@
-export { default as withEmployees } from './Employes/GetEmployees';
+export {default as withEmployees} from './Employes/GetEmployees';

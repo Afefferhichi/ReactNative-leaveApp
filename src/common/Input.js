@@ -1,34 +1,34 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 
 const input = (props) => {
   let template = null;
 
-switch (props.type){
+  switch (props.type) {
     case 'textinput':
-        template =
+      template =
         <TextInput
-        {...props}
-        style={[styles.input,props.overrideStyle]}
-            />;
-    break;
+          {...props}
+          style={[styles.input, props.overrideStyle]}
+        />;
+      break;
     default:
-        return template;
-}
- return template;
+      return template;
+  }
+  return template;
 };
 const styles = StyleSheet.create({
 
-    input: {
-        width:'80%',
-        borderBottomWidth:1,
-        borderBottomColor:'#F6E8B1',
-        fontSize:16,
-        padding:5,
-        marginTop:10,
-        alignSelf:'auto'
+  input: {
+    width: '80%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F6E8B1',
+    fontSize: 16,
+    padding: 5,
+    marginTop: 10,
+    alignSelf: 'auto'
 
-    }
+  }
 });
 export default input;

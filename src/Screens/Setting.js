@@ -1,35 +1,34 @@
-import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, {Component} from 'react';
+import {Image, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Header from '../common/Header';
 
 class Setting extends Component {
   render() {
     return (
       <View>
-      <View
-        style={{
-          height: 58,
-          backgroundColor: 'white',
-          borderWidth: 1,
-          borderColor: 'white',
-          alignItems: 'center',
-          flexDirection: 'row',
-          borderBottomWidth:1,
-          padding:10,
+        <View
+          style={{
+            height: 58,
+            backgroundColor: 'white',
+            borderWidth: 1,
+            borderColor: 'white',
+            alignItems: 'center',
+            flexDirection: 'row',
+            borderBottomWidth: 1,
+            padding: 10,
 
-        }}
-      >
-        <Icon
-          name='md-menu'
-          size={30}
-          style={{ paddingLeft: 10, paddingRight: 20 }}
-          onPress={() => this.props.navigation.openDrawer()}
-        />
-        <Text style={{ fontSize: 20, fontWeight: 'normal', color: '#696969' }}>
-          Settings
-        </Text>
-      </View>
+          }}
+        >
+          <Icon
+            name='md-menu'
+            size={30}
+            style={{paddingLeft: 10, paddingRight: 20}}
+            onPress={() => this.props.navigation.openDrawer()}
+          />
+          <Text style={{fontSize: 20, fontWeight: 'normal', color: '#696969'}}>
+            Settings
+          </Text>
+        </View>
 
         <View
           style={{
@@ -52,26 +51,26 @@ class Setting extends Component {
               borderRadius: 15
             }}
           />
-          <View style={{ marginLeft: 10 }}>
-            <Text style={{ color: 'white' }}>Nour Al jenin</Text>
-            <Text style={{ color: 'white' }}>Tranee</Text>
+          <View style={{marginLeft: 10}}>
+            <Text style={{color: 'white'}}>Nour Al jenin</Text>
+            <Text style={{color: 'white'}}>Tranee</Text>
           </View>
           {/* <TouchableOpacity
-            style={{
-              width: "0%",
-              height: 45,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "white",
-              marginTop: 5,
-              alignSelf: "center",
-              marginLeft: 10,
-              marginTop: 40
-            }}
-            onPress={() => this.props.navigation.navigate("Holiday")}
-          >
-            <Text style={{ color: "tomato" }}>Daily Detail</Text>
-          </TouchableOpacity> */}
+    style={{
+    width: "0%",
+    height: 45,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: 5,
+    alignSelf: "center",
+    marginLeft: 10,
+    marginTop: 40
+    }}
+    onPress={() => this.props.navigation.navigate("Holiday")}
+    >
+    <Text style={{ color: "tomato" }}>Daily Detail</Text>
+    </TouchableOpacity> */}
           <View
             style={{
               alignSelf: 'flex-end',
@@ -83,7 +82,7 @@ class Setting extends Component {
             <Icon
               name='md-log-out'
               size={30}
-              style={{ alignSelf: 'flex-end' }}
+              style={{alignSelf: 'flex-end'}}
               onPress={() =>
                 this.props.navigation.navigate('Login')}
             />

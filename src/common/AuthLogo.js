@@ -1,24 +1,24 @@
 import React from 'react';
-import { View, Image} from 'react-native';
+import {Image, View} from 'react-native';
 
 import Landingimage from '../../assets/icons/logo';
 
-const  LogoComponent = () => (
+const LogoComponent = () => (
 
-    <View>
+  <View>
 
-       <Image
-          source={Landingimage}
-          resizeMode={'center'}
-          style={{
-             width:200,
-             height:90,
+    <Image
+      source={Landingimage}
+      resizeMode={'center'}
+      style={{
+        width: 200,
+        height: 90,
 
 
-          }}
- />
+      }}
+    />
 
-    </View>
+  </View>
 
 
 );

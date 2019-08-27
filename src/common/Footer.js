@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, {Component} from 'react';
+import {Button, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class Footer extends Component {
@@ -14,8 +14,8 @@ class Footer extends Component {
           flexDirection: 'row'
         }}
       >
-        <View style={{ width: '25%' }}>
-          <Button title='Open' onPress={this.props.onPress} />
+        <View style={{width: '25%'}}>
+          <Button title='Open' onPress={this.props.onPress}/>
         </View>
         <View
           style={{
@@ -25,7 +25,7 @@ class Footer extends Component {
             marginLeft: 10
           }}
         >
-          <Icon name='md-menu' size={29} style={{ marginLeft: 10 }} />
+          <Icon name='md-menu' size={29} style={{marginLeft: 10}}/>
         </View>
       </View>
     );

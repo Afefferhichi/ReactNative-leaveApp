@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { DatePickerIOS, Text, TouchableOpacity, View } from 'react-native';
-import { ActionSheet } from 'teaset';
+import React, {Component} from 'react';
+import {DatePickerIOS, Text, TouchableOpacity, View} from 'react-native';
 
 class DatetimePickerIOS extends Component {
   constructor(props) {
@@ -15,14 +14,14 @@ class DatetimePickerIOS extends Component {
   }
 
   confirm = () => {
-    const { startDate, endDate, startDateIsHalf, endDateIsHalf } = this.state;
+    const {startDate, endDate, startDateIsHalf, endDateIsHalf} = this.state;
     this.props.onConfirm &&
-      this.props.onConfirm(
-        startDate,
-        endDate || startDate,
-        startDateIsHalf,
-        endDateIsHalf || startDateIsHalf
-      );
+    this.props.onConfirm(
+      startDate,
+      endDate || startDate,
+      startDateIsHalf,
+      endDateIsHalf || startDateIsHalf
+    );
   };
 
   setDate(newDate) {
@@ -70,7 +69,7 @@ class DatetimePickerIOS extends Component {
               backgroundColor: 'green'
             }}
           >
-            <Text style={{ color: 'white', lineHeight: 33 }}>OK</Text>
+            <Text style={{color: 'white', lineHeight: 33}}>OK</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.onCancel && this.props.onCancel()}
@@ -82,7 +81,7 @@ class DatetimePickerIOS extends Component {
               borderWidth: 1
             }}
           >
-            <Text style={{ lineHeight: 33 }}>Cancel</Text>
+            <Text style={{lineHeight: 33}}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>

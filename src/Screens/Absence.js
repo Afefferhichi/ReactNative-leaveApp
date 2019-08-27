@@ -1,15 +1,6 @@
-import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  LayoutAnimation,
-  Platform,
-  UIManager,
-  ScrollView,
-  TouchableOpacity
-} from 'react-native';
-import { ActionSheet } from 'teaset';
+import React, {Component} from 'react';
+import {LayoutAnimation, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, UIManager, View} from 'react-native';
+import {ActionSheet} from 'teaset';
 import Header from '../common/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AbsenceCard from '../common/AbsenceCard';
@@ -18,7 +9,7 @@ export default class Absence extends Component {
   constructor() {
     super();
 
-    this.state = { expanded: false, expanded2: false };
+    this.state = {expanded: false, expanded2: false};
 
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -26,30 +17,26 @@ export default class Absence extends Component {
   }
 
 
-
-
   // ============== Confirmation ===============
   showConfirmationButtons = () => {
     ActionSheet.hide();
     let items = [
-      { title: 'Approve', onPress: () => this.props.navigation.navigate('AbsenceConfirm', { mode: 'APPROVE' }) },
-      { title: 'Reject', onPress: () => this.props.navigation.navigate('AbsenceConfirm', { mode: 'REJECT' }) }
+      {title: 'Approve', onPress: () => this.props.navigation.navigate('AbsenceConfirm', {mode: 'APPROVE'})},
+      {title: 'Reject', onPress: () => this.props.navigation.navigate('AbsenceConfirm', {mode: 'REJECT'})}
     ];
-    let cancelItem = { title: 'Cancel' };
+    let cancelItem = {title: 'Cancel'};
     ActionSheet.show(items, cancelItem);
   };
   // ============== Confirmation:End ===============
 
 
-
-
   changeLayout = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({ expanded: !this.state.expanded });
+    this.setState({expanded: !this.state.expanded});
   };
   changeLayout2 = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({ expanded2: !this.state.expanded2 });
+    this.setState({expanded2: !this.state.expanded2});
   };
   onButtonShow = () => {
     if (this.state.expanded === false) {
@@ -152,7 +139,7 @@ export default class Absence extends Component {
     return (
       //<SafeAreaView
       //StatusBar barStyle="light-content" backgroundColor="#6a51ae">
-        <View>
+      <View>
         <View
           style={{
             height: 58,
@@ -161,28 +148,28 @@ export default class Absence extends Component {
             borderColor: 'white',
             alignItems: 'center',
             flexDirection: 'row',
-            borderBottomWidth:1,
-            padding:10,
+            borderBottomWidth: 1,
+            padding: 10,
 
           }}
         >
           <Icon
             name='md-menu'
             size={30}
-            style={{ paddingLeft: 10, paddingRight: 20 }}
+            style={{paddingLeft: 10, paddingRight: 20}}
             onPress={() => this.props.navigation.openDrawer()}
           />
-          <Text style={{ fontSize: 20, fontWeight: 'normal', color: '#696969' }}>
+          <Text style={{fontSize: 20, fontWeight: 'normal', color: '#696969'}}>
             Activity Feed
           </Text>
         </View>
-        <ScrollView style={{ height: '90%' }}>
+        <ScrollView style={{height: '90%'}}>
           <View style={styles.container}>
             <View style={styles.container}>
-              <Header HeaderText='Leave Request' />
-              <View style={{ flexDirection: 'row' }}>
-                <View style={{ width: '30%' }}>
-                  <Icon name='md-calendar' size={29} style={{ marginLeft: 30 }} />
+              <Header HeaderText='Leave Request'/>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{width: '30%'}}>
+                  <Icon name='md-calendar' size={29} style={{marginLeft: 30}}/>
                 </View>
                 <View
                   style={{
@@ -195,8 +182,8 @@ export default class Absence extends Component {
                     marginTop: 5
                   }}
                 >
-                  <AbsenceCard />
-                  <View style={{ marginLeft: 150 }}>{this.onButtonShow()}</View>
+                  <AbsenceCard/>
+                  <View style={{marginLeft: 150}}>{this.onButtonShow()}</View>
                   {/* {this.onButtonShow()} */}
 
 
@@ -217,7 +204,7 @@ export default class Absence extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>From: </Text>
+                        <Text style={{fontWeight: 'bold'}}>From: </Text>
                         <Text>12/01/2018</Text>
                       </View>
                       <View
@@ -227,7 +214,7 @@ export default class Absence extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>To: </Text>
+                        <Text style={{fontWeight: 'bold'}}>To: </Text>
                         <Text>12/01/2018</Text>
                       </View>
                       <View
@@ -237,7 +224,7 @@ export default class Absence extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
+                        <Text style={{fontWeight: 'bold'}}>Absence Type: </Text>
                         <Text>Holliday</Text>
                       </View>
                       <View
@@ -247,7 +234,7 @@ export default class Absence extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
+                        <Text style={{fontWeight: 'bold'}}>Reason: </Text>
                         <Text>20.0 days</Text>
                       </View>
                       <View
@@ -257,7 +244,7 @@ export default class Absence extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Token: </Text>
+                        <Text style={{fontWeight: 'bold'}}>Token: </Text>
                         <Text>2.00 Days</Text>
                       </View>
                       <View
@@ -267,7 +254,7 @@ export default class Absence extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Remaning: </Text>
+                        <Text style={{fontWeight: 'bold'}}>Remaning: </Text>
                         <Text>18.00 Days</Text>
                       </View>
                       {/*  */}
@@ -310,7 +297,7 @@ export default class Absence extends Component {
                         this.props.navigation.navigate('AbsenceDetail')
                       }
                     >
-                      <Text style={{ color: 'white' }}>OPEN</Text>
+                      <Text style={{color: 'white'}}>OPEN</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={{
@@ -326,7 +313,7 @@ export default class Absence extends Component {
                         this.showConfirmationButtons()
                       }
                     >
-                      <Icon name='md-menu' size={30} style={{ color: 'white' }} />
+                      <Icon name='md-menu' size={30} style={{color: 'white'}}/>
                     </TouchableOpacity>
 
                   </View>
@@ -334,11 +321,11 @@ export default class Absence extends Component {
                 </View>
               </View>
               {/* second card  */}
-              <View style={{ marginTop: 10 }}>
-                <Header HeaderText='Exit Request' />
-                <View style={{ flexDirection: 'row' }}>
-                  <View style={{ width: '30%' }}>
-                    <Icon name='md-time' size={29} style={{ marginLeft: 30 }} />
+              <View style={{marginTop: 10}}>
+                <Header HeaderText='Exit Request'/>
+                <View style={{flexDirection: 'row'}}>
+                  <View style={{width: '30%'}}>
+                    <Icon name='md-time' size={29} style={{marginLeft: 30}}/>
 
                   </View>
                   <View
@@ -352,10 +339,9 @@ export default class Absence extends Component {
                       marginTop: 5
                     }}
                   >
-                    <AbsenceCard />
-                    <View style={{ marginLeft: 150 }}>{this.onButtonShow2()}</View>
+                    <AbsenceCard/>
+                    <View style={{marginLeft: 150}}>{this.onButtonShow2()}</View>
                     {/* {this.onButtonShow()} */}
-
 
 
                     {/* /// */}
@@ -376,7 +362,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: 'bold' }}>From: </Text>
+                          <Text style={{fontWeight: 'bold'}}>From: </Text>
                           <Text>12/01/2018</Text>
                         </View>
 
@@ -387,7 +373,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: 'bold' }}>Time: </Text>
+                          <Text style={{fontWeight: 'bold'}}>Time: </Text>
                           <Text>Holliday</Text>
                         </View>
                         <View
@@ -397,7 +383,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
+                          <Text style={{fontWeight: 'bold'}}>Absence Type: </Text>
                           <Text>20.0 days</Text>
                         </View>
                         <View
@@ -407,7 +393,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
+                          <Text style={{fontWeight: 'bold'}}>Reason: </Text>
                           <Text>2.00 Days</Text>
                         </View>
                         <View
@@ -417,7 +403,7 @@ export default class Absence extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{ fontWeight: 'bold' }}>date of recivery: </Text>
+                          <Text style={{fontWeight: 'bold'}}>date of recivery: </Text>
                           <Text>18.00 Days</Text>
                         </View>
 
@@ -446,7 +432,7 @@ export default class Absence extends Component {
                               this.props.navigation.navigate('ExitDetail')
                             }
                           >
-                            <Text style={{ color: 'white' }}>OPEN</Text>
+                            <Text style={{color: 'white'}}>OPEN</Text>
                           </TouchableOpacity>
                           <TouchableOpacity
                             style={{
@@ -462,7 +448,7 @@ export default class Absence extends Component {
                               this.showConfirmationButtons()
                             }
                           >
-                            <Icon name='md-menu' size={30} style={{ color: 'white' }} />
+                            <Icon name='md-menu' size={30} style={{color: 'white'}}/>
                           </TouchableOpacity>
 
                         </View>
@@ -477,8 +463,8 @@ export default class Absence extends Component {
             </View>
           </View>
         </ScrollView>
-       </View>
-        //</SafeAreaView>
+      </View>
+      //</SafeAreaView>
     );
   }
 }

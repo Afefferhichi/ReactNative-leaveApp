@@ -1,5 +1,4 @@
-
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 
 export default client = new ApolloClient({
   link: new HttpLink({

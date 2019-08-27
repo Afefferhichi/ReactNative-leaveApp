@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import React, {Component} from 'react';
+import {Image, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class ProfileCard extends Component {
@@ -26,15 +26,15 @@ class ProfileCard extends Component {
             borderRadius: 50
           }}
         />
-        <View style={{ marginLeft: 10, width:'60%' }}>
-          <Text style={{ color: 'black' }}>{this.props.name}</Text>
-          <Text style={{ color: 'black' }}>{this.props.status}</Text>
+        <View style={{marginLeft: 10, width: '60%'}}>
+          <Text style={{color: 'black'}}>{this.props.name}</Text>
+          <Text style={{color: 'black'}}>{this.props.status}</Text>
         </View>
-        <View style={{alignItems:'center', alignSelf:'center'}}>
-        <Icon
+        <View style={{alignItems: 'center', alignSelf: 'center'}}>
+          <Icon
             name='md-arrow-dropright'
             size={30}
-            style={{ paddingLeft: 10, paddingRight: 20, alignSelf:'flex-end' }}
+            style={{paddingLeft: 10, paddingRight: 20, alignSelf: 'flex-end'}}
             onPress={this.props.onPress}
           />
         </View>

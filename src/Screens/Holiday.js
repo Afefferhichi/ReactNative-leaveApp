@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React, {Component} from 'react';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import DayDetail from '../common/DayDetail';
 
 
@@ -29,9 +28,9 @@ class Holiday extends Component {
                 borderRadius: 15
               }}
             />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ color: 'white' }}>Nour Al jinen</Text>
-              <Text style={{ color: 'white' }}>Nour Al jinen</Text>
+            <View style={{marginLeft: 10}}>
+              <Text style={{color: 'white'}}>Nour Al jinen</Text>
+              <Text style={{color: 'white'}}>Nour Al jinen</Text>
             </View>
           </View>
 
@@ -89,7 +88,7 @@ class Holiday extends Component {
             }}
             onPress={() => this.props.navigation.navigate('AbsenceDetail')}
           >
-            <Text style={{ color: 'white' }}>Go Back</Text>
+            <Text style={{color: 'white'}}>Go Back</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>

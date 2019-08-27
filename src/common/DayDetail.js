@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import React, {Component} from 'react';
+import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class DayDetail extends Component {
@@ -14,7 +14,7 @@ class DayDetail extends Component {
             justifyContent: 'center'
           }}
         >
-          <Text style={{ alignSelf: 'center' }}>{this.props.DayHeader}</Text>
+          <Text style={{alignSelf: 'center'}}>{this.props.DayHeader}</Text>
         </View>
         <View
           style={{
@@ -25,12 +25,12 @@ class DayDetail extends Component {
             flexDirection: 'row'
           }}
         >
-          <View style={{ flexDirection: 'column' }}>
-            <View style={{ flexDirection: 'row' }}>
+          <View style={{flexDirection: 'column'}}>
+            <View style={{flexDirection: 'row'}}>
               <Text>Morning:</Text>
               <Text>{this.props.Time1}</Text>
             </View>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Text>Afternoon:</Text>
               <Text>{this.props.Time2}</Text>
             </View>
@@ -49,7 +49,7 @@ class DayDetail extends Component {
             <Icon
               activeOpacity={0.8}
               name='md-arrow-down'
-              style={{ color: 'red' }}
+              style={{color: 'red'}}
               size={22}
             />
           </View>

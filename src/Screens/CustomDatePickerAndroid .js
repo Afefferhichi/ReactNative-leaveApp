@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DatePickerAndroid, TimePickerAndroid } from 'react-native';
+import {DatePickerAndroid, TimePickerAndroid} from 'react-native';
 
 export default class CustomDatePickerAndroid extends React.PureComponent {
   static propTypes = {
@@ -24,7 +24,8 @@ export default class CustomDatePickerAndroid extends React.PureComponent {
     timePickerModeAndroid: 'default',
     is24Hour: true,
     isVisible: false,
-    onHideAfterConfirm: () => {}
+    onHideAfterConfirm: () => {
+    }
   };
 
   componentDidUpdate = prevProps => {
@@ -56,12 +57,12 @@ export default class CustomDatePickerAndroid extends React.PureComponent {
         maxDate: this.props.maximumDate,
         mode: this.props.datePickerModeAndroid
       });
-    } catch ({ message }) {
+    } catch ({message}) {
       console.warn('Cannot open date picker', message);
       return;
     }
 
-    const { action, year, month, day } = picked;
+    const {action, year, month, day} = picked;
     if (action !== DatePickerAndroid.dismissedAction) {
       let date;
       if (this.props.date && !isNaN(this.props.date.getTime())) {
@@ -86,12 +87,12 @@ export default class CustomDatePickerAndroid extends React.PureComponent {
         let pickedTime;
         try {
           pickedTime = await TimePickerAndroid.open(timeOptions);
-        } catch ({ message }) {
+        } catch ({message}) {
           console.warn('Cannot open time picker', message);
           return;
         }
 
-        const { action: timeAction, hour, minute } = pickedTime;
+        const {action: timeAction, hour, minute} = pickedTime;
         if (timeAction !== TimePickerAndroid.dismissedAction) {
           const selectedDate = new Date(year, month, day, hour, minute);
           this.props.onConfirm(selectedDate);
@@ -117,12 +118,12 @@ export default class CustomDatePickerAndroid extends React.PureComponent {
         is24Hour: this.props.is24Hour,
         mode: this.props.timePickerModeAndroid
       });
-    } catch ({ message }) {
+    } catch ({message}) {
       console.warn('Cannot open time picker', message);
       return;
     }
 
-    const { action, hour, minute } = picked;
+    const {action, hour, minute} = picked;
     if (action !== TimePickerAndroid.dismissedAction) {
       let date;
       if (this.props.date) {

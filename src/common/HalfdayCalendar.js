@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { CalendarList } from 'react-native-calendars';
-import { ActionSheet } from 'teaset';
+import React, {Component} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {CalendarList} from 'react-native-calendars';
+import {ActionSheet} from 'teaset';
 
 const SELECTED_COLOR = 'lightgreen';
 const CALENDAR_WIDTH = 360;
@@ -26,11 +26,11 @@ class HalfdayCalendar extends Component {
       endDateIsHalf,
       markedDates: startDate
         ? this.getMarkedDates(
-            startDate,
-            endDate,
-            startDateIsHalf,
-            endDateIsHalf
-          )
+          startDate,
+          endDate,
+          startDateIsHalf,
+          endDateIsHalf
+        )
         : {},
       showCalendar: false
     };
@@ -142,7 +142,7 @@ class HalfdayCalendar extends Component {
       });
     }
 
-    await this.setState({ markedDates: markedDates });
+    await this.setState({markedDates: markedDates});
   };
 
   /**
@@ -153,8 +153,8 @@ class HalfdayCalendar extends Component {
    *  And endDateIsHaf means that a user chose the endDate's beforenoon
    * Return:
    *  Object-array including customStyles
-   *    selected: true, color, startingDay: true/false, endingDay: true/false
-   *    customStyles: refer to the method 'getCustomStyles'
+   *  selected: true, color, startingDay: true/false, endingDay: true/false
+   *  customStyles: refer to the method 'getCustomStyles'
    *
    */
   getMarkedDates = (startDate, endDate, startDateIsHalf, endDateIsHalf) => {
@@ -197,7 +197,9 @@ class HalfdayCalendar extends Component {
         customStyles: customStyles
       };
       index++;
-      if (_date >= date2) {break;}
+      if (_date >= date2) {
+        break;
+      }
     }
     return markedDates;
   };
@@ -227,17 +229,17 @@ class HalfdayCalendar extends Component {
         backgroundColor: SELECTED_COLOR,
         height: 32,
         width: !isStart && !isEnd ? '150%' : 32,
-        ...(isWideLeft ? { width: '150%', left: -19 } : {}),
+        ...(isWideLeft ? {width: '150%', left: -19} : {}),
         zIndex: isStart ? 3 : isEnd ? 2 : 1,
         alignItems: isStart
           ? !isHalf
             ? 'center'
             : 'flex-start'
           : isEnd
-          ? !isHalf
-            ? 'center'
-            : 'flex-end'
-          : 'center',
+            ? !isHalf
+              ? 'center'
+              : 'flex-end'
+            : 'center',
         borderRadius: 0,
         borderTopLeftRadius: isStart ? (isHalf ? 0 : 30) : 0,
         borderBottomLeftRadius: isStart ? (isHalf ? 0 : 30) : 0,
@@ -247,24 +249,24 @@ class HalfdayCalendar extends Component {
       text: isStart
         ? isHalf
           ? {
-              position: 'absolute',
-              top: -4,
-              left: 0,
-              lineHeight: 32,
-              textAlign: 'center',
-              width: 0,
-              height: 0,
-              ...(isBeforeNoon ? triangleLeftBottom : triangleRightTop)
-            }
+            position: 'absolute',
+            top: -4,
+            left: 0,
+            lineHeight: 32,
+            textAlign: 'center',
+            width: 0,
+            height: 0,
+            ...(isBeforeNoon ? triangleLeftBottom : triangleRightTop)
+          }
           : {
-              position: 'absolute',
-              top: -5,
-              lineHeight: 32,
-              textAlign: 'center'
-            }
+            position: 'absolute',
+            top: -5,
+            lineHeight: 32,
+            textAlign: 'center'
+          }
         : isEnd
-        ? isHalf
-          ? {
+          ? isHalf
+            ? {
               position: 'absolute',
               top: -4,
               lineHeight: 32,
@@ -273,14 +275,14 @@ class HalfdayCalendar extends Component {
               height: 0,
               ...triangleLeftBottom
             }
-          : {
+            : {
               position: 'absolute',
               top: -5,
               ...(isWideLeft ? {left: 45} : {}),
               lineHeight: 32,
               textAlign: 'center'
             }
-        : {
+          : {
             position: 'absolute',
             top: -5,
             lineHeight: 32,
@@ -291,15 +293,16 @@ class HalfdayCalendar extends Component {
   };
 
   confirm = () => {
-    const { startDate, endDate, startDateIsHalf, endDateIsHalf } = this.state;
+    const {startDate, endDate, startDateIsHalf, endDateIsHalf} = this.state;
     this.props.onConfirm &&
-      this.props.onConfirm(
-        startDate,
-        endDate || startDate,
-        startDateIsHalf,
-        endDateIsHalf || startDateIsHalf
-      );
+    this.props.onConfirm(
+      startDate,
+      endDate || startDate,
+      startDateIsHalf,
+      endDateIsHalf || startDateIsHalf
+    );
   };
+
   // =-========== Related Range Calendar : end
 
   render() {
@@ -320,7 +323,7 @@ class HalfdayCalendar extends Component {
           _calendarWidth={CALENDAR_WIDTH}
           // onLayout={(event)=>alert(event.nativeEvent.layout.width)}
           onDayPress={day => this.selectDate(day)}
-          style={{ marginBottom: 40 }}
+          style={{marginBottom: 40}}
           // Max amount of months allowed to scroll to the past. Default = 50
           pastScrollRange={50}
           // Max amount of months allowed to scroll to the future. Default = 50
@@ -361,7 +364,7 @@ class HalfdayCalendar extends Component {
               backgroundColor: 'green'
             }}
           >
-            <Text style={{ color: 'white', lineHeight: 33 }}>OK</Text>
+            <Text style={{color: 'white', lineHeight: 33}}>OK</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.onCancel && this.props.onCancel()}
@@ -373,7 +376,7 @@ class HalfdayCalendar extends Component {
               borderWidth: 1
             }}
           >
-            <Text style={{ lineHeight: 33 }}>Cancel</Text>
+            <Text style={{lineHeight: 33}}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>
