@@ -8,7 +8,8 @@ import {
   ScrollView,
   TextInput,
   TimePickerAndroid,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import TimePicker from "react-native-24h-timepicker";
@@ -19,69 +20,141 @@ import Header from "../common/Header";
 import Icon from "react-native-vector-icons/Ionicons";
 import DatePicker from "react-native-datepicker";
 import { thisTypeAnnotation } from "@babel/types";
+import DatetimePickerIOS from "../common/DatetimePickerIOS";
+
 // import console = require("console");
 
 class ExitDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDateTimePickerVisible: false,
-      time: null
+      isPickerVisible: false,
+      iosDatetimePickerMode: null,
+      time: null,
+      date1: null,
+      date2: null,
+      dateNum: null,
+      iosDefaultDate: new Date()
     };
   }
 
-  
+
+  showDatePicker = async (dateNum) => {
+    if (Platform.OS === 'ios') {
+      this.setState({ 
+        dateNum: dateNum,
+        isPickerVisible: true,
+        iosDatetimePickerMode: 'date'
+      });
+    } else {
 
 
+      const original_date = dateNum === 1 ? this.state.date1 : this.state.date2;
+      
+      try {
+        const { action, year, month, day } = await DatePickerAndroid.open({
+          date: original_date
+        });
+        if (action !== TimePickerAndroid.dismissedAction) {
+          
+          if ( dateNum === 1 ) {
+            await this.setState({ date1: `${year}-${month}-${day}` });
+          }
+          
+          if ( dateNum === 2 ) {
+            await this.setState({ date2: `${year}-${month}-${day}` });
+          }
 
-  onCancel() {
-    this.TimePicker.close();
-  }
-  onConfirm(hour, minute) {
-    this.TimePicker.close();
-  }
+        }
+      } catch ({ code, message }) {
+        
+      }
 
-  // 
 
-  showDatePicker = async () => {
-    this.setState({ isDatePickerVisible: true });
+    }
   };
+
 
   showTimePicker = async () => {
-    const original_time = this.state.time;
-    let original_hour, original_minute;
-    
-    if (original_time) {
-      original_hour = original_time.split(/\:/gi)[0];
-      original_minute = original_time.split(/\:/gi)[1];
-    } else {
-      const current_date = new Date();
-      original_hour = current_date.getHours();
-      original_minute = current_date.getMinutes(); 
-    }
-    try {
-      
-      const { action, hour, minute } = await TimePickerAndroid.open({
-        hour: parseInt(original_hour),
-        minute: parseInt(original_minute),
-        is24Hour: false, // Will display '2 PM'
+
+    if(Platform.OS === 'ios') {
+
+      this.setState({ 
+        isPickerVisible: true,
+        iosDatetimePickerMode: 'time'
       });
-      if (action !== TimePickerAndroid.dismissedAction) {
-        await this.setState({ time: `${hour}:${minute}` });
-      }
-    } catch ({ code, message }) {
+
+    } else {
+
+      const original_time = this.state.time;
+      let original_hour, original_minute;
       
+      if (original_time) {
+        original_hour = original_time.split(/\:/gi)[0];
+        original_minute = original_time.split(/\:/gi)[1];
+      } else {
+        const current_date = new Date();
+        original_hour = current_date.getHours();
+        original_minute = current_date.getMinutes(); 
+      }
+      try {
+        
+        const { action, hour, minute } = await TimePickerAndroid.open({
+          hour: parseInt(original_hour),
+          minute: parseInt(original_minute),
+          is24Hour: false, // Will display '2 PM'
+        });
+        if (action !== TimePickerAndroid.dismissedAction) {
+          await this.setState({ time: `${hour}:${minute}` });
+        }
+      } catch ({ code, message }) {
+        
+      }
+
     }
+
   };
 
-  hideDateTimePicker = () => {
-    this.setState({ isDateTimePickerVisible: false });
+  onConfirm(hour, minute) {
+    this.setState({ 
+      isPickerVisible: false,
+    });
+  }
+
+  onCancel(hour, minute) {
+    this.setState({ 
+      isPickerVisible: false,
+    });
+  }
+
+  onConfirmTimeIOS = date => {
+    const time = `${date.getHours()}:${date.getMinutes()}`;
+    this.setState({
+      time,
+      iosDefaultDate: date,
+      isPickerVisible: false
+    });
   };
 
-  handleDatePicked = date => {
-    console.log("A date has been picked: ", date);
-    this.hideDateTimePicker();
+  onConfirmDateIOS = date => {
+    let date1, date2;
+    if (this.state.dateNum === 1) {
+      date1 = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+    } else if (this.state.dateNum === 2) {
+      date2 = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+    }
+    
+    this.setState({
+      ...(this.state.dateNum === 1?{date1: date1} : {}),
+      ...(this.state.dateNum === 2?{date2: date2} : {}),
+      iosDefaultDate: date,
+      isPickerVisible: false
+    });
   };
+
+  onCancelIOS = () => {
+    this.setState({ isPickerVisible: false });
+  }
 
 
   // 
@@ -90,7 +163,6 @@ class ExitDetail extends Component {
   render() {
     return (
       <View style={{ backgroundColor: 'white' }}>
-
 
         <ScrollView style={{ height: "90%" }}>
           <View
@@ -152,23 +224,39 @@ class ExitDetail extends Component {
                 <Text>Time</Text>
               </View>
               <Text style={{ color: '#183152' }}>{this.state.time}</Text>
-              <TimePicker
+              {/*
+                <TimePicker
                 ref={ref => {
                   this.TimePicker = ref;
                 }}
                 onCancel={() => this.onCancel()}
                 onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
               />
+              */}
 
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Icon
-                  onPress={this.showDateTimePicker} size={30}
+                  onPress={()=>this.showDatePicker(1)} size={30}
                   name="md-calendar"
                 />
                 <Text>Date</Text>
               </View>
-              <Text style={{ color: '#183152' }}>{this.state.isDateTimePickerVisible}</Text>
+              <Text style={{ color: '#183152' }}>{this.state.date1}</Text>
 
+              {Platform.OS === 'ios' && 
+                <DateTimePicker
+                  date={this.state.iosDefaultDate}
+                  mode={this.state.iosDatetimePickerMode}
+                  isVisible={this.state.isPickerVisible}
+                  onConfirm={
+                    this.state.iosDatetimePickerMode === 'time' ?
+                      this.onConfirmTimeIOS
+                      :
+                      this.onConfirmDateIOS
+                  }
+                  onCancel={this.onCancelIOS}
+                />
+              }
             </View>
           </View>
           {/*  */}
@@ -185,12 +273,12 @@ class ExitDetail extends Component {
             >
               <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: '-15%' }}>
                 <Icon
-                  onPress={this.showDateTimePicker} size={30}
+                  onPress={()=>this.showDatePicker(2)} size={30}
                   name="md-calendar"
                 />
                 <Text>Date</Text>
               </View>
-              <Text style={{ color: 'red' }}>{this.state.isDateTimePickerVisible}</Text>
+              <Text style={{ color: 'red' }}>{this.state.date2}</Text>
             </View>
           </View>
           {/*  */}
@@ -202,7 +290,6 @@ class ExitDetail extends Component {
               <Picker style={{ width: "80%", borderWidth: 1 }}
                 onValueChange={value => this.setState({ selectedSpecialDay: value })}
                 selectedValue={this.state.selectedSpecialDay}>
-
 
                 <Picker.Item label="30min" value="30min" />
                 <Picker.Item label="1h" value="1hr" />
