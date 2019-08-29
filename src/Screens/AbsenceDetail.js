@@ -6,6 +6,9 @@ import {HalfdayCalendar} from 'react-native-halfday-calendar';
 // import console = require("console");
 
 class AbsenceDetail extends Component {
+  static navigationOptions = {
+    title: 'Absence Detail',
+  };
   constructor(props) {
     super(props);
     this.state = {

@@ -44,7 +44,7 @@ const AppStackNavigator = createStackNavigator({
   }
 }, {
   initialRouteName: 'ActivityFeed',
-  headerMode: 'none'
+  // headerMode: 'none'
 });
 
 

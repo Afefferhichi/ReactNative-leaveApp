@@ -6,6 +6,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AbsenceCard from '../common/AbsenceCard';
 
 export default class ActivityFeed extends Component {
+  static navigationOptions = ({navigation}) => ({
+    header: null
+  });
+
   constructor() {
     super();
 
