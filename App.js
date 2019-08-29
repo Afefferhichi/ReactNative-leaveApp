@@ -1,8 +1,6 @@
-
-    
 import React, { Component } from "react";
 import { View, Text } from "react-native";
-import Absence from "./src/Screens/Absence";
+import ActivityFeed from "./src/Screens/ActivityFeed";
 import {
   createStackNavigator,
   createAppContainer,
@@ -11,7 +9,7 @@ import {
 import Profile from "./src/Screens/Profile";
 import AbsenceDetail from "./src/Screens/AbsenceDetail";
 import AbsenceConfirm from "./src/Screens/AbsenceConfirm";
-import Holiday from "./src/Screens/Holiday";
+import ShowHistory from "./src/Screens/ShowHistory";
 import Setting from "./src/Screens/Setting";
 import AbsenceTeamList from "./src/Screens/AbsenceTeamList";
 import Login from './src/Screens/Login';
@@ -21,6 +19,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import client from './src/config/createApolloClient';
 // import CustomDatePickerAndroid from './src/Screens/CustomDatePickerAndroid'
 import TimePicker from './src/Screens/TimePicker'
+import AbsenceHistory from '././src/Screens/AbsenceHistory'
 
 
 
@@ -30,8 +29,11 @@ console.disableYellowBox = true;
 
 const AppStackNavigator = createStackNavigator({
 
-  Absence: {
-    screen: Absence
+  ActivityFeed: {
+    screen: ActivityFeed
+  },
+  AbsenceHistory: {
+    screen: AbsenceHistory
   },
   AbsenceDetail: {
     screen: AbsenceDetail
@@ -39,8 +41,8 @@ const AppStackNavigator = createStackNavigator({
   AbsenceConfirm: {
     screen: AbsenceConfirm
   },
-  Holiday: {
-    screen: Holiday
+  ShowHistory: {
+    screen: ShowHistory
   },
   ExitDetail: {
     screen: ExitDetail
@@ -55,32 +57,41 @@ const appDrawerNavigator = createDrawerNavigator(
   
   {
     
-    Absence: {
+    ActivityFeed: {
       
-      screen: AppStackNavigator,
+      screen: ActivityFeed,
       navigationOptions: {
         darwerLable: "Telnet",
-        drawerIcon: <Icon name="md-home" size={30} style={{ color: "white" }} />
+        drawerIcon: <Icon name="md-home" size={28} style={{ color: "white" }} />
       }
-    },
-    Setting: {
-      screen: Setting,
+          },
+    ShowHistory: {
+      
+      screen:  ShowHistory,
       navigationOptions: {
-        darwerLable: "Telnet",
-        drawerIcon: <Icon name="md-cog" size={30} style={{ color: "white" }} />
+      darwerLable: "Telnet",
+      drawerIcon: <Icon name="md-speedometer" size={28} style={{ color: "white" }} />
       }
-    },
+          },
     AbsenceTeamList: {
       screen: AbsenceTeamList,
       navigationOptions: {
         darwerLable: "Telnet",
-        drawerIcon: <Icon name="md-list" size={30} style={{ color: "white" }} />
+        drawerIcon: <Icon name="md-list" size={28} style={{ color: "white" }} />
+      }
+    },
+    
+    Setting: {
+      screen: Setting,
+      navigationOptions: {
+        darwerLable: "Telnet",
+        drawerIcon: <Icon name="md-cog" size={28} style={{ color: "white" }} />
       }
     }
   },
 
   {
-    initialRouteName: 'Absence',
+    initialRouteName: 'ActivityFeed',
     // hideStatusBar: true,
     drawerBackgroundColor: "#5F8CA3",
     overlayColor: "#8CC6D7",

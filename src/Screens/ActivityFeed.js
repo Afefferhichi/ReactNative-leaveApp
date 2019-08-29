@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {LayoutAnimation, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, UIManager, View} from 'react-native';
+import {LayoutAnimation, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, UIManager, View, Image} from 'react-native';
 import {ActionSheet} from 'teaset';
 import Header from '../common/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AbsenceCard from '../common/AbsenceCard';
 
-export default class Absence extends Component {
+export default class ActivityFeed extends Component {
   constructor() {
     super();
 
@@ -137,8 +137,6 @@ export default class Absence extends Component {
 
   render() {
     return (
-      //<SafeAreaView
-      //StatusBar barStyle="light-content" backgroundColor="#6a51ae">
       <View>
         <View
           style={{
@@ -152,6 +150,7 @@ export default class Absence extends Component {
             padding: 10,
 
           }}
+          
         >
           <Icon
             name='md-menu'
@@ -159,9 +158,12 @@ export default class Absence extends Component {
             style={{paddingLeft: 10, paddingRight: 20}}
             onPress={() => this.props.navigation.openDrawer()}
           />
+         
+         
           <Text style={{fontSize: 20, fontWeight: 'normal', color: '#696969'}}>
             Activity Feed
           </Text>
+           
         </View>
         <ScrollView style={{height: '90%'}}>
           <View style={styles.container}>

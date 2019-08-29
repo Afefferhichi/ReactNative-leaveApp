@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Button, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import Input from '../common/Input';
 import validationRules from '../common/validationRules';
+import {useQuery} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+
 
 
 //import console = require('console');
@@ -103,7 +106,7 @@ class Login extends Component {
 
 
               onPress={() =>
-                this.props.navigation.navigate('Absence')}
+                this.props.navigation.navigate('ActivityFeed')}
             />
 
           </View>
@@ -134,6 +137,8 @@ const styles = StyleSheet.create({
 
 
 });
+
+
 
 export default Login;
 

@@ -4,20 +4,23 @@ import {gql} from 'apollo-boost';
 import {Query} from 'react-apollo';
 
 
-export const GET_EMPLOYES = gql`
-{
-  employees{
-  firstName
+export const GET_EMPById = gql`
+query ($login: String!,$password: String!)
+{login (login: $login, password: $password)
+{id,
+  firstName,
   lastName
-  }
+}
+
 }
 `;
 
-function GetEmployees() {
+function GetEmployee() {
   const {loading, error, data} = useQuery(gql`
   {
-   employees{
-   firstName
+   employee{
+  id,
+   firstName,
    lastName
    }
   }
@@ -30,7 +33,7 @@ function GetEmployees() {
     return <p>Error :(</p>;
   }
 
-  return data.employees.map(({currency, rate}) => (
+  return data.employee.map(({currency, rate}) => (
     <div key={currency}>
       <p>
         {currency}: {rate}
@@ -39,15 +42,15 @@ function GetEmployees() {
   ));
 }
 
-const withEmployees = Component => props => (
-  <Query query={GET_EMPLOYES}>
+const withEmployee = Component => props => (
+  <Query query={GET_EMPLOYEE}>
     {({loading, data, error}) => {
       console.log('THis is query data', data);
       console.log('THis is query error', error);
       return (
         <Component
           loading={loading}
-          employes={data && data.employees}
+          employe={data && data.employee}
           {...props}
         />);
     }
@@ -56,4 +59,5 @@ const withEmployees = Component => props => (
 );
 
 
-export default withEmployees;
+export default withEmployee
+;

@@ -27,12 +27,16 @@ class DayDetail extends Component {
         >
           <View style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row'}}>
-              <Text>Morning:</Text>
+              <Text>Start Date:</Text>
               <Text>{this.props.Time1}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <Text>Afternoon:</Text>
+              <Text>End Date:</Text>
               <Text>{this.props.Time2}</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text>State:</Text>
+              <Text>{this.props.Time3}</Text>
             </View>
           </View>
           <View
@@ -49,7 +53,7 @@ class DayDetail extends Component {
             <Icon
               activeOpacity={0.8}
               name='md-arrow-down'
-              style={{color: 'red'}}
+              style={{color: 'blue'}}
               size={22}
             />
           </View>

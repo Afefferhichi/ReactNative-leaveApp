@@ -52,8 +52,8 @@ class Setting extends Component {
             }}
           />
           <View style={{marginLeft: 10}}>
-            <Text style={{color: 'white'}}>Nour Al jenin</Text>
-            <Text style={{color: 'white'}}>Tranee</Text>
+            <Text style={{color: 'white'}}>@username</Text>
+            
           </View>
           {/* <TouchableOpacity
     style={{

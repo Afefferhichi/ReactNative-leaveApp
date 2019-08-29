@@ -66,7 +66,7 @@ class AbsenceDetail extends Component {
               }}
             />
             <View style={{marginLeft: 20, alignSelf: 'center'}}>
-              <Text style={{color: 'black'}}> Welcome Nour Al jinen</Text>
+              <Text style={{color: 'black'}}> Welcome @username</Text>
               {/*<Text style={{ color: "black" }}>tranee</Text>*/}
             </View>
           </View>
@@ -172,7 +172,7 @@ class AbsenceDetail extends Component {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#183152',
-            marginVertical: 30,
+            marginVertical: 50,
             alignSelf: 'center',
 
           }}
