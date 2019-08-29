@@ -150,7 +150,7 @@ export default class ActivityFeed extends Component {
             padding: 10,
 
           }}
-          
+
         >
           <Icon
             name='md-menu'
@@ -158,12 +158,12 @@ export default class ActivityFeed extends Component {
             style={{paddingLeft: 10, paddingRight: 20}}
             onPress={() => this.props.navigation.openDrawer()}
           />
-         
-         
+
+
           <Text style={{fontSize: 20, fontWeight: 'normal', color: '#696969'}}>
             Activity Feed
           </Text>
-           
+
         </View>
         <ScrollView style={{height: '90%'}}>
           <View style={styles.container}>
