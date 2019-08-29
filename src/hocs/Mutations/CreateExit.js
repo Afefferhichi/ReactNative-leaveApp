@@ -1,4 +1,6 @@
 import React from 'react';
+import {TextInput, Button, Text } from "react-native";
+
 import {gql} from 'apollo-boost';
 
 export const Create_Exit = gql`
@@ -18,7 +20,8 @@ mutation createsort($input : sortieInput!) {
   
     return (
       <Mutation mutation={Create_Exit}>
-        {(createSortie, { data }) => (
+        
+        {/* {(createSortie, { data }) => (
           <div>
             <form
               onSubmit={e => {
@@ -29,7 +32,7 @@ mutation createsort($input : sortieInput!) {
             >
             </form>
           </div>
-        )}
+        )} */}
       </Mutation>
     );
   };

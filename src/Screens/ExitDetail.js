@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   DatePickerAndroid,
   Image,
@@ -13,6 +13,36 @@ import {
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
+import gql from 'graphql-tag';
+import { ApolloProvider, graphql, Mutation } from 'react-apollo';
+import client from '../config/createApolloClient';
+
+
+const addSortie = gql`
+  mutation addSortie($input: String!) {
+    createSortie(sortie: $input) {
+      employeeId,
+      recovery_Date,
+      sortie_Date,
+      sortieTime,
+      sortieState,
+      motif
+    }
+  }
+`;
+
+const sortieQuery = gql`
+  query{
+    sorties {
+      employeeId,
+      recovery_Date,
+      sortie_Date,
+      sortieTime,
+      sortieState,
+      motif
+    }
+  }
+`;
 
 // import console = require("console");
 
@@ -43,22 +73,22 @@ class ExitDetail extends Component {
       let selected_date = new Date((dateNum === 1 ? this.state.date1 : this.state.date2) || (+new Date));
 
       try {
-        const {action, year, month, day} = await DatePickerAndroid.open({
+        const { action, year, month, day } = await DatePickerAndroid.open({
           date: selected_date
         });
         if (action !== DatePickerAndroid.dismissedAction) {
 
 
           if (dateNum === 1) {
-            await this.setState({date1: `${year}/${month + 1}/${day}`});
+            await this.setState({ date1: `${year}/${month + 1}/${day}` });
           }
 
           if (dateNum === 2) {
-            await this.setState({date2: `${year}/${month + 1}/${day}`});
+            await this.setState({ date2: `${year}/${month + 1}/${day}` });
           }
 
         }
-      } catch ({code, message}) {
+      } catch ({ code, message }) {
         // alert(message)
       }
 
@@ -91,15 +121,15 @@ class ExitDetail extends Component {
       }
       try {
 
-        const {action, hour, minute} = await TimePickerAndroid.open({
+        const { action, hour, minute } = await TimePickerAndroid.open({
           hour: parseInt(selected_hour),
           minute: parseInt(selected_minute),
           is24Hour: false, // Will display '2 PM'
         });
         if (action !== TimePickerAndroid.dismissedAction) {
-          await this.setState({time: `${hour}:${minute}`});
+          await this.setState({ time: `${hour}:${minute}` });
         }
-      } catch ({code, message}) {
+      } catch ({ code, message }) {
 
       }
 
@@ -137,15 +167,15 @@ class ExitDetail extends Component {
     }
 
     this.setState({
-      ...(this.state.dateNum === 1 ? {date1: date1} : {}),
-      ...(this.state.dateNum === 2 ? {date2: date2} : {}),
+      ...(this.state.dateNum === 1 ? { date1: date1 } : {}),
+      ...(this.state.dateNum === 2 ? { date2: date2 } : {}),
       iosDefaultDate: date,
       isPickerVisible: false
     });
   };
 
   onCancelIOS = () => {
-    this.setState({isPickerVisible: false});
+    this.setState({ isPickerVisible: false });
   };
 
 
@@ -154,176 +184,199 @@ class ExitDetail extends Component {
 
   render() {
     return (
-      <View style={{backgroundColor: 'white'}}>
+      <ApolloProvider client={client}>
+        <View style={{ backgroundColor: 'white' }}>
+          <Mutation mutation={addSortie} refetchQueries={[{query: sortieQuery}]} >
+            {(addSortieMutation, { sortie }) => (
+              <ScrollView style={{ height: '95%' }}>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    padding: 10,
+                    margin: 10,
+                    flexDirection: 'row'
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri:
+                        'https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'
+                    }}
+                    style={{
+                      width: 70,
+                      height: 80,
+                      backgroundColor: '#f2f2f2',
+                      borderRadius: 18
+                    }}
+                  />
+                  <View style={{ marginLeft: 10, alignSelf: 'center' }}>
+                    <Text style={{ color: 'black', }}>Welcome @username </Text>
+                    {/*<Text style={{ color: "white" }}>Student</Text>*/}
+                  </View>
 
-        <ScrollView style={{height: '95%'}}>
-          <View
-            style={{
-              backgroundColor: 'white',
-              padding: 10,
-              margin: 10,
-              flexDirection: 'row'
-            }}
-          >
-            <Image
-              source={{
-                uri:
-                  'https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'
-              }}
-              style={{
-                width: 70,
-                height: 80,
-                backgroundColor: '#f2f2f2',
-                borderRadius: 18
-              }}
-            />
-            <View style={{marginLeft: 10, alignSelf: 'center'}}>
-              <Text style={{color: 'black',}}>Welcome @username </Text>
-              {/*<Text style={{ color: "white" }}>Student</Text>*/}
-            </View>
-
-          </View>
-          <View
-            style={{
-              backgroundColor: '#C4D7ED',
-              padding: 10,
-              margin: 10,
-              flexDirection: 'row',
-              borderRadius: 10,
-            }}
-          >
-            <Icon name='md-cog' size={30}/>
-            <Text style={{color: '#000000', marginLeft: 10}}>
-              This absence is currently approved. Tap here to request for a change.
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#C4D7ED',
+                    padding: 10,
+                    margin: 10,
+                    flexDirection: 'row',
+                    borderRadius: 10,
+                  }}
+                >
+                  <Icon name='md-cog' size={30} />
+                  <Text style={{ color: '#000000', marginLeft: 10 }}>
+                    This absence is currently approved. Tap here to request for a change.
             </Text>
-          </View>
-          <View
-            style={{borderTopWidth: 1, borderBottomWidth: 1, padding: 10}}
-          >
-            <Text style={{fontWeight: 'bold'}}>From </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around'
-              }}
-            >
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  onPress={() => this.showTimePicker()}
-                  size={30}
-                  name='md-time'
-                />
-                <Text>Time</Text>
-              </View>
-              <Text style={{color: '#183152'}}>{this.state.time}</Text>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  onPress={() => this.showDatePicker(1)} size={30}
-                  name='md-calendar'
-                />
-                <Text>Date</Text>
-              </View>
-              <Text style={{color: '#183152'}}>{this.state.date1}</Text>
+                </View>
+                <View
+                  style={{ borderTopWidth: 1, borderBottomWidth: 1, padding: 10 }}
+                >
+                  <Text style={{ fontWeight: 'bold' }}>From </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-around'
+                    }}
+                  >
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                      <Icon
+                        onPress={() => this.showTimePicker()}
+                        size={30}
+                        name='md-time'
+                      />
+                      <Text>Time</Text>
+                    </View>
+                    <Text style={{ color: '#183152' }}>{this.state.time}</Text>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                      <Icon
+                        onPress={() => this.showDatePicker(1)} size={30}
+                        name='md-calendar'
+                      />
+                      <Text>Date</Text>
+                    </View>
+                    <Text style={{ color: '#183152' }}>{this.state.date1}</Text>
 
-              {Platform.OS === 'ios' &&
-              <DateTimePicker
-                date={this.state.iosDefaultDate}
-                mode={this.state.iosDatetimePickerMode}
-                isVisible={this.state.isPickerVisible}
-                onConfirm={
-                  this.state.iosDatetimePickerMode === 'time' ?
-                    this.onConfirmTimeIOS
-                    :
-                    this.onConfirmDateIOS
-                }
-                onCancel={this.onCancelIOS}
-              />
-              }
-            </View>
-          </View>
-          {/*  */}
-          <View
-            style={{borderTopWidth: 0, borderBottomWidth: 1, padding: 10}}
-          >
-            <Text style={{fontWeight: 'bold'}}>Recovery Date </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around'
-              }}
-            >
-              <View style={{justifyContent: 'center', alignItems: 'center', marginLeft: '-15%'}}>
-                <Icon
-                  onPress={() => this.showDatePicker(2)} size={30}
-                  name='md-calendar'
-                />
-                <Text>Date</Text>
-              </View>
-              <Text style={{color: 'red'}}>{this.state.date2}</Text>
-            </View>
-          </View>
-          {/*  */}
-          <View
-            style={{borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10}}
-          >
-            <Text style={{fontWeight: 'bold'}}>Pattern</Text>
-            <View style={{alignItems: 'center'}}>
-              <Picker style={{width: '80%', borderWidth: 1}}
-                      onValueChange={value => this.setState({selectedSpecialDay: value})}
+                    {Platform.OS === 'ios' &&
+                      <DateTimePicker
+                        date={this.state.iosDefaultDate}
+                        mode={this.state.iosDatetimePickerMode}
+                        isVisible={this.state.isPickerVisible}
+                        onConfirm={
+                          this.state.iosDatetimePickerMode === 'time' ?
+                            this.onConfirmTimeIOS
+                            :
+                            this.onConfirmDateIOS
+                        }
+                        onCancel={this.onCancelIOS}
+                      />
+                    }
+                  </View>
+                </View>
+                {/*  */}
+                <View
+                  style={{ borderTopWidth: 0, borderBottomWidth: 1, padding: 10 }}
+                >
+                  <Text style={{ fontWeight: 'bold' }}>Recovery Date </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-around'
+                    }}
+                  >
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: '-15%' }}>
+                      <Icon
+                        onPress={() => this.showDatePicker(2)} size={30}
+                        name='md-calendar'
+                      />
+                      <Text>Date</Text>
+                    </View>
+                    <Text style={{ color: 'red' }}>{this.state.date2}</Text>
+                  </View>
+                </View>
+                {/*  */}
+                <View
+                  style={{ borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10 }}
+                >
+                  <Text style={{ fontWeight: 'bold' }}>Pattern</Text>
+                  <View style={{ alignItems: 'center' }}>
+                    <Picker style={{ width: '80%', borderWidth: 1 }}
+                      onValueChange={value => this.setState({ selectedSpecialDay: value })}
                       selectedValue={this.state.selectedSpecialDay}>
 
-                <Picker.Item label='30min' value='30min'/>
-                <Picker.Item label='1h' value='1hr'/>
-                <Picker.Item label='1h:30min' value='1h:30min'/>
-                <Picker.Item label='2hrs' value='2hrs'/>
-              </Picker>
-            </View>
-          </View>
-          {/*  */}
-          <View
-            style={{borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10}}
-          >
+                      <Picker.Item label='30min' value='30min' />
+                      <Picker.Item label='1h' value='1hr' />
+                      <Picker.Item label='1h:30min' value='1h:30min' />
+                      <Picker.Item label='2hrs' value='2hrs' />
+                    </Picker>
+                  </View>
+                </View>
+                {/*  */}
+                <View
+                  style={{ borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10 }}
+                >
 
 
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontWeight: 'bold'}}>Note:</Text>
-              {/* <Text>0.00 Days</Text> */}
-            </View>
-            <TextInput multiline={true}
-                       style={{
-                         marginTop: 5,
-                         width: '90%',
-                         height: 80,
-                         borderRadius: 10,
-                         backgroundColor: '#C4D7ED',
-                         alignSelf: 'center',
-                         marginBottom: 5
-                       }}
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: 'bold' }}>Note:</Text>
+                    {/* <Text>0.00 Days</Text> */}
+                  </View>
+                  <TextInput multiline={true}
+                    style={{
+                      marginTop: 5,
+                      width: '90%',
+                      height: 80,
+                      borderRadius: 10,
+                      backgroundColor: '#C4D7ED',
+                      alignSelf: 'center',
+                      marginBottom: 5
+                    }}
 
-            />
-          </View>
-          <TouchableOpacity
-            onPress={this._onPressButton}
-            onShowUnderlay={() => {
-              alert('onShowUnderlay button !');
-            }}
-            style={{
-              width: '70%',
-              height: 39,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#183152',
-              marginVertical: 50,
-              alignSelf: 'center',
+                  />
+                </View>
+                <TouchableOpacity
+                  onPress={()=>{
+                    alert('here 1');
+                    addSortieMutation({
+                      variables: {
+                        sortie: {
+                          employeeId: 1,
+                          recovery_Date: '2019-8-29',
+                          sortie_Date: '2019-8-29',
+                          sortieTime: '13:30',
+                          sortieState: 'PENDING',
+                          motif: '30min'
+                        }
+                      }
+                    })
+                      .then(res => res)
+                      .catch(err=> err)
+                  }}
 
-            }}
-          >
-            <Text style={{color: 'white'}}>Send Request</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
+                  onShowUnderlay={() => {
+                    alert('onShowUnderlay button !');
+                  }}
+                  style={{
+                    width: '70%',
+                    height: 39,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#183152',
+                    marginVertical: 50,
+                    alignSelf: 'center',
+
+                  }}
+                >
+                  <Text style={{ color: 'white' }}>Send Request</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            )}
+
+          </Mutation>
+        </View>
+      </ApolloProvider>
     );
   }
 }
