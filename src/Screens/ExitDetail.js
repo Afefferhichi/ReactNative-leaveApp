@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Button,
   DatePickerAndroid,
   Image,
   Picker,
@@ -18,17 +19,17 @@ import { ApolloProvider, graphql, Mutation } from 'react-apollo';
 import client from '../config/createApolloClient';
 
 
-const addSortie = gql`
-  mutation addSortie($input: String!) {
-    createSortie(sortie: $input) {
-      employeeId,
-      recovery_Date,
-      sortie_Date,
-      sortieTime,
-      sortieState,
-      motif
-    }
+const ADD_EXIT_DETAIL = gql`
+mutation createsort($input : sortieInput!) {
+  createSortie(sortie: $input) {
+  	employeeId,
+    recovery_Date,
+    sortie_Date,
+    sortieTime,
+    sortieState,
+    motif
   }
+}
 `;
 
 const sortieQuery = gql`
@@ -56,7 +57,8 @@ class ExitDetail extends Component {
       date1: null,
       date2: null,
       dateNum: null,
-      iosDefaultDate: new Date()
+      iosDefaultDate: new Date(),
+      mutationCalled: false
     };
   }
 
@@ -179,15 +181,48 @@ class ExitDetail extends Component {
   };
 
 
-  //
-
-
   render() {
     return (
       <ApolloProvider client={client}>
-        <View style={{ backgroundColor: 'white' }}>
-          <Mutation mutation={addSortie} refetchQueries={[{query: sortieQuery}]} >
-            {(addSortieMutation, { sortie }) => (
+        <Mutation mutation={ADD_EXIT_DETAIL} _refetchQueries={[{ query: sortieQuery }]} >
+          {(createsortMutation, { data }) => (
+            <View style={{ backgroundColor: 'white' }}>
+              <Button
+                title="Send Request 18"
+                onPress={async () => {
+                  //alert('here 3'+typeof(createsortMutation)); 
+                  await createsortMutation({
+                    variables: {
+                      input: {
+                        "employeeId": "2",
+                        "recovery_Date": "2019-08-29",
+                        "sortie_Date": "2019-08-29",
+                        "sortieState": "PENDING",
+                        "sortieTime": "HALF_HOUR",
+                        "motif": "sething special 333"
+                      }
+                    }
+                  })
+                    .then(res => { alert(res) })
+
+
+                  await this.setState({ mutationCalled: true });
+                }}
+
+                onShowUnderlay={() => {
+                  alert('onShowUnderlay button !');
+                }}
+                style={{
+                  width: '70%',
+                  height: 39,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#183152',
+                  marginVertical: 50,
+                  alignSelf: 'center',
+
+                }}
+              />
               <ScrollView style={{ height: '95%' }}>
                 <View
                   style={{
@@ -227,7 +262,7 @@ class ExitDetail extends Component {
                   <Icon name='md-cog' size={30} />
                   <Text style={{ color: '#000000', marginLeft: 10 }}>
                     This absence is currently approved. Tap here to request for a change.
-            </Text>
+                  </Text>
                 </View>
                 <View
                   style={{ borderTopWidth: 1, borderBottomWidth: 1, padding: 10 }}
@@ -300,7 +335,7 @@ class ExitDetail extends Component {
                 <View
                   style={{ borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10 }}
                 >
-                  <Text style={{ fontWeight: 'bold' }}>Pattern</Text>
+                  <Text style={{ fontWeight: 'bold' }}>Exit Time</Text>
                   <View style={{ alignItems: 'center' }}>
                     <Picker style={{ width: '80%', borderWidth: 1 }}
                       onValueChange={value => this.setState({ selectedSpecialDay: value })}
@@ -336,46 +371,12 @@ class ExitDetail extends Component {
 
                   />
                 </View>
-                <TouchableOpacity
-                  onPress={()=>{
-                    alert('here 1');
-                    addSortieMutation({
-                      variables: {
-                        sortie: {
-                          employeeId: 1,
-                          recovery_Date: '2019-8-29',
-                          sortie_Date: '2019-8-29',
-                          sortieTime: '13:30',
-                          sortieState: 'PENDING',
-                          motif: '30min'
-                        }
-                      }
-                    })
-                      .then(res => res)
-                      .catch(err=> err)
-                  }}
+                <Text style={{ color: 'white' }}>Send Request</Text>
 
-                  onShowUnderlay={() => {
-                    alert('onShowUnderlay button !');
-                  }}
-                  style={{
-                    width: '70%',
-                    height: 39,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#183152',
-                    marginVertical: 50,
-                    alignSelf: 'center',
-
-                  }}
-                >
-                  <Text style={{ color: 'white' }}>Send Request</Text>
-                </TouchableOpacity>
               </ScrollView>
-            )}
-
-          </Mutation>
-        </View>
+            </View>
+          )}
+        </Mutation>
       </ApolloProvider>
     );
   }
