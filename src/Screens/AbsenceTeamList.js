@@ -1,13 +1,13 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, Text, TextInput, View} from 'react-native';
+import { ActivityIndicator, FlatList, Text, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileCard from '../common/ProfileCard';
 
-import {useQuery} from '@apollo/react-hooks';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-function AbsenceTeamItem({item}) {
+function AbsenceTeamItem({ item }) {
   return (
     <ProfileCard
       onPress={() => this.props.navigation.navigate('AbsenceHistory')}
@@ -20,7 +20,7 @@ function AbsenceTeamItem({item}) {
 }
 
 function AbsenceTeamList() {
-  const {loading, error, data} = useQuery(gql`
+  const { loading, error, data } = Query(gql`
   {
    employees{
    firstName
@@ -31,14 +31,14 @@ function AbsenceTeamList() {
 
   _keyExtractor = (item, index) => item.firstName;
 
-  _renderItem = ({item}) => (
+  _renderItem = ({ item }) => (
     <AbsenceTeamItem
       item={item}
     />
   );
   console.log(error);
   if (loading) {
-    return <ActivityIndicator/>;
+    return <ActivityIndicator />;
   }
   if (error) {
     return <Text>Error </Text>;
@@ -60,10 +60,10 @@ function AbsenceTeamList() {
         <Icon
           name='md-menu'
           size={30}
-          style={{paddingLeft: 10, paddingRight: 20}}
+          style={{ paddingLeft: 10, paddingRight: 20 }}
           onPress={() => this.props.navigation.openDrawer()}
         />
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: '#000000'}}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000000' }}>
           Team List
         </Text>
       </View>

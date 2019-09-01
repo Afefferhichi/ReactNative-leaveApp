@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -63,6 +62,7 @@
 		F6BCD0B18D4D44AEB3B48DED /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA04455E9463486789DB5249 /* Foundation.ttf */; };
 		FEB2B46B6B6C4FB3B2A852F7 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67CE6B57BDF941B09C742DB0 /* MaterialIcons.ttf */; };
 		FF80311A5B8840DF9E228AF0 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 750C41140CC74624B695429F /* libRNVectorIcons.a */; };
+		D73F9ACC9BAE45AB87134AFE /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1D37DDA0564A798DC1DD28 /* libRNCAsyncStorage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -446,6 +446,8 @@
 		F84B7F709CA3470F987650F3 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		FA04455E9463486789DB5249 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		FD1A42A5250842228AF5968C /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		B5C00EF5F38E47B0A1F20091 /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNCAsyncStorage.xcodeproj"; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6B1D37DDA0564A798DC1DD28 /* libRNCAsyncStorage.a */ = {isa = PBXFileReference; name = "libRNCAsyncStorage.a"; path = "libRNCAsyncStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -478,6 +480,7 @@
 				F1670F182DBC43E5BF77252D /* libRNGestureHandler.a in Frameworks */,
 				9563CD9921CD47568A6C4082 /* libRNReanimated.a in Frameworks */,
 				B9A02EF401BD47598E6130DC /* libRNDatePicker.a in Frameworks */,
+				D73F9ACC9BAE45AB87134AFE /* libRNCAsyncStorage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +749,7 @@
 				28732FFCCC8242E5A4594AE9 /* RNGestureHandler.xcodeproj */,
 				C2F362946F784DD3BC349C75 /* RNReanimated.xcodeproj */,
 				D8A37693EAD44ECEAC0A6F4B /* RNDatePicker.xcodeproj */,
+				B5C00EF5F38E47B0A1F20091 /* RNCAsyncStorage.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1451,12 +1455,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = LiveProjectTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1486,12 +1492,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = LiveProjectTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1522,6 +1530,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = LiveProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1547,6 +1556,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = LiveProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1579,11 +1589,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = "LiveProject-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1622,11 +1634,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = "LiveProject-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1664,11 +1678,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = "LiveProject-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1706,11 +1722,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-reanimatedios/**",
 					"$(SRCROOT)..\node_modules\neact-native-date-pickeriosRNDatePicker",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 				INFOPLIST_FILE = "LiveProject-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

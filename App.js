@@ -9,12 +9,11 @@ import AbsenceTeamList from './src/Screens/AbsenceTeamList';
 import Login from './src/Screens/Login';
 import ExitDetail from './src/Screens/ExitDetail';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider} from 'react-apollo';
 import client from './src/config/createApolloClient';
 // import CustomDatePickerAndroid from './src/Screens/CustomDatePickerAndroid'
 import TimePicker from './src/Screens/TimePicker';
 import AbsenceHistory from '././src/Screens/AbsenceHistory';
-
 
 console.disableYellowBox = true;
 
@@ -96,6 +95,7 @@ const appDrawerNavigator = createDrawerNavigator(
     }
   }
 );
+
 
 const RootStack = createStackNavigator({
   Login: {
