@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
-import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, { Component } from "react";
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import SessionStore from "../common/SessionStore";
 
 class Setting extends Component {
   state = {
@@ -9,10 +15,12 @@ class Setting extends Component {
   };
 
   logout = async () => {
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.props.navigation.navigate('Login');
-    }, 1000);
+    SessionStore.logout(() => {
+      this.setState({ loading: true });
+      setTimeout(() => {
+        this.props.navigation.navigate("Login");
+      }, 1000);
+    });
   };
 
   render() {
@@ -21,51 +29,51 @@ class Setting extends Component {
         <View
           style={{
             height: 58,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             borderWidth: 1,
-            borderColor: 'white',
-            alignItems: 'center',
-            flexDirection: 'row',
+            borderColor: "white",
+            alignItems: "center",
+            flexDirection: "row",
             borderBottomWidth: 1,
-            padding: 10,
-
+            padding: 10
           }}
         >
           <Icon
-            name='md-menu'
+            name="md-menu"
             size={30}
             style={{ paddingLeft: 10, paddingRight: 20 }}
             onPress={() => this.props.navigation.openDrawer()}
           />
-          <Text style={{ fontSize: 20, fontWeight: 'normal', color: '#696969' }}>
+          <Text
+            style={{ fontSize: 20, fontWeight: "normal", color: "#696969" }}
+          >
             Settings
           </Text>
         </View>
 
         <View
           style={{
-            backgroundColor: '#C4D7ED',
+            backgroundColor: "#C4D7ED",
             borderRadius: 15,
             padding: 10,
             margin: 10,
-            flexDirection: 'row'
+            flexDirection: "row"
           }}
         >
           <Image
             source={{
               uri:
-                'https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'
+                "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
             }}
             style={{
               width: 90,
               height: 100,
-              backgroundColor: '#f2f2f2',
+              backgroundColor: "#f2f2f2",
               borderRadius: 15
             }}
           />
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ color: 'white' }}>@username</Text>
-
+            <Text style={{ color: "white" }}>@username</Text>
           </View>
           {/* <TouchableOpacity
     style={{
@@ -85,27 +93,24 @@ class Setting extends Component {
     </TouchableOpacity> */}
           <TouchableOpacity
             style={{
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-              justifyContent: 'center',
+              alignSelf: "flex-end",
+              alignItems: "center",
+              justifyContent: "center",
               marginLeft: 90
             }}
             onPress={() => this.logout()}
           >
-            {this.state.loading &&
-              <ActivityIndicator size="small" />
-            }
-            {!this.state.loading &&
+            {this.state.loading && <ActivityIndicator size="small" />}
+            {!this.state.loading && (
               <Icon
-                name='md-log-out'
+                name="md-log-out"
                 size={30}
-                style={{ alignSelf: 'flex-end' }}
+                style={{ alignSelf: "flex-end" }}
               />
-            }
+            )}
             {/* <Text style={{ fontSize: 12 }}>LOG OUT</Text> */}
           </TouchableOpacity>
         </View>
-
       </View>
     );
   }

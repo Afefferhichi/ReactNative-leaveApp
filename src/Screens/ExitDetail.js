@@ -69,14 +69,9 @@ class ExitDetail extends Component {
 
 
   async componentDidMount() {
-    try {
-      const value = await AsyncStorage.getItem('@login')
-      if (value !== null) {
-        this.setState({ login: JSON.parse(value) });
-      }
-    } catch (e) {
-      // error reading value
-    }
+    SessionStore.isLoggedIn((loggedIn, loginInformation) => {
+      (loggedIn && this.setState({ login: loginInformation }));
+    })
   }
 
   showDatePicker = async (dateNum) => {

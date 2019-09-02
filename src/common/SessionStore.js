@@ -19,7 +19,7 @@ class SessionStore {
     async isLoggedIn(afterGettingCallback) {
         try {
             const loginInformation = await AsyncStorage.getItem('@login');
-            afterGettingCallback && afterGettingCallback(loginInformation !== null);
+            afterGettingCallback && afterGettingCallback(loginInformation !== null, JSON.parse(loginInformation));
         } catch (e) {
             // saving error
         }
