@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
-import {LayoutAnimation, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, UIManager, View, Image} from 'react-native';
-import {ActionSheet} from 'teaset';
+import React, { Component } from 'react';
+import { LayoutAnimation, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, UIManager, View, Image } from 'react-native';
+import { ActionSheet } from 'teaset';
 import Header from '../common/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AbsenceCard from '../common/AbsenceCard';
 import SessionStore from '../common/SessionStore';
 
 export default class ActivityFeed extends Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({ navigation }) => ({
     header: null
   });
 
   constructor() {
     super();
 
-    this.state = {expanded: false, expanded2: false};
+    this.state = { expanded: false, expanded2: false };
 
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -22,7 +22,7 @@ export default class ActivityFeed extends Component {
   }
 
   async componentDidMount() {
-    
+
   }
 
 
@@ -30,10 +30,10 @@ export default class ActivityFeed extends Component {
   showConfirmationButtons = () => {
     ActionSheet.hide();
     let items = [
-      {title: 'Approve', onPress: () => this.props.navigation.navigate('AbsenceConfirm', {mode: 'APPROVE'})},
-      {title: 'Reject', onPress: () => this.props.navigation.navigate('AbsenceConfirm', {mode: 'REJECT'})}
+      { title: 'Approve', onPress: () => this.props.navigation.navigate('AbsenceConfirm', { mode: 'APPROVE' }) },
+      { title: 'Reject', onPress: () => this.props.navigation.navigate('AbsenceConfirm', { mode: 'REJECT' }) }
     ];
-    let cancelItem = {title: 'Cancel'};
+    let cancelItem = { title: 'Cancel' };
     ActionSheet.show(items, cancelItem);
   };
   // ============== Confirmation:End ===============
@@ -41,11 +41,11 @@ export default class ActivityFeed extends Component {
 
   changeLayout = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({expanded: !this.state.expanded});
+    this.setState({ expanded: !this.state.expanded });
   };
   changeLayout2 = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({expanded2: !this.state.expanded2});
+    this.setState({ expanded2: !this.state.expanded2 });
   };
   onButtonShow = () => {
     if (this.state.expanded === false) {
@@ -164,23 +164,23 @@ export default class ActivityFeed extends Component {
           <Icon
             name='md-menu'
             size={30}
-            style={{paddingLeft: 10, paddingRight: 20}}
+            style={{ paddingLeft: 10, paddingRight: 20 }}
             onPress={() => this.props.navigation.openDrawer()}
           />
 
 
-          <Text style={{fontSize: 20, fontWeight: 'normal', color: '#696969'}}>
+          <Text style={{ fontSize: 20, fontWeight: 'normal', color: '#696969' }}>
             Activity Feed
           </Text>
 
         </View>
-        <ScrollView style={{height: '90%'}}>
+        <ScrollView style={{ height: '90%' }}>
           <View style={styles.container}>
             <View style={styles.container}>
-              <Header HeaderText='Leave Request'/>
-              <View style={{flexDirection: 'row'}}>
-                <View style={{width: '30%'}}>
-                  <Icon name='md-calendar' size={29} style={{marginLeft: 30}}/>
+              <Header HeaderText='Leave Request' />
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ width: '30%' }}>
+                  <Icon name='md-calendar' size={29} style={{ marginLeft: 30 }} />
                 </View>
                 <View
                   style={{
@@ -193,8 +193,8 @@ export default class ActivityFeed extends Component {
                     marginTop: 5
                   }}
                 >
-                  <AbsenceCard/>
-                  <View style={{marginLeft: 150}}>{this.onButtonShow()}</View>
+                  <AbsenceCard />
+                  <View style={{ marginLeft: 150 }}>{this.onButtonShow()}</View>
                   {/* {this.onButtonShow()} */}
 
 
@@ -215,7 +215,7 @@ export default class ActivityFeed extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{fontWeight: 'bold'}}>From: </Text>
+                        <Text style={{ fontWeight: 'bold' }}>From: </Text>
                         <Text>12/01/2018</Text>
                       </View>
                       <View
@@ -225,7 +225,7 @@ export default class ActivityFeed extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{fontWeight: 'bold'}}>To: </Text>
+                        <Text style={{ fontWeight: 'bold' }}>To: </Text>
                         <Text>12/01/2018</Text>
                       </View>
                       <View
@@ -235,7 +235,7 @@ export default class ActivityFeed extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{fontWeight: 'bold'}}>Absence Type: </Text>
+                        <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
                         <Text>Holliday</Text>
                       </View>
                       <View
@@ -245,7 +245,7 @@ export default class ActivityFeed extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{fontWeight: 'bold'}}>Reason: </Text>
+                        <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
                         <Text>20.0 days</Text>
                       </View>
                       <View
@@ -255,7 +255,7 @@ export default class ActivityFeed extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{fontWeight: 'bold'}}>Token: </Text>
+                        <Text style={{ fontWeight: 'bold' }}>Token: </Text>
                         <Text>2.00 Days</Text>
                       </View>
                       <View
@@ -265,7 +265,7 @@ export default class ActivityFeed extends Component {
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{fontWeight: 'bold'}}>Remaning: </Text>
+                        <Text style={{ fontWeight: 'bold' }}>Remaning: </Text>
                         <Text>18.00 Days</Text>
                       </View>
                       {/*  */}
@@ -308,7 +308,7 @@ export default class ActivityFeed extends Component {
                         this.props.navigation.navigate('AbsenceDetail')
                       }
                     >
-                      <Text style={{color: 'white'}}>OPEN</Text>
+                      <Text style={{ color: 'white' }}>OPEN</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={{
@@ -324,7 +324,7 @@ export default class ActivityFeed extends Component {
                         this.showConfirmationButtons()
                       }
                     >
-                      <Icon name='md-menu' size={30} style={{color: 'white'}}/>
+                      <Icon name='md-menu' size={30} style={{ color: 'white' }} />
                     </TouchableOpacity>
 
                   </View>
@@ -332,11 +332,11 @@ export default class ActivityFeed extends Component {
                 </View>
               </View>
               {/* second card  */}
-              <View style={{marginTop: 10}}>
-                <Header HeaderText='Exit Request'/>
-                <View style={{flexDirection: 'row'}}>
-                  <View style={{width: '30%'}}>
-                    <Icon name='md-time' size={29} style={{marginLeft: 30}}/>
+              <View style={{ marginTop: 10 }}>
+                <Header HeaderText='Exit Request' />
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: '30%' }}>
+                    <Icon name='md-time' size={29} style={{ marginLeft: 30 }} />
 
                   </View>
                   <View
@@ -350,8 +350,8 @@ export default class ActivityFeed extends Component {
                       marginTop: 5
                     }}
                   >
-                    <AbsenceCard/>
-                    <View style={{marginLeft: 150}}>{this.onButtonShow2()}</View>
+                    <AbsenceCard />
+                    <View style={{ marginLeft: 150 }}>{this.onButtonShow2()}</View>
                     {/* {this.onButtonShow()} */}
 
 
@@ -373,8 +373,8 @@ export default class ActivityFeed extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{fontWeight: 'bold'}}>From: </Text>
-                          <Text>12/01/2018 {SessionStore.isAdmin()}</Text>
+                          <Text style={{ fontWeight: 'bold' }}>From: </Text>
+                          <Text>12/01/2018</Text>
                         </View>
 
                         <View
@@ -384,7 +384,7 @@ export default class ActivityFeed extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{fontWeight: 'bold'}}>Time: </Text>
+                          <Text style={{ fontWeight: 'bold' }}>Time: </Text>
                           <Text>Holliday</Text>
                         </View>
                         <View
@@ -394,7 +394,7 @@ export default class ActivityFeed extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{fontWeight: 'bold'}}>Absence Type: </Text>
+                          <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
                           <Text>20.0 days</Text>
                         </View>
                         <View
@@ -404,7 +404,7 @@ export default class ActivityFeed extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{fontWeight: 'bold'}}>Reason: </Text>
+                          <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
                           <Text>2.00 Days</Text>
                         </View>
                         <View
@@ -414,7 +414,7 @@ export default class ActivityFeed extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{fontWeight: 'bold'}}>date of recovery: </Text>
+                          <Text style={{ fontWeight: 'bold' }}>date of recovery: </Text>
                           <Text>18.00 Days</Text>
                         </View>
 
@@ -443,25 +443,27 @@ export default class ActivityFeed extends Component {
                               this.props.navigation.navigate('ExitDetail')
                             }
                           >
-                            <Text style={{color: 'white'}}>OPEN</Text>
+                            <Text style={{ color: 'white' }}>OPEN</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity
-                            style={{
-                              height: 30,
-                              width: 50,
-                              backgroundColor: '#a39c9b',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              marginLeft: 5,
-                              borderRadius: 3
-                            }}
-                            onPress={() =>
-                              this.showConfirmationButtons()
-                            }
-                          >
-                            <Icon name='md-menu' size={30} style={{color: 'white'}}/>
-                          </TouchableOpacity>
+                          {SessionStore.isAdmin() &&
+                            <TouchableOpacity
+                              style={{
+                                height: 30,
+                                width: 50,
+                                backgroundColor: '#a39c9b',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginLeft: 5,
+                                borderRadius: 3
+                              }}
+                              onPress={() =>
+                                this.showConfirmationButtons()
+                              }
+                            >
+                              <Icon name='md-menu' size={30} style={{ color: 'white' }} />
+                            </TouchableOpacity>
 
+                          }
                         </View>
                         {/*  */}
                       </View>
