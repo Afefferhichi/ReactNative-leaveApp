@@ -9,16 +9,10 @@ class Setting extends Component {
   };
 
   logout = async () => {
-    this.setState({loading: true});
-    try {
-      await AsyncStorage.removeItem('@login');
-      setTimeout(()=>{
-        this.props.navigation.navigate('Login');
-      }, 1000);
-    } catch (e) {
-      // saving error
-    }
-
+    this.setState({ loading: true });
+    setTimeout(() => {
+      this.props.navigation.navigate('Login');
+    }, 1000);
   };
 
   render() {

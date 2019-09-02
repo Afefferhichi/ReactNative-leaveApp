@@ -20,6 +20,10 @@ export default class ActivityFeed extends Component {
     }
   }
 
+  async componentDidMount() {
+    
+  }
+
 
   // ============== Confirmation ===============
   showConfirmationButtons = () => {
@@ -409,7 +413,7 @@ export default class ActivityFeed extends Component {
                             marginBottom: 5
                           }}
                         >
-                          <Text style={{fontWeight: 'bold'}}>date of recivery: </Text>
+                          <Text style={{fontWeight: 'bold'}}>date of recovery: </Text>
                           <Text>18.00 Days</Text>
                         </View>
 

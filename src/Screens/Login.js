@@ -5,7 +5,7 @@ import validationRules from '../common/validationRules';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import SessionStore from '../common/SessionStore';
 
 
 const LOGIN = gql(`
@@ -26,8 +26,13 @@ class Login extends Component {
     action: 'Login',
     hasErrors: false,
     requesting: false,
-    login: null,
-    password: '',
+    // Manager
+    // login: 'Sameh.Ouederni',
+    // password: '123aze',
+
+    // Normal User
+    login: 'Mahdi.Turki',
+    password: '123',
     loginError: '',
     isCheckedLogin: false,
     loggedIn: false
@@ -36,12 +41,13 @@ class Login extends Component {
   async componentDidMount() {
     try {
       const value = await AsyncStorage.getItem('@login')
-      await this.setState({isCheckedLogin: true});
+      await this.setState({ isCheckedLogin: true });
       if (value !== null) {
-        await this.setState({loggedIn: true});
-        setTimeout( async ()=>{
+        await this.setState({ loggedIn: true });
+        setTimeout(async () => {
           await this.setState({
-            loggedIn: false});
+            loggedIn: false
+          });
           this.props.navigation.navigate('ActivityFeed');
         }, 500);
       }
@@ -113,13 +119,14 @@ class Login extends Component {
                     setTimeout(async () => {
 
                       try {
-                        await AsyncStorage.setItem('@login', JSON.stringify(data.login))
-                        await this.setState({
-                          requesting: false,
-                          login: null,
-                          password: null
+                        SessionStore.login(data.login, async () => {
+                          await this.setState({
+                            requesting: false,
+                            login: null,
+                            password: null
+                          })
+                          this.props.navigation.navigate('ActivityFeed');
                         })
-                        this.props.navigation.navigate('ActivityFeed');
                       } catch (e) {
                         // saving error
                       }

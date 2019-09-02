@@ -5,6 +5,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 class ShowHistory extends Component {
+  static navigationOptions = ({navigation}) => ({
+    header: null
+  });
+
   render() {
     return (
       <View>

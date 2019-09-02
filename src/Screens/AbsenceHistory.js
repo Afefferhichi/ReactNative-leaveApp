@@ -1,8 +1,12 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
+import { Image, Text, View } from 'react-native';
 import Header from '../common/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 class AbsenceHistory extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  });
+
   render() {
     return (
       <View>
@@ -16,7 +20,7 @@ class AbsenceHistory extends React.Component {
           width: '100%',
           justifyContent: 'center'
         }}>
-          <Text style={{color: '#000000', fontWeight: 'bold', marginLeft: 20}}>{this.props.topText}</Text>
+          <Text style={{ color: '#000000', fontWeight: 'bold', marginLeft: 20 }}>{this.props.topText}</Text>
 
         </View>
         <View
@@ -30,25 +34,25 @@ class AbsenceHistory extends React.Component {
           }}
         >
 
-          <View style={{marginLeft: 10, width: '60%'}}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>{this.props.shift} :</Text>
-              <Text style={{color: 'black'}}>Time: {this.props.time}</Text>
+          <View style={{ marginLeft: 10, width: '60%' }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ color: 'black' }}>{this.props.shift} :</Text>
+              <Text style={{ color: 'black' }}>Time: {this.props.time}</Text>
             </View>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>Morning :</Text>
-              <Text style={{color: 'black'}}>Time: 6: 00, pm</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ color: 'black' }}>Morning :</Text>
+              <Text style={{ color: 'black' }}>Time: 6: 00, pm</Text>
             </View>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>Morning :</Text>
-              <Text style={{color: 'black'}}>Time: 6: 00, pm</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ color: 'black' }}>Morning :</Text>
+              <Text style={{ color: 'black' }}>Time: 6: 00, pm</Text>
             </View>
           </View>
-          <View style={{alignItems: 'center', alignSelf: 'center'}}>
+          <View style={{ alignItems: 'center', alignSelf: 'center' }}>
             <Icon
               name='md-arrow-dropright'
               size={30}
-              style={{paddingLeft: 10, paddingRight: 20, alignSelf: 'flex-end', marginLeft: 75}}
+              style={{ paddingLeft: 10, paddingRight: 20, alignSelf: 'flex-end', marginLeft: 75 }}
               onPress={this.props.onPress}
             />
           </View>

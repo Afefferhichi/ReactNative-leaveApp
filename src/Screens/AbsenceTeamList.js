@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, Text, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileCard from '../common/ProfileCard';
@@ -6,8 +6,16 @@ import ProfileCard from '../common/ProfileCard';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
+const FETCH_EMPLOYEES = gql`
+{
+ employees{
+ firstName
+ lastName
+ }
+}
+`;
 
-function AbsenceTeamItem({ item }) {
+const AbsenceTeamItem = ({ item }) => {
   return (
     <ProfileCard
       onPress={() => this.props.navigation.navigate('AbsenceHistory')}
@@ -19,15 +27,8 @@ function AbsenceTeamItem({ item }) {
   );
 }
 
-function AbsenceTeamList() {
-  const { loading, error, data } = Query(gql`
-  {
-   employees{
-   firstName
-   lastName
-   }
-  }
-  `);
+class AbsenceTeamList extends Component {
+
 
   _keyExtractor = (item, index) => item.firstName;
 
@@ -36,17 +37,9 @@ function AbsenceTeamList() {
       item={item}
     />
   );
-  console.log(error);
-  if (loading) {
-    return <ActivityIndicator />;
-  }
-  if (error) {
-    return <Text>Error </Text>;
-  }
 
-
-  return (
-    <View>
+  render() {
+    return (
       <View
         style={{
           height: 58,
@@ -65,31 +58,41 @@ function AbsenceTeamList() {
         />
         <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000000' }}>
           Team List
-        </Text>
+          </Text>
+        <TextInput
+          style={{
+            backgroundColor: 'white',
+            width: '90%',
+            alignSelf: 'center',
+            borderColor: '#f3f3f3',
+            borderWidth: 1,
+            marginTop: 5,
+            marginBottom: 5,
+            borderRadius: 20,
+            height: 40,
+            justifyContent: 'center'
+          }}
+          placeholder='Search here'
+        />
+        <Query query={FETCH_EMPLOYEES} variables={{}}>
+          {(loading, error, data) => {
+            <View>
+              {loading && <ActivityIndicator size="large" />}
+              {error && <Text>An error occurred while retriving data</Text>}
+              {!error && !loading &&
+                <FlatList
+                  data={data.employees}
+                  extraData={data}
+                  keyExtractor={this._keyExtractor}
+                  renderItem={this._renderItem}
+                />}
+            </View>
+          }}
+        </Query>
       </View>
-      <TextInput
-        style={{
-          backgroundColor: 'white',
-          width: '90%',
-          alignSelf: 'center',
-          borderColor: '#f3f3f3',
-          borderWidth: 1,
-          marginTop: 5,
-          marginBottom: 5,
-          borderRadius: 20,
-          height: 40,
-          justifyContent: 'center'
-        }}
-        placeholder='Search here'
-      />
-      <FlatList
-        data={data.employees}
-        extraData={data}
-        keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
-      />
-    </View>
-  );
+    );
+
+  }
 }
 
 export default AbsenceTeamList;
