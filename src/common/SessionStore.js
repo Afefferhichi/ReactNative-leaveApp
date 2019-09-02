@@ -8,9 +8,9 @@ class SessionStore {
     async login(loginInformation, afterLoginCallback) {
         try {
             const _loginInformation = loginInformation;
-            _loginInformation.isAdmin = _loginInformation.id === 1 || _loginInformation.id === 2;
+            _loginInformation.isAdmin = _loginInformation.id === "1" || _loginInformation.id === "2";
             await AsyncStorage.setItem('@login', JSON.stringify(_loginInformation));
-            this.value = loginInformation;
+            this.value = _loginInformation;
             afterLoginCallback && afterLoginCallback();
         } catch (e) {
             // saving error
