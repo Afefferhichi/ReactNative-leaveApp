@@ -40,17 +40,15 @@ class Login extends Component {
 
   async componentDidMount() {
     try {
-      const value = await AsyncStorage.getItem('@login')
-      await this.setState({ isCheckedLogin: true });
-      if (value !== null) {
-        await this.setState({ loggedIn: true });
-        setTimeout(async () => {
-          await this.setState({
-            loggedIn: false
-          });
-          this.props.navigation.navigate('ActivityFeed');
-        }, 500);
-      }
+      SessionStore.isLoggedIn( loggedIn => {
+        if(loggedIn) {
+          await this.setState({ loggedIn: true });
+          setTimeout(async () => {
+            await this.setState({ loggedIn: false });
+            this.props.navigation.navigate('ActivityFeed');
+          }, 500);
+        }
+      })
     } catch (e) {
       // error reading value
     }

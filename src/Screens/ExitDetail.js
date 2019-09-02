@@ -16,9 +16,9 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import gql from 'graphql-tag';
 import { ApolloProvider, Mutation } from 'react-apollo';
-import AsyncStorage from '@react-native-community/async-storage';
 import client from '../config/createApolloClient';
 import constants from '../common/constants';
+import SessionStore from '../common/SessionStore';
 
 const ADD_EXIT_DETAIL = gql`
 mutation createsort($input : sortieInput!) {
