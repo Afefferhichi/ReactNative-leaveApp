@@ -42,7 +42,6 @@ class Login extends Component {
     try {
       SessionStore.isLoggedIn( async (_loggedIn) => {
         if(_loggedIn) {
-          await this.setState({ loggedIn: true });
           setTimeout(async () => {
             await this.setState({ loggedIn: false });
             this.props.navigation.navigate('ActivityFeed');
