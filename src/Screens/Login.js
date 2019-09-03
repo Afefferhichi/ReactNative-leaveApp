@@ -5,7 +5,7 @@ import validationRules from '../common/validationRules';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import SessionStore from '../common/SessionStore';
+import SessionStore from '../common/Stores/SessionStore';
 
 
 const LOGIN = gql(`

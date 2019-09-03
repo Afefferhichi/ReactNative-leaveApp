@@ -4,7 +4,8 @@ import { ActionSheet } from 'teaset';
 import Header from '../common/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AbsenceCard from '../common/AbsenceCard';
-import SessionStore from '../common/SessionStore';
+import SessionStore from '../common/Stores/SessionStore';
+import ExitRequestStore from "../common/Stores/ExitRequestStore";
 
 export default class ActivityFeed extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -14,7 +15,7 @@ export default class ActivityFeed extends Component {
   constructor() {
     super();
 
-    this.state = { expanded: false, expanded2: false };
+    this.state = { expanded: false, expanded2: false, exitRequestData: {} };
 
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -22,7 +23,9 @@ export default class ActivityFeed extends Component {
   }
 
   async componentDidMount() {
-
+    ExitRequestStore.get((exitRequestData) => {
+      this.setState({exitRequestData})
+    })
   }
 
 
