@@ -4,6 +4,7 @@ import {ActionSheet} from 'teaset';
 import Header from '../common/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AbsenceCard from '../common/AbsenceCard';
+import SessionStore from '../common/SessionStore';
 
 export default class ActivityFeed extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -373,7 +374,7 @@ export default class ActivityFeed extends Component {
                           }}
                         >
                           <Text style={{fontWeight: 'bold'}}>From: </Text>
-                          <Text>12/01/2018</Text>
+                          <Text>12/01/2018 {SessionStore.isAdmin()}</Text>
                         </View>
 
                         <View
