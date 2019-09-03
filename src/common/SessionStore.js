@@ -8,6 +8,7 @@ class SessionStore {
     async login(loginInformation, afterLoginCallback) {
         try {
             await AsyncStorage.setItem('@login', JSON.stringify(loginInformation));
+            this.value = loginInformation;
             afterLoginCallback && afterLoginCallback();
         } catch (e) {
             // saving error
@@ -19,6 +20,7 @@ class SessionStore {
     async isLoggedIn(afterGettingCallback) {
         try {
             const loginInformation = await AsyncStorage.getItem('@login');
+            this.value = loginInformation;
             afterGettingCallback && afterGettingCallback(loginInformation !== null, JSON.parse(loginInformation));
         } catch (e) {
             // saving error
@@ -26,19 +28,15 @@ class SessionStore {
     };
 
 
-    async getLoginInformation(afterGettingCallback) {
-        try {
-            const loginInformation = await AsyncStorage.getItem('@login');
-            afterGettingCallback && afterGettingCallback(JSON.parse(loginInformation));
-        } catch (e) {
-            // saving error
-        }
+    getLoginInformation() {
+        return this.value;
     };
 
     
     async logout(afterLogoutCallback) {
         try {
             await AsyncStorage.removeItem('@login');
+            this.value = {};
             afterLogoutCallback && afterLogoutCallback();
         } catch (e) {
             // saving error
