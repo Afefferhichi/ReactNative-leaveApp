@@ -7,7 +7,9 @@ class SessionStore {
 
     async login(loginInformation, afterLoginCallback) {
         try {
-            await AsyncStorage.setItem('@login', JSON.stringify(loginInformation));
+            const _loginInformation = loginInformation;
+            _loginInformation.isAdmin = _loginInformation.id === 1 || _loginInformation.id === 2;
+            await AsyncStorage.setItem('@login', JSON.stringify(_loginInformation));
             this.value = loginInformation;
             afterLoginCallback && afterLoginCallback();
         } catch (e) {
@@ -31,6 +33,10 @@ class SessionStore {
     getLoginInformation() {
         return this.value;
     };
+
+    isAdmin() {
+        return this.value.isAdmin;
+    }
 
     
     async logout(afterLogoutCallback) {
