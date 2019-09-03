@@ -41,6 +41,7 @@ class Login extends Component {
   async componentDidMount() {
     try {
       SessionStore.isLoggedIn( async (_loggedIn) => {
+        await this.setState({ isCheckedLogin: false });
         if(_loggedIn) {
           setTimeout(async () => {
             await this.setState({ loggedIn: false });
