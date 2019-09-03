@@ -10,10 +10,6 @@ class AbsenceCard extends Component {
           <Text style={{color: 'blue'}}>12/01/2018</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>FROM: </Text>
-          <Text>HEART, JENNIFER</Text>
-        </View>
-        <View style={{flexDirection: 'row'}}>
           <Text style={{fontWeight: 'bold'}}>EMPLOYEE: </Text>
           <Text>HEART, JENNIFER</Text>
         </View>

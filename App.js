@@ -8,6 +8,8 @@ import Setting from './src/Screens/Setting';
 import AbsenceTeamList from './src/Screens/AbsenceTeamList';
 import Login from './src/Screens/Login';
 import ExitDetail from './src/Screens/ExitDetail';
+import ExitRequest from '././src/Screens/ExitRequest';
+import LeaveRequest from '././src/Screens/LeaveRequest';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ApolloProvider} from 'react-apollo';
 import client from './src/config/createApolloClient';
@@ -37,6 +39,12 @@ const AppStackNavigator = createStackNavigator({
   },
   ExitDetail: {
     screen: ExitDetail
+  },
+  ExitRequest: {
+    screen: ExitRequest
+  },
+  LeaveRequest: {
+    screen: LeaveRequest
   },
   TimePicker: {
     screen: TimePicker
@@ -71,6 +79,20 @@ const appDrawerNavigator = createDrawerNavigator(
       screen: AbsenceTeamList,
       navigationOptions: {
         drawerLabel: 'AbsenceTeamList',
+        drawerIcon: <Icon name="md-list" size={28} style={{color: 'white'}}/>
+      }
+    },
+    ExitRequest: {
+      screen: ExitRequest,
+      navigationOptions: {
+        drawerLabel: 'ExitRequest',
+        drawerIcon: <Icon name="md-list" size={28} style={{color: 'white'}}/>
+      }
+    },
+    LeaveRequest: {
+      screen: LeaveRequest,
+      navigationOptions: {
+        drawerLabel: 'LeaveRequest',
         drawerIcon: <Icon name="md-list" size={28} style={{color: 'white'}}/>
       }
     },

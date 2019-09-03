@@ -15,7 +15,12 @@ export default class ActivityFeed extends Component {
   constructor() {
     super();
 
-    this.state = { expanded: false, expanded2: false, exitRequestData: {} };
+    this.state = {
+      expanded: false,
+      expanded2: false,
+      exitRequestData: {},
+      exitRequests: []
+    };
 
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -24,7 +29,7 @@ export default class ActivityFeed extends Component {
 
   async componentDidMount() {
     ExitRequestStore.get((exitRequestData) => {
-      this.setState({exitRequestData})
+      this.setState({exitRequests: [exitRequestData] });
     })
   }
 
@@ -342,137 +347,143 @@ export default class ActivityFeed extends Component {
                     <Icon name='md-time' size={29} style={{ marginLeft: 30 }} />
 
                   </View>
-                  <View
-                    style={{
-                      borderWidth: 0,
-                      width: ' 70%',
-                      borderColor: '#f2f2f2',
-                      borderLeftColor: 'blue',
-                      borderLeftWidth: 0,
-                      marginLeft: 5,
-                      marginTop: 5
-                    }}
-                  >
-                    <AbsenceCard />
-                    <View style={{ marginLeft: 150 }}>{this.onButtonShow2()}</View>
-                    {/* {this.onButtonShow()} */}
+
+                  {this.state.exitRequests.length === 0 &&
+                    <Text>Oops, you don't have any Exit Requeyet.</Text>
+                  }
+                  {this.state.exitRequests.length > 0 &&
+                    <View
+                      style={{
+                        borderWidth: 0,
+                        width: ' 70%',
+                        borderColor: '#f2f2f2',
+                        borderLeftColor: 'blue',
+                        borderLeftWidth: 0,
+                        marginLeft: 5,
+                        marginTop: 5
+                      }}
+                    >
+                      <AbsenceCard />
+                      <View style={{ marginLeft: 150 }}>{this.onButtonShow2()}</View>
+                      {/* {this.onButtonShow()} */}
 
 
-                    {/* /// */}
+                      {/* /// */}
 
-                    <View style={styles.btnTextHolder}>
-                      <View
-                        style={{
-                          height: this.state.expanded2 ? null : 0,
-                          overflow: 'hidden'
-                        }}
-                      >
-
-                        {/*  */}
+                      <View style={styles.btnTextHolder}>
                         <View
                           style={{
-                            flexDirection: 'row',
-                            marginLeft: 5,
-                            marginBottom: 5
-                          }}
-                        >
-                          <Text style={{ fontWeight: 'bold' }}>From: </Text>
-                          <Text>12/01/2018</Text>
-                        </View>
-
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            marginLeft: 5,
-                            marginBottom: 5
-                          }}
-                        >
-                          <Text style={{ fontWeight: 'bold' }}>Time: </Text>
-                          <Text>Holliday</Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            marginLeft: 5,
-                            marginBottom: 5
-                          }}
-                        >
-                          <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
-                          <Text>20.0 days</Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            marginLeft: 5,
-                            marginBottom: 5
-                          }}
-                        >
-                          <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
-                          <Text>2.00 Days</Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            marginLeft: 5,
-                            marginBottom: 5
-                          }}
-                        >
-                          <Text style={{ fontWeight: 'bold' }}>date of recovery: </Text>
-                          <Text>18.00 Days</Text>
-                        </View>
-
-
-                        <View
-                          style={{
-                            height: 40,
-                            backgroundColor: 'white',
-                            flexDirection: 'row',
-                            alignItems: 'center'
+                            height: this.state.expanded2 ? null : 0,
+                            overflow: 'hidden'
                           }}
                         >
 
-                          <TouchableOpacity
+                          {/*  */}
+                          <View
                             style={{
-                              height: 30,
-                              width: 90,
-                              backgroundColor: '#a39c9b',
-                              justifyContent: 'center',
-                              alignItems: 'center',
+                              flexDirection: 'row',
                               marginLeft: 5,
-                              borderRadius: 3,
-                              marginRight: 20
+                              marginBottom: 5
                             }}
-                            onPress={() =>
-                              this.props.navigation.navigate('ExitDetail')
-                            }
                           >
-                            <Text style={{ color: 'white' }}>OPEN</Text>
-                          </TouchableOpacity>
-                          {SessionStore.isAdmin() &&
+                            <Text style={{ fontWeight: 'bold' }}>From: </Text>
+                            <Text>12/01/2018</Text>
+                          </View>
+
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              marginLeft: 5,
+                              marginBottom: 5
+                            }}
+                          >
+                            <Text style={{ fontWeight: 'bold' }}>Time: </Text>
+                            <Text>Holliday</Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              marginLeft: 5,
+                              marginBottom: 5
+                            }}
+                          >
+                            <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
+                            <Text>20.0 days</Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              marginLeft: 5,
+                              marginBottom: 5
+                            }}
+                          >
+                            <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
+                            <Text>2.00 Days</Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              marginLeft: 5,
+                              marginBottom: 5
+                            }}
+                          >
+                            <Text style={{ fontWeight: 'bold' }}>date of recovery: </Text>
+                            <Text>18.00 Days</Text>
+                          </View>
+
+
+                          <View
+                            style={{
+                              height: 40,
+                              backgroundColor: 'white',
+                              flexDirection: 'row',
+                              alignItems: 'center'
+                            }}
+                          >
+
                             <TouchableOpacity
                               style={{
                                 height: 30,
-                                width: 50,
+                                width: 90,
                                 backgroundColor: '#a39c9b',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 marginLeft: 5,
-                                borderRadius: 3
+                                borderRadius: 3,
+                                marginRight: 20
                               }}
                               onPress={() =>
-                                this.showConfirmationButtons()
+                                this.props.navigation.navigate('ExitDetail')
                               }
                             >
-                              <Icon name='md-menu' size={30} style={{ color: 'white' }} />
+                              <Text style={{ color: 'white' }}>OPEN</Text>
                             </TouchableOpacity>
+                            {SessionStore.isAdmin() &&
+                              <TouchableOpacity
+                                style={{
+                                  height: 30,
+                                  width: 50,
+                                  backgroundColor: '#a39c9b',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  marginLeft: 5,
+                                  borderRadius: 3
+                                }}
+                                onPress={() =>
+                                  this.showConfirmationButtons()
+                                }
+                              >
+                                <Icon name='md-menu' size={30} style={{ color: 'white' }} />
+                              </TouchableOpacity>
 
-                          }
+                            }
+                          </View>
+                          {/*  */}
                         </View>
-                        {/*  */}
                       </View>
+                      {/*  */}
                     </View>
-                    {/*  */}
-                  </View>
+                  }
                 </View>
               </View>
               {/*  */}

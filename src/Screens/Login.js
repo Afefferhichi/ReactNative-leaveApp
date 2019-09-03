@@ -27,12 +27,12 @@ class Login extends Component {
     hasErrors: false,
     requesting: false,
     // Manager
-    login: 'Sameh.Ouederni',
-    password: '123aze',
+    // login: 'Sameh.Ouederni',
+    // password: '123aze',
 
     // Normal User
-    // login: 'Mahdi.Turki',
-    // password: '123',
+    login: 'Mahdi.Turki',
+    password: '123',
     loginError: '',
     isCheckedLogin: false,
     loggedIn: false
