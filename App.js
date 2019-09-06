@@ -1,148 +1,161 @@
-import React, {Component} from 'react';
-import ActivityFeed from './src/Screens/ActivityFeed';
-import {createAppContainer, createDrawerNavigator, createStackNavigator} from 'react-navigation';
-import AbsenceDetail from './src/Screens/AbsenceDetail';
-import AbsenceConfirm from './src/Screens/AbsenceConfirm';
-import ShowHistory from './src/Screens/ShowHistory';
-import Setting from './src/Screens/Setting';
-import AbsenceTeamList from './src/Screens/AbsenceTeamList';
-import Login from './src/Screens/Login';
-import ExitDetail from './src/Screens/ExitDetail';
-import ExitRequest from '././src/Screens/ExitRequest';
-import LeaveRequest from '././src/Screens/LeaveRequest';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {ApolloProvider} from 'react-apollo';
-import client from './src/config/createApolloClient';
-// import CustomDatePickerAndroid from './src/Screens/CustomDatePickerAndroid'
-import TimePicker from './src/Screens/TimePicker';
-import AbsenceHistory from '././src/Screens/AbsenceHistory';
+/***
+ * Entry point of the whole project.
+ * Detail:
+ * We use 2 navigator createStackNavigator and createDrawerNavigator
+ * Here is a main structure of this application.
+ *
+ * AppContainer (
+ *  RootStack:createStackNavigator (
+ *    Login:Component,
+ *    appDrawerNavigator:createDrawerNavigator (
+ *      AppStackNavigator:createStackNavigator (
+ *        ActivityFeed  : Component,
+ *        AbsenceHistory  : Component,
+ *        AbsenceDetail : Component,
+ *        AbsenceConfirm  : Component,
+ *        ShowHistory : Component,
+ *        ExitDetail  : Component,
+ *        ExitRequest : Component,
+ *        LeaveRequest  : Component,
+ *      ),
+ *      ShowHistory   : Component,
+ *      AbsenceTeamList   : Component,
+ *      ExitRequest   : Component,
+ *      LeaveRequest    : Component,
+ *      Setting   : Component
+ *    )
+ *  )
+ *
+ */
 
+import React, { Component } from "react";
+import {
+  createAppContainer,
+  createDrawerNavigator,
+  createStackNavigator
+} from "react-navigation";
+
+import {AbsenceConfirm} from "./src/Screens/AbsenceConfirm"
+
+import {
+  AbsenceDetail,
+  AbsenceHistory,
+  AbsenceTeamList,
+  ActivityFeed,
+  ExitDetail,
+  ExitRequest,
+  LeaveRequest,
+  Login,
+  Setting,
+  ShowHistory
+} from "./src/Screens";
+
+import Icon from "react-native-vector-icons/Ionicons";
+import { ApolloProvider } from "react-apollo";
+import client from "./src/config/createApolloClient";
+import colors from "./src/common/colors";
 console.disableYellowBox = true;
 
-
-const AppStackNavigator = createStackNavigator({
-
-  ActivityFeed: {
-    screen: ActivityFeed
+const AppStackNavigator = createStackNavigator(
+  {
+    ActivityFeed,
+    AbsenceHistory,
+    AbsenceDetail,
+    AbsenceConfirm,
+    ShowHistory,
+    ExitDetail,
+    ExitRequest,
+    LeaveRequest
   },
-  AbsenceHistory: {
-    screen: AbsenceHistory
-  },
-  AbsenceDetail: {
-    screen: AbsenceDetail
-  },
-  AbsenceConfirm: {
-    screen: AbsenceConfirm
-  },
-  ShowHistory: {
-    screen: ShowHistory
-  },
-  ExitDetail: {
-    screen: ExitDetail
-  },
-  ExitRequest: {
-    screen: ExitRequest
-  },
-  LeaveRequest: {
-    screen: LeaveRequest
-  },
-  TimePicker: {
-    screen: TimePicker
+  {
+    initialRouteName: "ActivityFeed"
   }
-}, {
-  initialRouteName: 'ActivityFeed',
-  // headerMode: 'none'
-});
-
-
+);
 
 const appDrawerNavigator = createDrawerNavigator(
   {
-
     ActivityFeed: {
-
       screen: AppStackNavigator,
       navigationOptions: {
-        drawerLabel: 'ActivityFeed',
-        drawerIcon: <Icon name="md-home" size={28} style={{color: 'white'}}/>
+        drawerLabel: "ActivityFeed",
+        drawerIcon: <Icon name="md-home" size={28} style={{ color: colors.white }} />
       }
     },
     ShowHistory: {
-
       screen: ShowHistory,
       navigationOptions: {
-        drawerLabel: 'ShowHistory',
-        drawerIcon: <Icon name="md-speedometer" size={28} style={{color: 'white'}}/>
+        drawerLabel: "ShowHistory",
+        drawerIcon: (
+          <Icon name="md-speedometer" size={28} style={{ color: colors.white }} />
+        )
       }
     },
     AbsenceTeamList: {
       screen: AbsenceTeamList,
       navigationOptions: {
-        drawerLabel: 'AbsenceTeamList',
-        drawerIcon: <Icon name="md-list" size={28} style={{color: 'white'}}/>
+        drawerLabel: "AbsenceTeamList",
+        drawerIcon: <Icon name="md-list" size={28} style={{ color: colors.white }} />
       }
     },
     ExitRequest: {
       screen: ExitRequest,
       navigationOptions: {
-        drawerLabel: 'ExitRequest',
-        drawerIcon: <Icon name="md-list" size={28} style={{color: 'white'}}/>
+        drawerLabel: "ExitRequest",
+        drawerIcon: <Icon name="md-list" size={28} style={{ color: colors.white }} />
       }
     },
     LeaveRequest: {
       screen: LeaveRequest,
       navigationOptions: {
-        drawerLabel: 'LeaveRequest',
-        drawerIcon: <Icon name="md-list" size={28} style={{color: 'white'}}/>
+        drawerLabel: "LeaveRequest",
+        drawerIcon: <Icon name="md-list" size={28} style={{ color: colors.white }} />
       }
     },
 
     Setting: {
       screen: Setting,
       navigationOptions: {
-        drawerLabel: 'Setting',
-        drawerIcon: <Icon name="md-cog" size={28} style={{color: 'white'}}/>
+        drawerLabel: "Setting",
+        drawerIcon: <Icon name="md-cog" size={28} style={{ color: colors.white }} />
       }
     }
   },
 
   {
-    initialRouteName: 'ActivityFeed',
+    initialRouteName: "ActivityFeed",
     // hideStatusBar: true,
-    drawerBackgroundColor: '#5F8CA3',
-    overlayColor: '#8CC6D7',
+    drawerBackgroundColor: "#5F8CA3",
+    overlayColor: "#8CC6D7",
     contentOptions: {
-      activeTintColor: '#fff',
-      activeBackgroundColor: '#91BACF'
+      activeTintColor: "#fff",
+      activeBackgroundColor: "#91BACF"
     }
   }
 );
 
-
-const RootStack = createStackNavigator({
-  Login: {
-    screen: Login
+const RootStack = createStackNavigator(
+  {
+    Login: {
+      screen: Login
+    },
+    appDrawerNavigator: {
+      screen: appDrawerNavigator
+    }
   },
-  appDrawerNavigator: {
-    screen: appDrawerNavigator
+  {
+    headerMode: "none"
   }
-}, {
-  headerMode: 'none'
-});
+);
 const AppContainer = createAppContainer(RootStack);
 
-
-class App extends Component {
-
+class LeaveApp extends Component {
   render() {
     return (
-
       <ApolloProvider client={client}>
-        <AppContainer/>
+        <AppContainer />
       </ApolloProvider>
     );
   }
 }
 
-export default App;
-
+export default LeaveApp;

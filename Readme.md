@@ -1,3 +1,13 @@
-# Leave App
-# This app is built to manage the leave status of a company.
-# Coming soon
+### Leave Management App
+
+#### How to run the project
+
+```$xslt
+$ yarn
+$ react-native eject
+$ react-native link
+$ react-native run-android
+```
+
+
+

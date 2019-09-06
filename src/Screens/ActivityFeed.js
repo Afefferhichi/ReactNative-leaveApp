@@ -1,17 +1,22 @@
-import React, { Component } from 'react';
-import { LayoutAnimation, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, UIManager, View, Image } from 'react-native';
-import { ActionSheet } from 'teaset';
-import Header from '../common/Header';
-import Icon from 'react-native-vector-icons/Ionicons';
-import AbsenceCard from '../common/AbsenceCard';
-import SessionStore from '../common/Stores/SessionStore';
-import ExitRequestStore from "../common/Stores/ExitRequestStore";
+import React, { Component } from "react";
+import {
+  LayoutAnimation,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  View
+} from "react-native";
+import { ActionSheet } from "teaset";
+import Header from "../common/Header";
+import Icon from "react-native-vector-icons/Ionicons";
+import AbsenceCard from "../common/AbsenceCard";
+import SessionStore from "../Stores/SessionStore";
+import ExitRequestStore from "../Stores/ExitRequestStore";
 
-export default class ActivityFeed extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    header: null
-  });
-
+class ActivityFeed extends Component {
   constructor() {
     super();
 
@@ -22,30 +27,40 @@ export default class ActivityFeed extends Component {
       exitRequests: []
     };
 
-    if (Platform.OS === 'android') {
+    if (Platform.OS === "android") {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }
 
-  async componentDidMount() {
-    ExitRequestStore.get((exitRequestData) => {
-      this.setState({exitRequests: [exitRequestData] });
-    })
-  }
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  });
 
+  async componentDidMount() {
+    ExitRequestStore.get(exitRequestData => {
+      this.setState({ exitRequests: [exitRequestData] });
+    });
+  }
 
   // ============== Confirmation ===============
   showConfirmationButtons = () => {
     ActionSheet.hide();
     let items = [
-      { title: 'Approve', onPress: () => this.props.navigation.navigate('AbsenceConfirm', { mode: 'APPROVE' }) },
-      { title: 'Reject', onPress: () => this.props.navigation.navigate('AbsenceConfirm', { mode: 'REJECT' }) }
+      {
+        title: "Approve",
+        onPress: () =>
+          this.props.navigation.navigate("AbsenceConfirm", { mode: "APPROVE" })
+      },
+      {
+        title: "Reject",
+        onPress: () =>
+          this.props.navigation.navigate("AbsenceConfirm", { mode: "REJECT" })
+      }
     ];
-    let cancelItem = { title: 'Cancel' };
+    let cancelItem = { title: "Cancel" };
     ActionSheet.show(items, cancelItem);
   };
   // ============== Confirmation:End ===============
-
 
   changeLayout = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -62,19 +77,19 @@ export default class ActivityFeed extends Component {
           style={{
             height: 35,
             width: 35,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             borderWidth: 1,
             borderRadius: 50,
-            color: 'blue',
-            marginBottom: 10,
+            color: "blue",
+            marginBottom: 10
           }}
         >
           <Icon
             activeOpacity={0.8}
             onPress={this.changeLayout}
             style={styles.Btn}
-            name='md-arrow-down'
+            name="md-arrow-down"
             size={22}
           />
         </View>
@@ -86,8 +101,8 @@ export default class ActivityFeed extends Component {
             height: 35,
             marginBottom: 10,
             width: 35,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             borderWidth: 1,
             borderRadius: 50
           }}
@@ -96,7 +111,7 @@ export default class ActivityFeed extends Component {
             activeOpacity={0.8}
             onPress={this.changeLayout}
             style={styles.Btn}
-            name='md-arrow-up'
+            name="md-arrow-up"
             size={22}
           />
         </View>
@@ -110,8 +125,8 @@ export default class ActivityFeed extends Component {
           style={{
             height: 35,
             width: 35,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             borderWidth: 1,
             borderRadius: 50,
             marginBottom: 10
@@ -121,7 +136,7 @@ export default class ActivityFeed extends Component {
             activeOpacity={0.8}
             onPress={this.changeLayout2}
             style={styles.Btn}
-            name='md-arrow-down'
+            name="md-arrow-down"
             size={22}
           />
         </View>
@@ -133,8 +148,8 @@ export default class ActivityFeed extends Component {
             height: 35,
             marginBottom: 10,
             width: 35,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             borderWidth: 1,
             borderRadius: 50
           }}
@@ -143,7 +158,7 @@ export default class ActivityFeed extends Component {
             activeOpacity={0.8}
             onPress={this.changeLayout2}
             style={styles.Btn}
-            name='md-arrow-up'
+            name="md-arrow-up"
             size={22}
           />
         </View>
@@ -151,51 +166,52 @@ export default class ActivityFeed extends Component {
     }
   };
 
-
   render() {
     return (
       <View>
         <View
           style={{
             height: 58,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             borderWidth: 1,
-            borderColor: 'white',
-            alignItems: 'center',
-            flexDirection: 'row',
+            borderColor: "white",
+            alignItems: "center",
+            flexDirection: "row",
             borderBottomWidth: 1,
-            padding: 10,
-
+            padding: 10
           }}
-
         >
           <Icon
-            name='md-menu'
+            name="md-menu"
             size={30}
             style={{ paddingLeft: 10, paddingRight: 20 }}
             onPress={() => this.props.navigation.openDrawer()}
           />
 
-
-          <Text style={{ fontSize: 20, fontWeight: 'normal', color: '#696969' }}>
+          <Text
+            style={{ fontSize: 20, fontWeight: "normal", color: "#696969" }}
+          >
             Activity Feed
           </Text>
-
         </View>
-        <ScrollView style={{ height: '90%' }}>
+        <ScrollView style={{ height: "90%" }}>
           <View style={styles.container}>
             <View style={styles.container}>
-              <Header HeaderText='Leave Request' />
-              <View style={{ flexDirection: 'row' }}>
-                <View style={{ width: '30%' }}>
-                  <Icon name='md-calendar' size={29} style={{ marginLeft: 30 }} />
+              <Header HeaderText="Leave Request" />
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "30%" }}>
+                  <Icon
+                    name="md-calendar"
+                    size={29}
+                    style={{ marginLeft: 30 }}
+                  />
                 </View>
                 <View
                   style={{
                     borderWidth: 0,
-                    width: ' 70%',
-                    borderColor: '#f2f2f2',
-                    borderLeftColor: 'red',
+                    width: " 70%",
+                    borderColor: "#f2f2f2",
+                    borderLeftColor: "red",
                     borderLeftWidth: 0,
                     marginLeft: 5,
                     marginTop: 5
@@ -205,75 +221,76 @@ export default class ActivityFeed extends Component {
                   <View style={{ marginLeft: 150 }}>{this.onButtonShow()}</View>
                   {/* {this.onButtonShow()} */}
 
-
                   {/* /// */}
 
                   <View style={styles.btnTextHolder}>
                     <View
                       style={{
                         height: this.state.expanded ? null : 0,
-                        overflow: 'hidden'
+                        overflow: "hidden"
                       }}
                     >
                       {/*  */}
                       <View
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: "row",
                           marginLeft: 5,
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>From: </Text>
+                        <Text style={{ fontWeight: "bold" }}>From: </Text>
                         <Text>12/01/2018</Text>
                       </View>
                       <View
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: "row",
                           marginLeft: 5,
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>To: </Text>
+                        <Text style={{ fontWeight: "bold" }}>To: </Text>
                         <Text>12/01/2018</Text>
                       </View>
                       <View
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: "row",
                           marginLeft: 5,
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
+                        <Text style={{ fontWeight: "bold" }}>
+                          Absence Type:{" "}
+                        </Text>
                         <Text>Holliday</Text>
                       </View>
                       <View
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: "row",
                           marginLeft: 5,
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
+                        <Text style={{ fontWeight: "bold" }}>Reason: </Text>
                         <Text>20.0 days</Text>
                       </View>
                       <View
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: "row",
                           marginLeft: 5,
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Token: </Text>
+                        <Text style={{ fontWeight: "bold" }}>Token: </Text>
                         <Text>2.00 Days</Text>
                       </View>
                       <View
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: "row",
                           marginLeft: 5,
                           marginBottom: 5
                         }}
                       >
-                        <Text style={{ fontWeight: 'bold' }}>Remaning: </Text>
+                        <Text style={{ fontWeight: "bold" }}>Remaning: </Text>
                         <Text>18.00 Days</Text>
                       </View>
                       {/*  */}
@@ -286,87 +303,87 @@ export default class ActivityFeed extends Component {
                 <View
                   style={{
                     height: this.state.expanded ? null : 0,
-                    overflow: 'hidden',
+                    overflow: "hidden"
                   }}
                 >
                   {/*  */}
                   <View
                     style={{
                       height: 40,
-                      backgroundColor: 'white',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      alignSelf: 'center',
+                      backgroundColor: "white",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      alignSelf: "center",
                       paddingLeft: 55
                     }}
                   >
-
                     <TouchableOpacity
                       style={{
                         height: 30,
                         width: 90,
-                        backgroundColor: '#a39c9b',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        backgroundColor: "#a39c9b",
+                        justifyContent: "center",
+                        alignItems: "center",
                         marginLeft: 5,
                         borderRadius: 3,
                         marginRight: 20
                       }}
                       onPress={() =>
-                        this.props.navigation.navigate('AbsenceDetail')
+                        this.props.navigation.navigate("AbsenceDetail")
                       }
                     >
-                      <Text style={{ color: 'white' }}>OPEN</Text>
+                      <Text style={{ color: "white" }}>OPEN</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={{
                         height: 30,
                         width: 50,
-                        backgroundColor: '#a39c9b',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        backgroundColor: "#a39c9b",
+                        justifyContent: "center",
+                        alignItems: "center",
                         marginLeft: 5,
                         borderRadius: 3
                       }}
-                      onPress={() =>
-                        this.showConfirmationButtons()
-                      }
+                      onPress={() => this.showConfirmationButtons()}
                     >
-                      <Icon name='md-menu' size={30} style={{ color: 'white' }} />
+                      <Icon
+                        name="md-menu"
+                        size={30}
+                        style={{ color: "white" }}
+                      />
                     </TouchableOpacity>
-
                   </View>
                   {/*  */}
                 </View>
               </View>
               {/* second card  */}
               <View style={{ marginTop: 10 }}>
-                <Header HeaderText='Exit Request' />
-                <View style={{ flexDirection: 'row' }}>
-                  <View style={{ width: '30%' }}>
-                    <Icon name='md-time' size={29} style={{ marginLeft: 30 }} />
-
+                <Header HeaderText="Exit Request" />
+                <View style={{ flexDirection: "row" }}>
+                  <View style={{ width: "30%" }}>
+                    <Icon name="md-time" size={29} style={{ marginLeft: 30 }} />
                   </View>
 
-                  {this.state.exitRequests.length === 0 &&
+                  {this.state.exitRequests.length === 0 && (
                     <Text>Oops, you don't have any Exit Requeyet.</Text>
-                  }
-                  {this.state.exitRequests.length > 0 &&
+                  )}
+                  {this.state.exitRequests.length > 0 && (
                     <View
                       style={{
                         borderWidth: 0,
-                        width: ' 70%',
-                        borderColor: '#f2f2f2',
-                        borderLeftColor: 'blue',
+                        width: " 70%",
+                        borderColor: "#f2f2f2",
+                        borderLeftColor: "blue",
                         borderLeftWidth: 0,
                         marginLeft: 5,
                         marginTop: 5
                       }}
                     >
                       <AbsenceCard />
-                      <View style={{ marginLeft: 150 }}>{this.onButtonShow2()}</View>
+                      <View style={{ marginLeft: 150 }}>
+                        {this.onButtonShow2()}
+                      </View>
                       {/* {this.onButtonShow()} */}
-
 
                       {/* /// */}
 
@@ -374,116 +391,118 @@ export default class ActivityFeed extends Component {
                         <View
                           style={{
                             height: this.state.expanded2 ? null : 0,
-                            overflow: 'hidden'
+                            overflow: "hidden"
                           }}
                         >
-
                           {/*  */}
                           <View
                             style={{
-                              flexDirection: 'row',
+                              flexDirection: "row",
                               marginLeft: 5,
                               marginBottom: 5
                             }}
                           >
-                            <Text style={{ fontWeight: 'bold' }}>From: </Text>
+                            <Text style={{ fontWeight: "bold" }}>From: </Text>
                             <Text>12/01/2018</Text>
                           </View>
 
                           <View
                             style={{
-                              flexDirection: 'row',
+                              flexDirection: "row",
                               marginLeft: 5,
                               marginBottom: 5
                             }}
                           >
-                            <Text style={{ fontWeight: 'bold' }}>Time: </Text>
+                            <Text style={{ fontWeight: "bold" }}>Time: </Text>
                             <Text>Holliday</Text>
                           </View>
                           <View
                             style={{
-                              flexDirection: 'row',
+                              flexDirection: "row",
                               marginLeft: 5,
                               marginBottom: 5
                             }}
                           >
-                            <Text style={{ fontWeight: 'bold' }}>Absence Type: </Text>
+                            <Text style={{ fontWeight: "bold" }}>
+                              Absence Type:{" "}
+                            </Text>
                             <Text>20.0 days</Text>
                           </View>
                           <View
                             style={{
-                              flexDirection: 'row',
+                              flexDirection: "row",
                               marginLeft: 5,
                               marginBottom: 5
                             }}
                           >
-                            <Text style={{ fontWeight: 'bold' }}>Reason: </Text>
+                            <Text style={{ fontWeight: "bold" }}>Reason: </Text>
                             <Text>2.00 Days</Text>
                           </View>
                           <View
                             style={{
-                              flexDirection: 'row',
+                              flexDirection: "row",
                               marginLeft: 5,
                               marginBottom: 5
                             }}
                           >
-                            <Text style={{ fontWeight: 'bold' }}>date of recovery: </Text>
+                            <Text style={{ fontWeight: "bold" }}>
+                              date of recovery:{" "}
+                            </Text>
                             <Text>18.00 Days</Text>
                           </View>
-
 
                           <View
                             style={{
                               height: 40,
-                              backgroundColor: 'white',
-                              flexDirection: 'row',
-                              alignItems: 'center'
+                              backgroundColor: "white",
+                              flexDirection: "row",
+                              alignItems: "center"
                             }}
                           >
-
                             <TouchableOpacity
                               style={{
                                 height: 30,
                                 width: 90,
-                                backgroundColor: '#a39c9b',
-                                justifyContent: 'center',
-                                alignItems: 'center',
+                                backgroundColor: "#a39c9b",
+                                justifyContent: "center",
+                                alignItems: "center",
                                 marginLeft: 5,
                                 borderRadius: 3,
                                 marginRight: 20
                               }}
                               onPress={() =>
-                                this.props.navigation.navigate('ExitDetail')
+                                this.props.navigation.navigate("ExitDetail")
                               }
                             >
-                              <Text style={{ color: 'white' }}>OPEN</Text>
+                              <Text style={{ color: "white" }}>OPEN</Text>
                             </TouchableOpacity>
-                            {SessionStore.isAdmin() &&
+                            {SessionStore.isAdmin() && (
                               <TouchableOpacity
                                 style={{
                                   height: 30,
                                   width: 50,
-                                  backgroundColor: '#a39c9b',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
+                                  backgroundColor: "#a39c9b",
+                                  justifyContent: "center",
+                                  alignItems: "center",
                                   marginLeft: 5,
                                   borderRadius: 3
                                 }}
-                                onPress={() =>
-                                  this.showConfirmationButtons()
-                                }
+                                onPress={() => this.showConfirmationButtons()}
                               >
-                                <Icon name='md-menu' size={30} style={{ color: 'white' }} />
+                                <Icon
+                                  name="md-menu"
+                                  size={30}
+                                  style={{ color: "white" }}
+                                />
                               </TouchableOpacity>
-
-                            }
+                            )}
                           </View>
                           {/*  */}
                         </View>
                       </View>
                       {/*  */}
                     </View>
-                  }
+                  )}
                 </View>
               </View>
               {/*  */}
@@ -501,32 +520,34 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     // justifyContent: "center",
-    paddingTop: Platform.OS === 'ios' ? 20 : 0
+    paddingTop: Platform.OS === "ios" ? 20 : 0
   },
   container1: {
     fontSize: 25,
-    color: 'red',
+    color: "red",
     padding: 10
   },
 
   text: {
     fontSize: 17,
-    color: 'black',
+    color: "black",
     padding: 10
   },
 
   btnText: {
-    textAlign: 'center',
-    color: 'white',
+    textAlign: "center",
+    color: "white",
     fontSize: 20
   },
 
   btnTextHolder: {
     borderWidth: 0,
-    backgroundColor: 'white'
+    backgroundColor: "white"
   },
 
   Btn: {
-    color: '#191970'
+    color: "#191970"
   }
 });
+
+export {ActivityFeed};

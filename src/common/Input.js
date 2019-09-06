@@ -1,17 +1,15 @@
-import React from 'react';
+import React from "react";
+import { StyleSheet, TextInput } from "react-native";
+import colors from "./colors";
 
-import {StyleSheet, TextInput} from 'react-native';
-
-const input = (props) => {
+const input = props => {
   let template = null;
 
   switch (props.type) {
-    case 'textinput':
-      template =
-        <TextInput
-          {...props}
-          style={[styles.input, props.overrideStyle]}
-        />;
+    case "textinput":
+      template = (
+        <TextInput {...props} style={[styles.input, props.overrideStyle]} />
+      );
       break;
     default:
       return template;
@@ -19,16 +17,14 @@ const input = (props) => {
   return template;
 };
 const styles = StyleSheet.create({
-
   input: {
-    width: '80%',
+    width: "80%",
     borderBottomWidth: 1,
-    borderBottomColor: '#F6E8B1',
+    borderBottomColor: colors.lightyellow,
     fontSize: 16,
     padding: 5,
     marginTop: 10,
-    alignSelf: 'auto'
-
+    alignSelf: "auto"
   }
 });
 export default input;

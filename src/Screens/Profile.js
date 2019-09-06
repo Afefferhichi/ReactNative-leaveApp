@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import React, { Component } from "react";
+import { Text, View } from "react-native";
 
 class Profile extends Component {
   render() {
@@ -11,4 +11,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export {Profile};

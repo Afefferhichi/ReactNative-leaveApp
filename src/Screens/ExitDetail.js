@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Button,
   DatePickerAndroid,
   Image,
   Picker,
@@ -15,11 +14,10 @@ import {
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/Ionicons";
 import gql from "graphql-tag";
-import { ApolloProvider, Mutation } from "react-apollo";
-import client from "../config/createApolloClient";
+import { Mutation } from "react-apollo";
 import constants from "../common/constants";
-import SessionStore from "../common/Stores/SessionStore";
-import ExitRequestStore from "../common/Stores/ExitRequestStore";
+import SessionStore from "../Stores/SessionStore";
+import ExitRequestStore from "../Stores/ExitRequestStore";
 
 const ADD_EXIT_DETAIL = gql`
   mutation createsort($input: sortieInput!) {
@@ -185,7 +183,6 @@ class ExitDetail extends Component {
     const { fromTime, fromDate, recoveryDate, sortieTime, note } = this.state;
 
     return (
-      <ApolloProvider client={client}>
         <Mutation
           mutation={ADD_EXIT_DETAIL}
           _refetchQueries={[{ query: sortieQuery }]}
@@ -336,10 +333,7 @@ class ExitDetail extends Component {
                       }
                       selectedValue={sortieTime}
                     >
-                      <Picker.Item
-                        label=""
-                        value={""}
-                      />
+                      <Picker.Item label="" value={""} />
                       <Picker.Item
                         label="30min"
                         value={constants.SortieTime.HALF_HOUR}
@@ -464,9 +458,8 @@ class ExitDetail extends Component {
             </View>
           )}
         </Mutation>
-      </ApolloProvider>
     );
   }
 }
 
-export default ExitDetail;
+export {ExitDetail};

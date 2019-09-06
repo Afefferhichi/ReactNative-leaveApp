@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import { ActivityIndicator, Button, ImageBackground, Text, View } from 'react-native';
-import Input from '../common/Input';
-import validationRules from '../common/validationRules';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import React, { Component } from "react";
+import {
+  ActivityIndicator,
+  Button,
+  ImageBackground,
+  Text,
+  View
+} from "react-native";
+import Input from "../common/Input";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
 
-import SessionStore from '../common/Stores/SessionStore';
-
+import SessionStore from "../Stores/SessionStore";
 
 const LOGIN = gql(`
   query employee($login: String!, $password: String!) {
@@ -22,8 +26,8 @@ const LOGIN = gql(`
 
 class Login extends Component {
   state = {
-    type: 'Login',
-    action: 'Login',
+    type: "Login",
+    action: "Login",
     hasErrors: false,
     requesting: false,
     // Manager
@@ -31,24 +35,24 @@ class Login extends Component {
     // password: '123aze',
 
     // Normal User
-    login: 'Mahdi.Turki',
-    password: '123',
-    loginError: '',
+    login: "Mahdi.Turki",
+    password: "123",
+    loginError: "",
     isCheckedLogin: false,
     loggedIn: false
   };
 
   async componentDidMount() {
     try {
-      SessionStore.isLoggedIn( async (_loggedIn) => {
+      SessionStore.isLoggedIn(async _loggedIn => {
         await this.setState({ isCheckedLogin: true });
-        if(_loggedIn) {
+        if (_loggedIn) {
           setTimeout(async () => {
             await this.setState({ loggedIn: false });
-            this.props.navigation.navigate('ActivityFeed');
+            this.props.navigation.navigate("ActivityFeed");
           }, 500);
         }
-      })
+      });
     } catch (e) {
       // error reading value
     }
@@ -58,153 +62,158 @@ class Login extends Component {
     const { navigate } = this.props.navigation;
     const { login, password } = this.state;
     return (
-      <View style={{
-        flex: 1, justifyContent: 'center', alignItems: 'center'
-      }}>
-        {!this.state.isCheckedLogin &&
-          <Text>Loading...</Text>
-        }
-        {this.state.isCheckedLogin && this.state.loggedIn &&
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        {!this.state.isCheckedLogin && <Text>Loading...</Text>}
+        {this.state.isCheckedLogin && this.state.loggedIn && (
           <ActivityIndicator size="large" />
-          //<Text>You are already loggedin in. Moving to Activity Feed...</Text>
+        )
+        //<Text>You are already loggedin in. Moving to Activity Feed...</Text>
         }
-        {this.state.isCheckedLogin && !this.state.loggedIn &&
-          <ImageBackground style={{ height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}
-            source={require('../../assets/icons/img.png')}>
+        {this.state.isCheckedLogin && !this.state.loggedIn && (
+          <ImageBackground
+            style={{
+              height: "100%",
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+            source={require("../../assets/icons/img.png")}
+          >
             <View>
-              <Text style={{ color: '#183152', fontWeight: 'bold', }}>Welcome TELNETTeam</Text>
+              <Text style={{ color: "#183152", fontWeight: "bold" }}>
+                Welcome TELNETTeam
+              </Text>
             </View>
             <Input
-              placeholder='Entrer your username'
-              placeholderTextColor='#F6E8B1'
-              type='textinput'
+              placeholder="Entrer your username"
+              placeholderTextColor="#F6E8B1"
+              type="textinput"
               value={this.state.login}
-              autoCapitalize={'none'}
-              keyboardType={'email-address'}
-              onChangeText={value => this.setState({ 'login': value })}
+              autoCapitalize={"none"}
+              keyboardType={"email-address"}
+              onChangeText={value => this.setState({ login: value })}
             />
             <Input
-              placeholder='Entrer your password'
-              placeholderTextColor='#F6E8B1'
-              type='textinput'
+              placeholder="Entrer your password"
+              placeholderTextColor="#F6E8B1"
+              type="textinput"
               value={this.state.password}
-              onChangeText={value => this.setState({ 'password': value })}
+              onChangeText={value => this.setState({ password: value })}
               secureTextEntry
             />
 
-            <Text
-              style={[styles.login.error, { marginTop: 20 }]}
-            >{this.state.loginError}</Text>
+            <Text style={[styles.login.error, { marginTop: 20 }]}>
+              {this.state.loginError}
+            </Text>
 
-            {this.state.requesting &&
+            {this.state.requesting && (
               <Query query={LOGIN} variables={{ login, password }}>
                 {({ loading, error, data }) => {
-
-                  if (loading) return <Text style={styles.login.info}>Loading...</Text>
-
+                  if (loading) {
+                    return <Text style={styles.login.info}>Loading...</Text>;
+                  }
 
                   if (error) {
-                    return <Text style={styles.login.error}>An error occurred</Text>
+                    return (
+                      <Text style={styles.login.error}>An error occurred</Text>
+                    );
                   }
                   if (data.login === null) {
                     setTimeout(() => {
-                      this.setState({ requesting: false })
+                      this.setState({ requesting: false });
                     }, 2000);
                     return (
-                      <Text style={styles.login.error}>Invalid login or password</Text>
+                      <Text style={styles.login.error}>
+                        Invalid login or password
+                      </Text>
                     );
                   } else {
                     setTimeout(async () => {
-
                       try {
                         SessionStore.login(data.login, async () => {
                           await this.setState({
                             requesting: false,
                             login: null,
                             password: null
-                          })
-                          this.props.navigation.navigate('ActivityFeed');
-                        })
+                          });
+                          this.props.navigation.navigate("ActivityFeed");
+                        });
                       } catch (e) {
                         // saving error
                       }
                     }, 1000);
                     return (
-                      <Text style={styles.login.success}>Welcome {data.login.firstName} {data.login.lastName}</Text>
+                      <Text style={styles.login.success}>
+                        Welcome {data.login.firstName} {data.login.lastName}
+                      </Text>
                     );
                   }
                 }}
               </Query>
-            }
+            )}
 
             <View style={{ marginTop: 20 }}>
-
               <View style={styles.button}>
-
                 <Button
                   disabled={this.state.requesting}
-                  title='Login'
-                  color='#183152'
+                  title="Login"
+                  color="#183152"
                   onPress={() => {
                     if (this.state.login && this.state.password) {
-                      this.setState({ loginError: '' });
-                      this.setState({ requesting: true })
+                      this.setState({ loginError: "" });
+                      this.setState({ requesting: true });
                     } else {
-                      this.setState({ loginError: 'Please enter the valid login/password' });
+                      this.setState({
+                        loginError: "Please enter the valid login/password"
+                      });
                     }
                   }}
                 />
 
-                {this.state.requesting &&
+                {this.state.requesting && (
                   <ActivityIndicator style={{ marginTop: 15 }} size="small" />
-                }
-
+                )}
               </View>
             </View>
-
           </ImageBackground>
-        }
+        )}
       </View>
     );
   }
 }
 
-
-const styles = ({
+const styles = {
   errorContainer: {
     marginBottom: 10,
     marginTop: 30,
     padding: 10,
-    backgroundColor: 'white'
+    backgroundColor: "white"
   },
   errorLabel: {
-    color: '#fff',
-    textAlignVertical: 'center',
-    textAlign: 'center'
-
+    color: "#fff",
+    textAlignVertical: "center",
+    textAlign: "center"
   },
   button: {
     marginBottom: 0
   },
   login: {
     info: {
-      color: '#ff0'
+      color: "#ff0"
     },
     error: {
-      color: '#f00'
+      color: "#f00"
     },
     success: {
-      color: '#0f0'
+      color: "#0f0"
     }
   }
+};
 
-
-});
-
-
-
-export default Login;
-
-
-
-
+export {Login};

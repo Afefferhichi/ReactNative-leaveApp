@@ -170,7 +170,7 @@
 
       "key-spacing": 0,
       "keyword-spacing": 1,            // enforce spacing before and after keywords
-      "jsx-quotes": [1, "prefer-single"],
+      "jsx-quotes": [1, "prefer-double"],
       "comma-spacing": 0,
       "no-multi-spaces": 0,
       "brace-style": 0,                // enforce one true brace style (off by default)
@@ -190,7 +190,7 @@
       "no-trailing-spaces": 1,         // disallow trailing whitespace at the end of lines
       "no-underscore-dangle": 0,       // disallow dangling underscores in identifiers
       "no-mixed-spaces-and-tabs": 1,   // disallow mixed spaces and tabs for indentation
-      "quotes": [1, "single", "avoid-escape"], // specify whether double or single quotes should be used
+      "quotes": [1, "double", "avoid-escape"], // specify whether double or single quotes should be used
       "quote-props": 0,                // require quotes around object literal property names (off by default)
       "semi": 1,                       // require or disallow use of semicolons instead of ASI
       "sort-vars": 0,                  // sort variables within the same declaration block (off by default)
