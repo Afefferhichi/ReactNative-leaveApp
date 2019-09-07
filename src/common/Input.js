@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, TextInput } from "react-native";
-import colors from "./colors";
+import { colors } from "./colors";
 
-const input = props => {
+const Input = props => {
   let template = null;
 
   switch (props.type) {
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
     alignSelf: "auto"
   }
 });
-export default input;
+export { Input };

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import colors from "./colors";
+import { colors } from "./colors";
 
 class DayDetail extends Component {
   render() {
@@ -64,4 +64,4 @@ class DayDetail extends Component {
   }
 }
 
-export default DayDetail;
+export { DayDetail };

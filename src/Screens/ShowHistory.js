@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
-import DayDetail from "../common/DayDetail";
+import { DayDetail } from "../common";
 import Icon from "react-native-vector-icons/Ionicons";
 
 class ShowHistory extends Component {
@@ -86,4 +86,4 @@ class ShowHistory extends Component {
   }
 }
 
-export {ShowHistory};
+export { ShowHistory };

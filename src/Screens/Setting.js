@@ -7,7 +7,7 @@ import {
   View
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import SessionStore from "../Stores/SessionStore";
+import { SessionStore } from "../Stores";
 
 class Setting extends Component {
   state = {
@@ -116,4 +116,4 @@ class Setting extends Component {
   }
 }
 
-export {Setting};
+export { Setting };

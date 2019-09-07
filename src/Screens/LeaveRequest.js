@@ -10,12 +10,15 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { HalfdayCalendar } from "react-native-halfday-calendar";
-// import HalfdayCalendar from "../common/HalfdayCalendar";
-// import console = require("console");
 
+import { colors, constants } from "../common";
+import { SessionStore } from "../Stores";
+
+const woman_image_url =
+  "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 class LeaveRequest extends Component {
   static navigationOptions = {
-    title: "New Request"
+    title: "Leave Request"
   };
 
   constructor(props) {
@@ -36,7 +39,7 @@ class LeaveRequest extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, height: "100%", backgroundColor: "white" }}>
+      <View style={{ flex: 1, height: "100%", backgroundColor: colors.white }}>
         {this.state.showCalendar && (
           <HalfdayCalendar
             onConfirm={async (
@@ -64,7 +67,7 @@ class LeaveRequest extends Component {
         <ScrollView style={{ height: "90%" }}>
           <View
             style={{
-              backgroundColor: "white",
+              backgroundColor: colors.white,
               padding: 10,
               margin: 10,
               flexDirection: "row"
@@ -72,33 +75,32 @@ class LeaveRequest extends Component {
           >
             <Image
               source={{
-                uri:
-                  "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                uri: woman_image_url
               }}
               style={{
                 width: 70,
                 height: 80,
-                backgroundColor: "#f2f2f2",
+                backgroundColor: colors.whitegray,
                 borderRadius: 18
               }}
             />
             <View style={{ marginLeft: 20, alignSelf: "center" }}>
-              <Text style={{ color: "black" }}>Welcome @username</Text>
-              {/*<Text style={{ color: "black" }}>tranee</Text>*/}
+              <Text style={{ color: colors.black }}>
+                Welcome {SessionStore.userName()}
+              </Text>
             </View>
           </View>
           <View
             style={{
-              backgroundColor: "#C4D7ED",
+              backgroundColor: colors.dimsky,
               padding: 10,
               margin: 10,
               borderRadius: 10,
-
               flexDirection: "row"
             }}
           >
             <Icon name="md-cog" size={30} />
-            <Text style={{ color: "#000000", marginLeft: 10 }}>
+            <Text style={{ color: colors.black, marginLeft: 10 }}>
               This absence is currently approved. Tap here to request for a
               change.
             </Text>
@@ -141,9 +143,22 @@ class LeaveRequest extends Component {
                 }
                 selectedValue={this.state.selectedSpecialDay}
               >
-                <Picker.Item label="Holiday" value="Holiday" />
-                <Picker.Item label="Special Permits" value="Special Permits" />
-                <Picker.Item label="Sickness" value="Sickness" />
+                <Picker.Item
+                  label="Maternity"
+                  value={constants.LeaveReson.MATERNITY}
+                />
+                <Picker.Item
+                  label="Holiday"
+                  value={constants.LeaveReson.HOLIDAY}
+                />
+                <Picker.Item
+                  label="Permits"
+                  value={constants.LeaveReson.SPECIAL_PERMITS}
+                />
+                <Picker.Item
+                  label="Sickness"
+                  value={constants.LeaveReson.SICKNESS}
+                />
               </Picker>
             </View>
           </View>
@@ -171,7 +186,7 @@ class LeaveRequest extends Component {
                 width: "90%",
                 height: 80,
                 borderRadius: 10,
-                backgroundColor: "#ABC8E2",
+                backgroundColor: colors.lightsky,
                 alignSelf: "center",
                 marginBottom: 5
               }}
@@ -179,7 +194,6 @@ class LeaveRequest extends Component {
           </View>
 
           <TouchableOpacity
-            onPress={this._onPressButton}
             onShowUnderlay={() => {
               alert("onShowUnderlay button !");
             }}
@@ -188,12 +202,12 @@ class LeaveRequest extends Component {
               height: 39,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "#183152",
+              backgroundColor: colors.lightblue,
               marginVertical: 50,
               alignSelf: "center"
             }}
           >
-            <Text style={{ color: "white" }}>Send Request</Text>
+            <Text style={{ color: colors.white }}>Send Request</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -201,4 +215,4 @@ class LeaveRequest extends Component {
   }
 }
 
-export {LeaveRequest};
+export { LeaveRequest };

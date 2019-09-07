@@ -6,11 +6,11 @@ import {
   Text,
   View
 } from "react-native";
-import Input from "../common/Input";
+import { Input } from "../common";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-import SessionStore from "../Stores/SessionStore";
+import { SessionStore } from "../Stores";
 
 const LOGIN = gql(`
   query employee($login: String!, $password: String!) {
@@ -216,4 +216,4 @@ const styles = {
   }
 };
 
-export {Login};
+export { Login };

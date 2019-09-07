@@ -1,4 +1,4 @@
-export default {
+const colors = {
   black: "#000000",
   blue: "blue",
   lightblue: "#183152",
@@ -12,8 +12,10 @@ export default {
   dimsky: "#C4D7ED",
   whitegray: "#dcdcdc",
   lightyellow: "#F6E8B1",
-  white: "#ffffff",
+  white: "#ffffff"
 };
+
+export { colors };
 
 /**
  "#000000",

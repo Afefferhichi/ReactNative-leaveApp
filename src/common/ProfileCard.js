@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Image, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import colors from "./colors";
+import { colors } from "./colors";
 
 class ProfileCard extends Component {
   render() {
@@ -42,4 +42,4 @@ class ProfileCard extends Component {
   }
 }
 
-export default ProfileCard;
+export { ProfileCard };

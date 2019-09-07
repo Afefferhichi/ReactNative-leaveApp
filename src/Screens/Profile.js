@@ -11,4 +11,4 @@ class Profile extends Component {
   }
 }
 
-export {Profile};
+export { Profile };

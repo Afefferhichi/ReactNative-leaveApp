@@ -10,11 +10,10 @@ import {
   View
 } from "react-native";
 import { ActionSheet } from "teaset";
-import Header from "../common/Header";
 import Icon from "react-native-vector-icons/Ionicons";
-import AbsenceCard from "../common/AbsenceCard";
-import SessionStore from "../Stores/SessionStore";
-import ExitRequestStore from "../Stores/ExitRequestStore";
+
+import { Header, AbsenceCard, colors } from "../common";
+import { SessionStore, ExitRequestStore } from "../Stores";
 
 class ActivityFeed extends Component {
   constructor() {
@@ -31,6 +30,9 @@ class ActivityFeed extends Component {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }
+
+  setAnimation = () =>
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
   static navigationOptions = ({ navigation }) => ({
     header: null
@@ -62,119 +64,16 @@ class ActivityFeed extends Component {
   };
   // ============== Confirmation:End ===============
 
-  changeLayout = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({ expanded: !this.state.expanded });
-  };
-  changeLayout2 = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({ expanded2: !this.state.expanded2 });
-  };
-  onButtonShow = () => {
-    if (this.state.expanded === false) {
-      return (
-        <View
-          style={{
-            height: 35,
-            width: 35,
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            borderRadius: 50,
-            color: "blue",
-            marginBottom: 10
-          }}
-        >
-          <Icon
-            activeOpacity={0.8}
-            onPress={this.changeLayout}
-            style={styles.Btn}
-            name="md-arrow-down"
-            size={22}
-          />
-        </View>
-      );
-    } else {
-      return (
-        <View
-          style={{
-            height: 35,
-            marginBottom: 10,
-            width: 35,
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            borderRadius: 50
-          }}
-        >
-          <Icon
-            activeOpacity={0.8}
-            onPress={this.changeLayout}
-            style={styles.Btn}
-            name="md-arrow-up"
-            size={22}
-          />
-        </View>
-      );
-    }
-  };
-  onButtonShow2 = () => {
-    if (this.state.expanded2 === false) {
-      return (
-        <View
-          style={{
-            height: 35,
-            width: 35,
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            borderRadius: 50,
-            marginBottom: 10
-          }}
-        >
-          <Icon
-            activeOpacity={0.8}
-            onPress={this.changeLayout2}
-            style={styles.Btn}
-            name="md-arrow-down"
-            size={22}
-          />
-        </View>
-      );
-    } else {
-      return (
-        <View
-          style={{
-            height: 35,
-            marginBottom: 10,
-            width: 35,
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            borderRadius: 50
-          }}
-        >
-          <Icon
-            activeOpacity={0.8}
-            onPress={this.changeLayout2}
-            style={styles.Btn}
-            name="md-arrow-up"
-            size={22}
-          />
-        </View>
-      );
-    }
-  };
-
   render() {
+    const { expanded, expanded2 } = this.state;
     return (
       <View>
         <View
           style={{
             height: 58,
-            backgroundColor: "white",
+            backgroundColor: colors.white,
             borderWidth: 1,
-            borderColor: "white",
+            borderColor: colors.white,
             alignItems: "center",
             flexDirection: "row",
             borderBottomWidth: 1,
@@ -189,7 +88,7 @@ class ActivityFeed extends Component {
           />
 
           <Text
-            style={{ fontSize: 20, fontWeight: "normal", color: "#696969" }}
+            style={{ fontSize: 20, fontWeight: "normal", color: colors.gray }}
           >
             Activity Feed
           </Text>
@@ -210,18 +109,28 @@ class ActivityFeed extends Component {
                   style={{
                     borderWidth: 0,
                     width: " 70%",
-                    borderColor: "#f2f2f2",
-                    borderLeftColor: "red",
+                    borderColor: colors.whitegray,
+                    borderLeftColor: colors.red,
                     borderLeftWidth: 0,
                     marginLeft: 5,
                     marginTop: 5
                   }}
                 >
                   <AbsenceCard />
-                  <View style={{ marginLeft: 150 }}>{this.onButtonShow()}</View>
-                  {/* {this.onButtonShow()} */}
-
-                  {/* /// */}
+                  <View style={{ marginLeft: 150 }}>
+                    <View style={styles.circleIcon}>
+                      <Icon
+                        activeOpacity={0.8}
+                        onPress={() => {
+                          this.setAnimation();
+                          this.setState({ expanded: !expanded });
+                        }}
+                        style={styles.Btn}
+                        name={!expanded ? "md-arrow-down" : "md-arrow-up"}
+                        size={22}
+                      />
+                    </View>
+                  </View>
 
                   <View style={styles.btnTextHolder}>
                     <View
@@ -310,7 +219,7 @@ class ActivityFeed extends Component {
                   <View
                     style={{
                       height: 40,
-                      backgroundColor: "white",
+                      backgroundColor: colors.white,
                       flexDirection: "row",
                       alignItems: "center",
                       alignSelf: "center",
@@ -321,7 +230,7 @@ class ActivityFeed extends Component {
                       style={{
                         height: 30,
                         width: 90,
-                        backgroundColor: "#a39c9b",
+                        backgroundColor: colors.lightgray,
                         justifyContent: "center",
                         alignItems: "center",
                         marginLeft: 5,
@@ -329,16 +238,16 @@ class ActivityFeed extends Component {
                         marginRight: 20
                       }}
                       onPress={() =>
-                        this.props.navigation.navigate("AbsenceDetail")
+                        this.props.navigation.navigate("LeaveRequest")
                       }
                     >
-                      <Text style={{ color: "white" }}>OPEN</Text>
+                      <Text style={{ color: colors.white }}>OPEN</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={{
                         height: 30,
                         width: 50,
-                        backgroundColor: "#a39c9b",
+                        backgroundColor: colors.lightgray,
                         justifyContent: "center",
                         alignItems: "center",
                         marginLeft: 5,
@@ -349,7 +258,7 @@ class ActivityFeed extends Component {
                       <Icon
                         name="md-menu"
                         size={30}
-                        style={{ color: "white" }}
+                        style={{ color: colors.white }}
                       />
                     </TouchableOpacity>
                   </View>
@@ -372,8 +281,8 @@ class ActivityFeed extends Component {
                       style={{
                         borderWidth: 0,
                         width: " 70%",
-                        borderColor: "#f2f2f2",
-                        borderLeftColor: "blue",
+                        borderColor: colors.whitegray,
+                        borderLeftColor: colors.blue,
                         borderLeftWidth: 0,
                         marginLeft: 5,
                         marginTop: 5
@@ -381,9 +290,19 @@ class ActivityFeed extends Component {
                     >
                       <AbsenceCard />
                       <View style={{ marginLeft: 150 }}>
-                        {this.onButtonShow2()}
+                        <View style={styles.circleIcon}>
+                          <Icon
+                            activeOpacity={0.8}
+                            onPress={() => {
+                              this.setAnimation();
+                              this.setState({ expanded2: !expanded2 });
+                            }}
+                            style={styles.Btn}
+                            name={expanded2 ? "md-arrow-up" : "md-arrow-down"}
+                            size={22}
+                          />
+                        </View>
                       </View>
-                      {/* {this.onButtonShow()} */}
 
                       {/* /// */}
 
@@ -454,7 +373,7 @@ class ActivityFeed extends Component {
                           <View
                             style={{
                               height: 40,
-                              backgroundColor: "white",
+                              backgroundColor: colors.white,
                               flexDirection: "row",
                               alignItems: "center"
                             }}
@@ -463,7 +382,7 @@ class ActivityFeed extends Component {
                               style={{
                                 height: 30,
                                 width: 90,
-                                backgroundColor: "#a39c9b",
+                                backgroundColor: colors.lightgray,
                                 justifyContent: "center",
                                 alignItems: "center",
                                 marginLeft: 5,
@@ -474,14 +393,14 @@ class ActivityFeed extends Component {
                                 this.props.navigation.navigate("ExitDetail")
                               }
                             >
-                              <Text style={{ color: "white" }}>OPEN</Text>
+                              <Text style={{ color: colors.white }}>OPEN</Text>
                             </TouchableOpacity>
                             {SessionStore.isAdmin() && (
                               <TouchableOpacity
                                 style={{
                                   height: 30,
                                   width: 50,
-                                  backgroundColor: "#a39c9b",
+                                  backgroundColor: colors.lightgray,
                                   justifyContent: "center",
                                   alignItems: "center",
                                   marginLeft: 5,
@@ -492,7 +411,7 @@ class ActivityFeed extends Component {
                                 <Icon
                                   name="md-menu"
                                   size={30}
-                                  style={{ color: "white" }}
+                                  style={{ color: colors.white }}
                                 />
                               </TouchableOpacity>
                             )}
@@ -524,30 +443,40 @@ const styles = StyleSheet.create({
   },
   container1: {
     fontSize: 25,
-    color: "red",
+    color: colors.red,
     padding: 10
   },
 
   text: {
     fontSize: 17,
-    color: "black",
+    color: colors.black,
     padding: 10
   },
 
   btnText: {
     textAlign: "center",
-    color: "white",
+    color: colors.white,
     fontSize: 20
   },
 
   btnTextHolder: {
     borderWidth: 0,
-    backgroundColor: "white"
+    backgroundColor: colors.white
   },
 
   Btn: {
-    color: "#191970"
+    color: colors.darkblue
+  },
+  circleIcon: {
+    height: 35,
+    width: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 50,
+    color: colors.blue,
+    marginBottom: 10
   }
 });
 
-export {ActivityFeed};
+export { ActivityFeed };

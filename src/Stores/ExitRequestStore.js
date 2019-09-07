@@ -1,8 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
 
-class ExitRequestStore {
-  constructor() {
-  }
+class ExitRequestStoreClass {
+  constructor() {}
 
   async set(data, afterSetCallback) {
     try {
@@ -24,4 +23,5 @@ class ExitRequestStore {
   }
 }
 
-export default new ExitRequestStore();
+const ExitRequestStore = new ExitRequestStoreClass();
+export { ExitRequestStore };

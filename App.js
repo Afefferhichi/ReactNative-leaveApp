@@ -11,7 +11,6 @@
  *      AppStackNavigator:createStackNavigator (
  *        ActivityFeed  : Component,
  *        AbsenceHistory  : Component,
- *        AbsenceDetail : Component,
  *        AbsenceConfirm  : Component,
  *        ShowHistory : Component,
  *        ExitDetail  : Component,
@@ -35,10 +34,9 @@ import {
   createStackNavigator
 } from "react-navigation";
 
-import {AbsenceConfirm} from "./src/Screens/AbsenceConfirm"
+import { AbsenceConfirm } from "./src/Screens/AbsenceConfirm";
 
 import {
-  AbsenceDetail,
   AbsenceHistory,
   AbsenceTeamList,
   ActivityFeed,
@@ -53,14 +51,13 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { ApolloProvider } from "react-apollo";
 import client from "./src/config/createApolloClient";
-import colors from "./src/common/colors";
+import { colors } from "./src/common";
 console.disableYellowBox = true;
 
 const AppStackNavigator = createStackNavigator(
   {
     ActivityFeed,
     AbsenceHistory,
-    AbsenceDetail,
     AbsenceConfirm,
     ShowHistory,
     ExitDetail,
@@ -78,7 +75,9 @@ const appDrawerNavigator = createDrawerNavigator(
       screen: AppStackNavigator,
       navigationOptions: {
         drawerLabel: "ActivityFeed",
-        drawerIcon: <Icon name="md-home" size={28} style={{ color: colors.white }} />
+        drawerIcon: (
+          <Icon name="md-home" size={28} style={{ color: colors.white }} />
+        )
       }
     },
     ShowHistory: {
@@ -86,7 +85,11 @@ const appDrawerNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: "ShowHistory",
         drawerIcon: (
-          <Icon name="md-speedometer" size={28} style={{ color: colors.white }} />
+          <Icon
+            name="md-speedometer"
+            size={28}
+            style={{ color: colors.white }}
+          />
         )
       }
     },
@@ -94,21 +97,27 @@ const appDrawerNavigator = createDrawerNavigator(
       screen: AbsenceTeamList,
       navigationOptions: {
         drawerLabel: "AbsenceTeamList",
-        drawerIcon: <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        drawerIcon: (
+          <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        )
       }
     },
     ExitRequest: {
       screen: ExitRequest,
       navigationOptions: {
         drawerLabel: "ExitRequest",
-        drawerIcon: <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        drawerIcon: (
+          <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        )
       }
     },
     LeaveRequest: {
       screen: LeaveRequest,
       navigationOptions: {
         drawerLabel: "LeaveRequest",
-        drawerIcon: <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        drawerIcon: (
+          <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        )
       }
     },
 
@@ -116,7 +125,9 @@ const appDrawerNavigator = createDrawerNavigator(
       screen: Setting,
       navigationOptions: {
         drawerLabel: "Setting",
-        drawerIcon: <Icon name="md-cog" size={28} style={{ color: colors.white }} />
+        drawerIcon: (
+          <Icon name="md-cog" size={28} style={{ color: colors.white }} />
+        )
       }
     }
   },

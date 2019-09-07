@@ -146,4 +146,4 @@ class TimePicker extends React.PureComponent {
   }
 }
 
-export {TimePicker};
+export { TimePicker };

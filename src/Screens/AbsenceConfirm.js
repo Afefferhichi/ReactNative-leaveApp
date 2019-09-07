@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import colors from "../common/colors";
-const image_url = "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
+import { colors } from "../common";
+const image_url =
+  "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 class AbsenceConfirm extends Component {
   constructor() {
     super();
@@ -188,7 +189,9 @@ class AbsenceConfirm extends Component {
               borderRadius: 1
             }}
           >
-            <Text style={{ height: 33, color: colors.whitegray, lineHeight: 28 }}>
+            <Text
+              style={{ height: 33, color: colors.whitegray, lineHeight: 28 }}
+            >
               OK
             </Text>
           </TouchableOpacity>
@@ -198,4 +201,4 @@ class AbsenceConfirm extends Component {
   }
 }
 
-export {AbsenceConfirm};
+export { AbsenceConfirm };

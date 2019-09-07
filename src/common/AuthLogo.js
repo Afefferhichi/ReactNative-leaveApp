@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, View } from "react-native";
 
-import Landingimage from "../../assets/icons/logo";
+import Landingimage from "../../assets/icons/logo.png";
 
-const LogoComponent = () => (
+const AuthLogo = () => (
   <View>
     <Image
       source={Landingimage}
@@ -16,4 +16,4 @@ const LogoComponent = () => (
   </View>
 );
 
-export default LogoComponent;
+export { AuthLogo };

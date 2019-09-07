@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View } from "react-native";
-import colors from "./colors";
+import { colors } from "./colors";
 
 class AbsenceCard extends Component {
   render() {
@@ -23,4 +23,4 @@ class AbsenceCard extends Component {
   }
 }
 
-export default AbsenceCard;
+export { AbsenceCard };

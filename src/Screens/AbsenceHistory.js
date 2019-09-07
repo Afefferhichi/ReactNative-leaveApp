@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { colors } from "../common";
 
 class AbsenceHistory extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -13,43 +14,45 @@ class AbsenceHistory extends React.Component {
         <View
           style={{
             marginTop: 5,
-            borderBottomColor: "white",
+            borderBottomColor: colors.white,
             borderWidth: 1,
-            borderColor: "#ddd",
-            backgroundColor: "#f2f2f2",
+            borderColor: colors.whitegray,
+            backgroundColor: colors.whitegray,
             height: "25%",
             width: "100%",
             justifyContent: "center"
           }}
         >
           <Text
-            style={{ color: "#000000", fontWeight: "bold", marginLeft: 20 }}
+            style={{ color: colors.black, fontWeight: "bold", marginLeft: 20 }}
           >
             {this.props.topText}
           </Text>
         </View>
         <View
           style={{
-            backgroundColor: "#f2f2f2",
+            backgroundColor: colors.whitegray,
             padding: 10,
             //   margin: 10,
             flexDirection: "row",
-            borderColor: "#ddd",
+            borderColor: colors.whitegray,
             borderWidth: 1
           }}
         >
           <View style={{ marginLeft: 10, width: "60%" }}>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "black" }}>{this.props.shift} :</Text>
-              <Text style={{ color: "black" }}>Time: {this.props.time}</Text>
+              <Text style={{ color: colors.black }}>{this.props.shift} :</Text>
+              <Text style={{ color: colors.black }}>
+                Time: {this.props.time}
+              </Text>
             </View>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "black" }}>Morning :</Text>
-              <Text style={{ color: "black" }}>Time: 6: 00, pm</Text>
+              <Text style={{ color: colors.black }}>Morning :</Text>
+              <Text style={{ color: colors.black }}>Time: 6: 00, pm</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "black" }}>Morning :</Text>
-              <Text style={{ color: "black" }}>Time: 6: 00, pm</Text>
+              <Text style={{ color: colors.black }}>Morning :</Text>
+              <Text style={{ color: colors.black }}>Time: 6: 00, pm</Text>
             </View>
           </View>
           <View style={{ alignItems: "center", alignSelf: "center" }}>
@@ -71,4 +74,4 @@ class AbsenceHistory extends React.Component {
   }
 }
 
-export {AbsenceHistory};
+export { AbsenceHistory };

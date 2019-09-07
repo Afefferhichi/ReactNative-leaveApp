@@ -1,15 +1,18 @@
 import AsyncStorage from "@react-native-community/async-storage";
 
-class SessionStore {
+class SessionStoreClass {
   constructor() {
     this.value = {};
   }
 
+  precheck = value => {
+    const ret = value;
+    ret.isAdmin = ret.id === 1 || ret.id === 2;
+    return ret;
+  };
   async login(loginInformation, afterLoginCallback) {
     try {
-      const _loginInformation = loginInformation;
-      _loginInformation.isAdmin =
-        _loginInformation.id == 1 || _loginInformation.id == 2;
+      const _loginInformation = this.precheck(loginInformation);
       await AsyncStorage.setItem("@login", JSON.stringify(_loginInformation));
       this.value = _loginInformation;
       afterLoginCallback && afterLoginCallback();
@@ -21,7 +24,7 @@ class SessionStore {
   async isLoggedIn(afterGettingCallback) {
     try {
       let loginInformation = await AsyncStorage.getItem("@login");
-      loginInformation = JSON.parse(loginInformation);
+      loginInformation = this.precheck(JSON.parse(loginInformation));
       this.value = loginInformation;
       afterGettingCallback &&
         afterGettingCallback(loginInformation !== null, loginInformation);
@@ -38,6 +41,10 @@ class SessionStore {
     return this.value.isAdmin;
   }
 
+  userName() {
+    return `${this.value.firstName} ${this.value.lastName}`;
+  }
+
   async logout(afterLogoutCallback) {
     try {
       await AsyncStorage.removeItem("@login");
@@ -48,5 +55,5 @@ class SessionStore {
     }
   }
 }
-
-export default new SessionStore();
+const SessionStore = new SessionStoreClass();
+export { SessionStore };

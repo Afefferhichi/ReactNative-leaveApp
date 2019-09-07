@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import colors from "./colors";
+import { colors } from "./colors";
 
 class Header extends Component {
   render() {
@@ -31,4 +31,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export { Header };

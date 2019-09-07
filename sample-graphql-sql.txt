@@ -1,0 +1,211 @@
+create employee
+
+
+mutation createEmp($input : employeeInput!) {
+  createEmployee(emp: $input) {
+    id,
+    firstName,
+    lastName,
+    login,
+    password,
+    initialCongeSolde,
+    remainingCongeSolde
+  }
+}
+
+variables
+
+{"input": {"firstName": "nihel",
+"lastName": "ayadi",
+"login": "nihel",
+"password": "5555",
+"initialSoldeConge": 24,
+"remainigSoldeConge": 21}}
+
+                                 *****************************************
+
+query get employees
+
+{
+  employees
+	{
+  	id
+    firstName
+    lastName
+    conges{congeState
+      end_Date
+      start_Date
+      half_Day
+      id
+      motif
+      reason
+    
+    }
+    sorties{employeeId
+    sortieState
+    id,
+      motif,
+      recovery_Date,
+      sortie_Date,
+      sortieTime
+      
+    }
+  remainingCongeSolde
+    login
+    password
+    teamEmployee{teamId,id,employeeId}
+    initialCongeSolde
+    
+	}
+}
+
+
+                                    ******************************
+
+mutation createcong($input : congeInput!) {
+  createConge(conge: $input) {
+   congeState,
+    start_Date,
+    end_Date,
+    employeeId,
+    half_Day,
+    id,
+    motif,
+    reason
+  }
+}
+
+variables
+
+{"input": {"congeState": "PENDING",
+  "end_Date": "2019-12-31",
+  "start_Date": "2019-12-03",
+  "employeeId": 1,
+  "half_Day": "APRES_MIDI",
+  "motif": "evenement",
+  "reason": "EXCEPTIONNEL"
+
+}}
+
+                                 ********************************************
+ 
+
+mutation createsort($input : sortieInput!) {
+  createSortie(sortie: $input) {
+  employeeId,
+    recovery_Date,
+    sortie_Date,
+    sortieTime,
+    sortieState,
+    motif
+  }
+}
+
+variables
+
+{"input": {"employeeId": 2,
+  "recovery_Date":"2019-12-31",
+  "sortie_Date" :"2019-05-31",
+ "sortieState": "PENDING",
+ "sortieTime": "ONE_HOUR",
+  "motif": "chaine"
+}}
+
+
+                              ********************************************
+
+query employee ($login: String!,$password: String!)
+{login (login: $login, password: $password)
+{id,
+  firstName,
+  lastName
+}
+
+}
+
+variables 
+
+{"login": "Sameh.Ouederni",
+"password": "123aze"}
+
+
+
+
+User information for testing
+
+Manager
+----------------------------
+Sameh.Ouederni
+123aze
+
+
+Normal user
+----------------------------
+Mahdi.Turki
+123
+
+
+
+                               ********************************************
+get emplyee par id
+
+query employee ($id: Int!)
+{employee (empId: $id)
+{firstName
+}
+
+}
+
+variable
+
+{"id": 2}
+
+                                 *******************************************
+
+
+mutation upd($input : congeInput!, $id: Int!) {
+  updateConge(conge: $input, congeId: $id) {
+congeState
+  }
+}
+
+variables
+
+{"input": {    "congeState": "APPROVED"
+},
+  "id": 1049
+}
+
+
+                                  ************************************************
+
+
+mutation upds($input : sortieInput!, $id: Int!) {
+  updateSortie(sortie: $input, sortieId: $id) {
+sortieState
+  }
+}
+  
+variables 
+
+{"input": {   "sortieState": "APPROVED"
+},
+  "id": 3
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mise a jour  le visual studio accordé au compte microsoft:
+afef.ferchichi95@gmail.com
+azerty123@
