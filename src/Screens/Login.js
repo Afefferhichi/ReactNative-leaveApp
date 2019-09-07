@@ -6,10 +6,10 @@ import {
   Text,
   View
 } from "react-native";
-import { Input } from "../common";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
+import { Input, constants, colors } from "../common";
 import { SessionStore } from "../Stores";
 
 const LOGIN = gql(`
@@ -22,21 +22,15 @@ const LOGIN = gql(`
   }
 `);
 
-//import console = require('console');
-
 class Login extends Component {
   state = {
     type: "Login",
     action: "Login",
     hasErrors: false,
     requesting: false,
-    // Manager
-    // login: 'Sameh.Ouederni',
-    // password: '123aze',
-
-    // Normal User
-    login: "Mahdi.Turki",
-    password: "123",
+    ...(constants.DEMO_MODE
+      ? { login: constants.MANAGER.login, password: constants.MANAGER.password }
+      : { login: "", password: "" }),
     loginError: "",
     isCheckedLogin: false,
     loggedIn: false
@@ -72,9 +66,7 @@ class Login extends Component {
         {!this.state.isCheckedLogin && <Text>Loading...</Text>}
         {this.state.isCheckedLogin && this.state.loggedIn && (
           <ActivityIndicator size="large" />
-        )
-        //<Text>You are already loggedin in. Moving to Activity Feed...</Text>
-        }
+        )}
         {this.state.isCheckedLogin && !this.state.loggedIn && (
           <ImageBackground
             style={{
@@ -86,13 +78,13 @@ class Login extends Component {
             source={require("../../assets/icons/img.png")}
           >
             <View>
-              <Text style={{ color: "#183152", fontWeight: "bold" }}>
+              <Text style={{ color: colors.lightblue, fontWeight: "bold" }}>
                 Welcome TELNETTeam
               </Text>
             </View>
             <Input
               placeholder="Entrer your username"
-              placeholderTextColor="#F6E8B1"
+              placeholderTextColor={colors.lightyellow}
               type="textinput"
               value={this.state.login}
               autoCapitalize={"none"}
@@ -101,7 +93,7 @@ class Login extends Component {
             />
             <Input
               placeholder="Entrer your password"
-              placeholderTextColor="#F6E8B1"
+              placeholderTextColor={colors.lightyellow}
               type="textinput"
               value={this.state.password}
               onChangeText={value => this.setState({ password: value })}
@@ -142,7 +134,7 @@ class Login extends Component {
                             login: null,
                             password: null
                           });
-                          this.props.navigation.navigate("ActivityFeed");
+                          navigate("ActivityFeed");
                         });
                       } catch (e) {
                         // saving error
@@ -163,7 +155,7 @@ class Login extends Component {
                 <Button
                   disabled={this.state.requesting}
                   title="Login"
-                  color="#183152"
+                  color={colors.lightblue}
                   onPress={() => {
                     if (this.state.login && this.state.password) {
                       this.setState({ loginError: "" });
@@ -193,10 +185,10 @@ const styles = {
     marginBottom: 10,
     marginTop: 30,
     padding: 10,
-    backgroundColor: "white"
+    backgroundColor: colors.white
   },
   errorLabel: {
-    color: "#fff",
+    color: colors.white,
     textAlignVertical: "center",
     textAlign: "center"
   },
@@ -205,13 +197,13 @@ const styles = {
   },
   login: {
     info: {
-      color: "#ff0"
+      color: colors.yellow
     },
     error: {
-      color: "#f00"
+      color: colors.red
     },
     success: {
-      color: "#0f0"
+      color: colors.green
     }
   }
 };

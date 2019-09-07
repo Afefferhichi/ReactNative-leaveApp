@@ -12,7 +12,9 @@ const colors = {
   dimsky: "#C4D7ED",
   whitegray: "#dcdcdc",
   lightyellow: "#F6E8B1",
-  white: "#ffffff"
+  white: "#ffffff",
+  yellow: "#ffff00",
+  green: "#00ff00",
 };
 
 export { colors };

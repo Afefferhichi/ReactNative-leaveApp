@@ -1,4 +1,6 @@
 const constants = {
+  DEMO_MODE: true,
+
   SortieState: {
     APPROVED: "APPROVED",
     PENDING: "PENDING",
@@ -17,7 +19,11 @@ const constants = {
     HOLIDAY: "Holiday",
     SPECIAL_PERMITS: "Special Permits",
     SICKNESS: "Sickness"
-  }
+  },
+
+  USER: {login: "Mahdi.Turki", password: "123"}, // normal user,
+  MANAGER: {login: "Sameh.Ouederni", password: "123aze"}, // manager,
+
 };
 
 export { constants };

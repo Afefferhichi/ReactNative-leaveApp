@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { DayDetail } from "../common";
 import Icon from "react-native-vector-icons/Ionicons";
+import { colors } from "../common";
 
 class ShowHistory extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -15,9 +16,9 @@ class ShowHistory extends Component {
           <View
             style={{
               height: 58,
-              backgroundColor: "white",
+              backgroundColor: colors.white,
               borderWidth: 1,
-              borderColor: "white",
+              borderColor: colors.white,
               alignItems: "center",
               flexDirection: "row",
               borderBottomWidth: 1,
@@ -31,14 +32,14 @@ class ShowHistory extends Component {
               onPress={() => this.props.navigation.openDrawer()}
             />
             <Text
-              style={{ fontSize: 20, fontWeight: "normal", color: "#696969" }}
+              style={{ fontSize: 20, fontWeight: "normal", color: colors.gray }}
             >
               History Leave
             </Text>
           </View>
           <View
             style={{
-              backgroundColor: "#C4D7ED",
+              backgroundColor: colors.dimsky,
               padding: 10,
               margin: 10,
               flexDirection: "row"
@@ -52,12 +53,12 @@ class ShowHistory extends Component {
               style={{
                 width: 90,
                 height: 100,
-                backgroundColor: "#C4D7ED",
+                backgroundColor: colors.dimsky,
                 borderRadius: 15
               }}
             />
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ color: "white" }}>Welcome @username</Text>
+              <Text style={{ color: colors.white }}>Welcome @username</Text>
             </View>
           </View>
 

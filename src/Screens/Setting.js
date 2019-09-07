@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { SessionStore } from "../Stores";
+import { colors } from "../common";
 
 class Setting extends Component {
   state = {
@@ -29,9 +30,9 @@ class Setting extends Component {
         <View
           style={{
             height: 58,
-            backgroundColor: "white",
+            backgroundColor: colors.white,
             borderWidth: 1,
-            borderColor: "white",
+            borderColor: colors.white,
             alignItems: "center",
             flexDirection: "row",
             borderBottomWidth: 1,
@@ -45,7 +46,7 @@ class Setting extends Component {
             onPress={() => this.props.navigation.openDrawer()}
           />
           <Text
-            style={{ fontSize: 20, fontWeight: "normal", color: "#696969" }}
+            style={{ fontSize: 20, fontWeight: "normal", color: colors.gray }}
           >
             Settings
           </Text>
@@ -53,7 +54,7 @@ class Setting extends Component {
 
         <View
           style={{
-            backgroundColor: "#C4D7ED",
+            backgroundColor: colors.dimsky,
             borderRadius: 15,
             padding: 10,
             margin: 10,
@@ -68,29 +69,13 @@ class Setting extends Component {
             style={{
               width: 90,
               height: 100,
-              backgroundColor: "#f2f2f2",
+              backgroundColor: colors.whitegray,
               borderRadius: 15
             }}
           />
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ color: "white" }}>@username</Text>
+            <Text style={{ color: colors.white }}>@username</Text>
           </View>
-          {/* <TouchableOpacity
-    style={{
-    width: "0%",
-    height: 45,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    marginTop: 5,
-    alignSelf: "center",
-    marginLeft: 10,
-    marginTop: 40
-    }}
-    onPress={() => this.props.navigation.navigate("Holiday")}
-    >
-    <Text style={{ color: "tomato" }}>Daily Detail</Text>
-    </TouchableOpacity> */}
           <TouchableOpacity
             style={{
               alignSelf: "flex-end",
@@ -108,7 +93,6 @@ class Setting extends Component {
                 style={{ alignSelf: "flex-end" }}
               />
             )}
-            {/* <Text style={{ fontSize: 12 }}>LOG OUT</Text> */}
           </TouchableOpacity>
         </View>
       </View>
