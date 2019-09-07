@@ -44,14 +44,23 @@ class Login extends Component {
         if (_loggedIn) {
           setTimeout(async () => {
             await this.setState({ loggedIn: false });
-            this.props.navigation.navigate("ActivityFeed");
+            this.resetRoute("appDrawerNavigator");
           }, 500);
+
         }
       });
     } catch (e) {
       // error reading value
     }
   }
+
+  resetRoute = (routeName) => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName })],
+    });
+    this.props.navigation.dispatch(resetAction);
+  };
 
   render() {
     const {
@@ -140,11 +149,8 @@ class Login extends Component {
                             password: null
                           });
 
-                          const resetAction = StackActions.reset({
-                            index: 0,
-                            actions: [NavigationActions.navigate({ routeName: 'appDrawerNavigator' })],
-                          });
-                          this.props.navigation.dispatch(resetAction);
+                          this.resetRoute("appDrawerNavigator");
+
                         });
                       } catch (e) {
                         // saving error
