@@ -146,12 +146,8 @@ const appDrawerNavigator = createDrawerNavigator(
 
 const RootStack = createStackNavigator(
   {
-    Login: {
-      screen: Login
-    },
-    appDrawerNavigator: {
-      screen: appDrawerNavigator
-    }
+    Login,
+    appDrawerNavigator
   },
   {
     headerMode: "none"

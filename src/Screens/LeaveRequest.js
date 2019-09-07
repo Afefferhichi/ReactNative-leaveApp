@@ -38,28 +38,30 @@ class LeaveRequest extends Component {
   }
 
   render() {
+    const { showCalendar, startDate, endDate, startDateIsHalf, endDateIsHalf
+    } = this.state;
     return (
       <View style={{ flex: 1, height: "100%", backgroundColor: colors.white }}>
-        {this.state.showCalendar && (
+        {showCalendar && (
           <HalfdayCalendar
             onConfirm={async (
-              startDate,
-              endDate,
-              startDateIsHalf,
-              endDateIsHalf
+              _startDate,
+              _endDate,
+              _startDateIsHalf,
+              _endDateIsHalf
             ) => {
               await this.setState({
                 showCalendar: false,
-                startDate,
-                endDate,
-                startDateIsHalf,
-                endDateIsHalf
+                startDate: _startDate,
+                endDate: _endDate,
+                startDateIsHalf: _startDateIsHalf,
+                endDateIsHal: _endDateIsHalf,
               });
             }}
-            startDate={this.state.startDate}
-            endDate={this.state.endDate}
-            startDateIsHalf={this.state.startDateIsHalf}
-            endDateIsHalf={this.state.endDateIsHalf}
+            startDate={startDate}
+            endDate={endDate}
+            startDateIsHalf={startDateIsHalf}
+            endDateIsHalf={endDateIsHalf}
             onCancel={() => this.setState({ showCalendar: false })}
           />
         )}

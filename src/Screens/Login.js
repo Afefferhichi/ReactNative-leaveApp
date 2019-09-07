@@ -11,6 +11,7 @@ import gql from "graphql-tag";
 
 import { Input, constants, colors } from "../common";
 import { SessionStore } from "../Stores";
+import { StackActions, NavigationActions } from 'react-navigation';
 
 const LOGIN = gql(`
   query employee($login: String!, $password: String!) {
@@ -53,8 +54,14 @@ class Login extends Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
-    const { login, password } = this.state;
+    const {
+      login,
+      loggedIn,
+      password,
+      requesting,
+      isCheckedLogin,
+      loginError
+    } = this.state;
     return (
       <View
         style={{
@@ -63,11 +70,9 @@ class Login extends Component {
           alignItems: "center"
         }}
       >
-        {!this.state.isCheckedLogin && <Text>Loading...</Text>}
-        {this.state.isCheckedLogin && this.state.loggedIn && (
-          <ActivityIndicator size="large" />
-        )}
-        {this.state.isCheckedLogin && !this.state.loggedIn && (
+        {!isCheckedLogin && <Text>Loading...</Text>}
+        {isCheckedLogin && loggedIn && <ActivityIndicator size="large" />}
+        {isCheckedLogin && !loggedIn && (
           <ImageBackground
             style={{
               height: "100%",
@@ -86,7 +91,7 @@ class Login extends Component {
               placeholder="Entrer your username"
               placeholderTextColor={colors.lightyellow}
               type="textinput"
-              value={this.state.login}
+              value={login}
               autoCapitalize={"none"}
               keyboardType={"email-address"}
               onChangeText={value => this.setState({ login: value })}
@@ -95,16 +100,16 @@ class Login extends Component {
               placeholder="Entrer your password"
               placeholderTextColor={colors.lightyellow}
               type="textinput"
-              value={this.state.password}
+              value={password}
               onChangeText={value => this.setState({ password: value })}
               secureTextEntry
             />
 
             <Text style={[styles.login.error, { marginTop: 20 }]}>
-              {this.state.loginError}
+              {loginError}
             </Text>
 
-            {this.state.requesting && (
+            {requesting && (
               <Query query={LOGIN} variables={{ login, password }}>
                 {({ loading, error, data }) => {
                   if (loading) {
@@ -134,7 +139,12 @@ class Login extends Component {
                             login: null,
                             password: null
                           });
-                          navigate("ActivityFeed");
+
+                          const resetAction = StackActions.reset({
+                            index: 0,
+                            actions: [NavigationActions.navigate({ routeName: 'appDrawerNavigator' })],
+                          });
+                          this.props.navigation.dispatch(resetAction);
                         });
                       } catch (e) {
                         // saving error
@@ -153,11 +163,11 @@ class Login extends Component {
             <View style={{ marginTop: 20 }}>
               <View style={styles.button}>
                 <Button
-                  disabled={this.state.requesting}
+                  disabled={requesting}
                   title="Login"
                   color={colors.lightblue}
                   onPress={() => {
-                    if (this.state.login && this.state.password) {
+                    if (login && password) {
                       this.setState({ loginError: "" });
                       this.setState({ requesting: true });
                     } else {
@@ -168,7 +178,7 @@ class Login extends Component {
                   }}
                 />
 
-                {this.state.requesting && (
+                {requesting && (
                   <ActivityIndicator style={{ marginTop: 15 }} size="small" />
                 )}
               </View>

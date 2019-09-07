@@ -65,7 +65,7 @@ class ActivityFeed extends Component {
   // ============== Confirmation:End ===============
 
   render() {
-    const { expanded, expanded2 } = this.state;
+    const { expanded, expanded2, exitRequests } = this.state;
     return (
       <View>
         <View
@@ -135,7 +135,7 @@ class ActivityFeed extends Component {
                   <View style={styles.btnTextHolder}>
                     <View
                       style={{
-                        height: this.state.expanded ? null : 0,
+                        height: expanded ? null : 0,
                         overflow: "hidden"
                       }}
                     >
@@ -211,7 +211,7 @@ class ActivityFeed extends Component {
               <View style={styles.btnTextHolder}>
                 <View
                   style={{
-                    height: this.state.expanded ? null : 0,
+                    height: expanded ? null : 0,
                     overflow: "hidden"
                   }}
                 >
@@ -273,10 +273,10 @@ class ActivityFeed extends Component {
                     <Icon name="md-time" size={29} style={{ marginLeft: 30 }} />
                   </View>
 
-                  {this.state.exitRequests.length === 0 && (
+                  {exitRequests.length === 0 && (
                     <Text>Oops, you don't have any Exit Requeyet.</Text>
                   )}
-                  {this.state.exitRequests.length > 0 && (
+                  {exitRequests.length > 0 && (
                     <View
                       style={{
                         borderWidth: 0,
@@ -309,7 +309,7 @@ class ActivityFeed extends Component {
                       <View style={styles.btnTextHolder}>
                         <View
                           style={{
-                            height: this.state.expanded2 ? null : 0,
+                            height: expanded2 ? null : 0,
                             overflow: "hidden"
                           }}
                         >

@@ -5,14 +5,16 @@ class SessionStoreClass {
     this.value = {};
   }
 
-  precheck = value => {
+  preCheck = value => {
     const ret = value;
-    ret.isAdmin = ret.id === 1 || ret.id === 2;
+    if (ret) {
+      ret.isAdmin = ret.id === 1 || ret.id === 2;
+    }
     return ret;
   };
   async login(loginInformation, afterLoginCallback) {
     try {
-      const _loginInformation = this.precheck(loginInformation);
+      const _loginInformation = this.preCheck(loginInformation);
       await AsyncStorage.setItem("@login", JSON.stringify(_loginInformation));
       this.value = _loginInformation;
       afterLoginCallback && afterLoginCallback();
@@ -24,7 +26,7 @@ class SessionStoreClass {
   async isLoggedIn(afterGettingCallback) {
     try {
       let loginInformation = await AsyncStorage.getItem("@login");
-      loginInformation = this.precheck(JSON.parse(loginInformation));
+      loginInformation = this.preCheck(JSON.parse(loginInformation));
       this.value = loginInformation;
       afterGettingCallback &&
         afterGettingCallback(loginInformation !== null, loginInformation);
@@ -42,6 +44,7 @@ class SessionStoreClass {
   }
 
   userName() {
+    if (!this.value || !this.value.firstName) return "";
     return `${this.value.firstName} ${this.value.lastName}`;
   }
 

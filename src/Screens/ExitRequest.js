@@ -62,6 +62,7 @@ class ExitRequest extends Component {
   }
 
   showDatePicker = async dateNum => {
+    const { fromDate, recoveryDate } = this.state;
     if (Platform.OS === "ios") {
       this.setState({
         dateNum: dateNum,
@@ -70,8 +71,7 @@ class ExitRequest extends Component {
       });
     } else {
       let selected_date = new Date(
-        (dateNum === 1 ? this.state.fromDate : this.state.recoveryDate) ||
-        +new Date()
+        (dateNum === 1 ? fromDate : recoveryDate) || +new Date()
       );
 
       try {
@@ -96,13 +96,14 @@ class ExitRequest extends Component {
   };
 
   showTimePicker = async () => {
+    const {fromTime} = this.state;
     if (Platform.OS === "ios") {
       this.setState({
         isPickerVisible: true,
         iosDatetimePickerMode: "time"
       });
     } else {
-      const selected_time = this.state.fromTime;
+      const selected_time = fromTime;
       let selected_hour, selected_minute;
 
       if (selected_time) {
@@ -148,18 +149,19 @@ class ExitRequest extends Component {
   };
 
   onConfirmDateIOS = date => {
+    const {dateNum} = this.state;
     let fromDate, recoveryDate;
-    if (this.state.dateNum === 1) {
+    if (dateNum === 1) {
       fromDate = `${date.getFullYear()}-${date.getMonth() +
-      1}-${date.getDate()}`;
-    } else if (this.state.dateNum === 2) {
+        1}-${date.getDate()}`;
+    } else if (dateNum === 2) {
       recoveryDate = `${date.getFullYear()}-${date.getMonth() +
-      1}-${date.getDate()}`;
+        1}-${date.getDate()}`;
     }
 
     this.setState({
-      ...(this.state.dateNum === 1 ? { fromDate: fromDate } : {}),
-      ...(this.state.dateNum === 2 ? { recoveryDate: recoveryDate } : {}),
+      ...(dateNum === 1 ? { fromDate: fromDate } : {}),
+      ...(dateNum === 2 ? { recoveryDate: recoveryDate } : {}),
       iosDefaultDate: date,
       isPickerVisible: false
     });
@@ -422,8 +424,8 @@ class ExitRequest extends Component {
                         ? err.graphQLErrors.length !== 0
                           ? "There was an error on Server"
                           : err.networkError
-                            ? "There was a network problem"
-                            : "Unknown error occurred"
+                          ? "There was a network problem"
+                          : "Unknown error occurred"
                         : "Unknown error occurred";
                       alert(result);
                     });

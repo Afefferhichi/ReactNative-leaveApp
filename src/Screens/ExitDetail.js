@@ -34,6 +34,9 @@ const ADD_EXIT_DETAIL = gql`
 `;
 
 class ExitDetail extends Component {
+  static navigationOptions = {
+    title: "Exit Detail"
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -58,6 +61,7 @@ class ExitDetail extends Component {
   }
 
   showDatePicker = async dateNum => {
+    const {fromDate, recoveryDate} = this.state;
     if (Platform.OS === "ios") {
       this.setState({
         dateNum: dateNum,
@@ -66,7 +70,7 @@ class ExitDetail extends Component {
       });
     } else {
       let selected_date = new Date(
-        (dateNum === 1 ? this.state.fromDate : this.state.recoveryDate) ||
+        (dateNum === 1 ? fromDate : recoveryDate) ||
           +new Date()
       );
 
@@ -92,13 +96,14 @@ class ExitDetail extends Component {
   };
 
   showTimePicker = async () => {
+    const {fromTime} = this.state;
     if (Platform.OS === "ios") {
       this.setState({
         isPickerVisible: true,
         iosDatetimePickerMode: "time"
       });
     } else {
-      const selected_time = this.state.fromTime;
+      const selected_time = fromTime;
       let selected_hour, selected_minute;
 
       if (selected_time) {
@@ -144,18 +149,19 @@ class ExitDetail extends Component {
   };
 
   onConfirmDateIOS = date => {
+    const {dateNum} = this.state;
     let fromDate, recoveryDate;
-    if (this.state.dateNum === 1) {
+    if (dateNum === 1) {
       fromDate = `${date.getFullYear()}-${date.getMonth() +
         1}-${date.getDate()}`;
-    } else if (this.state.dateNum === 2) {
+    } else if (dateNum === 2) {
       recoveryDate = `${date.getFullYear()}-${date.getMonth() +
         1}-${date.getDate()}`;
     }
 
     this.setState({
-      ...(this.state.dateNum === 1 ? { fromDate: fromDate } : {}),
-      ...(this.state.dateNum === 2 ? { recoveryDate: recoveryDate } : {}),
+      ...(dateNum === 1 ? { fromDate: fromDate } : {}),
+      ...(dateNum === 2 ? { recoveryDate: recoveryDate } : {}),
       iosDefaultDate: date,
       isPickerVisible: false
     });

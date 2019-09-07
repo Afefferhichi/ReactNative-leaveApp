@@ -10,6 +10,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { SessionStore } from "../Stores";
 import { colors } from "../common";
 
+const woman_image_url =
+  "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 class Setting extends Component {
   state = {
     loading: false
@@ -19,12 +21,13 @@ class Setting extends Component {
     SessionStore.logout(() => {
       this.setState({ loading: true });
       setTimeout(() => {
-        this.props.navigation.navigate("Login");
+        this.props.navigation.replace("Login");
       }, 1000);
     });
   };
 
   render() {
+    const { loading } = this.state;
     return (
       <View>
         <View
@@ -63,8 +66,7 @@ class Setting extends Component {
         >
           <Image
             source={{
-              uri:
-                "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+              uri: woman_image_url
             }}
             style={{
               width: 90,
@@ -74,19 +76,22 @@ class Setting extends Component {
             }}
           />
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ color: colors.white }}>@username</Text>
+            <Text style={{ color: colors.black }}>
+              {SessionStore.isLoggedIn() &&
+                SessionStore.userName()
+              }
+            </Text>
           </View>
           <TouchableOpacity
             style={{
-              alignSelf: "flex-end",
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 90
+              position: "absolute",
+              right: 15,
+              bottom: 10
             }}
             onPress={() => this.logout()}
           >
-            {this.state.loading && <ActivityIndicator size="small" />}
-            {!this.state.loading && (
+            {loading && <ActivityIndicator size="small" />}
+            {!loading && (
               <Icon
                 name="md-log-out"
                 size={30}
