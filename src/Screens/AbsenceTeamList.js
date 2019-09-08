@@ -11,6 +11,7 @@ import { ProfileCard } from "../common";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { colors } from "../common";
+import {Actions} from 'react-native-router-flux';
 
 const manIcon = require("../../assets/icons/Capture.png");
 
@@ -38,7 +39,7 @@ class AbsenceTeamList extends Component {
   _keyExtractor = (item, index) => item.firstName;
   _renderItem = ({ item }) => (
     <AbsenceTeamItem
-      onPress={() => this.props.navigation.navigate("AbsenceHistory")}
+      onPress={() => Actions.AbsenceHistory()}
       item={item}
     />
   );
@@ -50,29 +51,7 @@ class AbsenceTeamList extends Component {
   render() {
     return (
       <View>
-        <View
-          style={{
-            height: 58,
-            backgroundColor: colors.white,
-            borderWidth: 1,
-            borderColor: colors.lightgray,
-            alignItems: "center",
-            flexDirection: "row"
-          }}
-        >
-          <Icon
-            name="md-menu"
-            size={30}
-            style={{ paddingLeft: 10, paddingRight: 20 }}
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-          <Text
-            style={{ fontSize: 20, fontWeight: "bold", color: colors.black }}
-          >
-            Team List
-          </Text>
-          <TextInput style={styles.searchInput} placeholder="Search here" />
-        </View>
+
         <View>
           <Query query={FETCH_EMPLOYEES} variables={{}}>
             {({ loading, error, data }) => {

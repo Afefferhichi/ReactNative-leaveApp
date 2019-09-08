@@ -7,6 +7,8 @@ import {
   View
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { Actions } from "react-native-router-flux";
+
 import { SessionStore } from "../Stores";
 import { colors } from "../common";
 
@@ -21,7 +23,7 @@ class Setting extends Component {
     SessionStore.logout(() => {
       this.setState({ loading: true });
       setTimeout(() => {
-        this.props.navigation.replace("Login");
+        Actions.reset("LandingPage");
       }, 1000);
     });
   };
@@ -30,30 +32,6 @@ class Setting extends Component {
     const { loading } = this.state;
     return (
       <View>
-        <View
-          style={{
-            height: 58,
-            backgroundColor: colors.white,
-            borderWidth: 1,
-            borderColor: colors.white,
-            alignItems: "center",
-            flexDirection: "row",
-            borderBottomWidth: 1,
-            padding: 10
-          }}
-        >
-          <Icon
-            name="md-menu"
-            size={30}
-            style={{ paddingLeft: 10, paddingRight: 20 }}
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-          <Text
-            style={{ fontSize: 20, fontWeight: "normal", color: colors.gray }}
-          >
-            Settings
-          </Text>
-        </View>
 
         <View
           style={{

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { colors } from "../common";
+import { Actions } from "react-native-router-flux";
 const image_url =
   "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 class AbsenceConfirm extends Component {
@@ -16,10 +17,10 @@ class AbsenceConfirm extends Component {
   };
 
   onConfirm = () => {
-    this.props.navigation.goBack();
+    Actions.pop();
   };
   onCancel = () => {
-    this.props.navigation.goBack();
+    Actions.pop();
   };
 
   render() {

@@ -55,14 +55,6 @@ class Login extends Component {
     }
   }
 
-  resetRoute = routeName => {
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName })]
-    });
-    this.props.navigation.dispatch(resetAction);
-  };
-
   render() {
     const {
       login,
@@ -149,9 +141,7 @@ class Login extends Component {
                             login: null,
                             password: null
                           });
-
-                          //this.resetRoute("appDrawerNavigator");
-                          Actions.jump("MainView");
+                          Actions.reset("MainView");
                         });
                       } catch (e) {
                         // saving error

@@ -6,8 +6,10 @@
  */
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Drawer, Router, Scene, Stack } from "react-native-router-flux";
+import { Actions, Drawer, Router, Scene, Stack } from "react-native-router-flux";
 import {
+  ExitDetail,
+  AbsenceConfirm,
   LandingPage,
   AbsenceTeamList,
   ActivityFeed,
@@ -28,14 +30,14 @@ class Routes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: undefined,
+      isLoggedIn: null,
       userData: null
     };
   }
 
   componentDidMount(): void {
     SessionStore.isLoggedIn().then(async loggedIn => {
-      await this.setState({ isLoggedIn: loggedIn });
+      Actions.MainView();
     });
   }
 
@@ -59,19 +61,22 @@ class Routes extends Component {
             type="reset"
             initial={this.state && this.state.isLoggedIn === true}
             contentComponent={SideBar}
-            drawerIcon={<Icon style={{ color: "white" }} name="md-menu" />}
+            drawerIcon={<Icon size={24} name="md-menu" />}
             hideNavBar
             drawerPosition="Left"
           >
             <Router hideNavBar>
               <Stack key="drawerRoot">
                 <Scene key="Welcome" component={Welcome} />
-                <Scene key="ActivityFeed" component={ActivityFeed} />
-                <Scene key="ExitRequest" component={ExitRequest} />
-                <Scene key="LeaveRequest" component={LeaveRequest} />
-                <Scene key="ShowHistory" component={ShowHistory} />
-                <Scene key="AbsenceTeamList" component={AbsenceTeamList} />
-                <Scene key="Setting" component={Setting} />
+                <Scene key="ActivityFeed" title="Activity Feed" component={ActivityFeed} />
+                <Scene key="ExitRequest" title="Exit Request" component={ExitRequest} />
+                <Scene key="LeaveRequest" title="Leave Request" component={LeaveRequest} />
+                <Scene key="ShowHistory" title="Show History" component={ShowHistory} />
+                <Scene key="AbsenceTeamList" title="Absence Team List" component={AbsenceTeamList} />
+                <Scene key="Setting" title="Setting" component={Setting} />
+                <Scene key="LandingPage" hideNavbar component={LandingPage} />
+                <Scene key="AbsenceConfirm" component={AbsenceConfirm} />
+                <Scene key="ExitDetail" component={ExitDetail} />
               </Stack>
             </Router>
           </Drawer>

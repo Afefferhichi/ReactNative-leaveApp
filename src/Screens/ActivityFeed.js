@@ -14,6 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import { Header, AbsenceCard, colors } from "../common";
 import { SessionStore, ExitRequestStore } from "../Stores";
+import { Actions } from "react-native-router-flux";
 
 class ActivityFeed extends Component {
   constructor() {
@@ -34,10 +35,6 @@ class ActivityFeed extends Component {
   setAnimation = () =>
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
-  static navigationOptions = ({ navigation }) => ({
-    header: null
-  });
-
   async componentDidMount() {
     ExitRequestStore.get(exitRequestData => {
       this.setState({ exitRequests: [exitRequestData] });
@@ -50,13 +47,11 @@ class ActivityFeed extends Component {
     let items = [
       {
         title: "Approve",
-        onPress: () =>
-          this.props.navigation.navigate("AbsenceConfirm", { mode: "APPROVE" })
+        onPress: () => Actions.AbsenceConfirm({ mode: "APPROVE" })
       },
       {
         title: "Reject",
-        onPress: () =>
-          this.props.navigation.navigate("AbsenceConfirm", { mode: "REJECT" })
+        onPress: () => Actions.AbsenceConfirm({ mode: "REJECT" })
       }
     ];
     let cancelItem = { title: "Cancel" };
@@ -68,31 +63,6 @@ class ActivityFeed extends Component {
     const { expanded, expanded2, exitRequests } = this.state;
     return (
       <View>
-        <View
-          style={{
-            height: 58,
-            backgroundColor: colors.white,
-            borderWidth: 1,
-            borderColor: colors.white,
-            alignItems: "center",
-            flexDirection: "row",
-            borderBottomWidth: 1,
-            padding: 10
-          }}
-        >
-          <Icon
-            name="md-menu"
-            size={30}
-            style={{ paddingLeft: 10, paddingRight: 20 }}
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-
-          <Text
-            style={{ fontSize: 20, fontWeight: "normal", color: colors.gray }}
-          >
-            Activity Feed
-          </Text>
-        </View>
         <ScrollView style={{ height: "90%" }}>
           <View style={styles.container}>
             <View style={styles.container}>
@@ -237,9 +207,7 @@ class ActivityFeed extends Component {
                         borderRadius: 3,
                         marginRight: 20
                       }}
-                      onPress={() =>
-                        this.props.navigation.navigate("LeaveRequest")
-                      }
+                      onPress={() => Actions.LeaveRequest()}
                     >
                       <Text style={{ color: colors.white }}>OPEN</Text>
                     </TouchableOpacity>
@@ -389,9 +357,7 @@ class ActivityFeed extends Component {
                                 borderRadius: 3,
                                 marginRight: 20
                               }}
-                              onPress={() =>
-                                this.props.navigation.navigate("ExitDetail")
-                              }
+                              onPress={() => Actions.ExitDetail()}
                             >
                               <Text style={{ color: colors.white }}>OPEN</Text>
                             </TouchableOpacity>

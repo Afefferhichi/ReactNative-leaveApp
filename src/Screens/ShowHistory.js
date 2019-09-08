@@ -5,38 +5,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { colors } from "../common";
 
 class ShowHistory extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    header: null
-  });
-
   render() {
     return (
       <View>
         <ScrollView>
-          <View
-            style={{
-              height: 58,
-              backgroundColor: colors.white,
-              borderWidth: 1,
-              borderColor: colors.white,
-              alignItems: "center",
-              flexDirection: "row",
-              borderBottomWidth: 1,
-              padding: 10
-            }}
-          >
-            <Icon
-              name="md-menu"
-              size={30}
-              style={{ paddingLeft: 10, paddingRight: 20 }}
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-            <Text
-              style={{ fontSize: 20, fontWeight: "normal", color: colors.gray }}
-            >
-              History Leave
-            </Text>
-          </View>
           <View
             style={{
               backgroundColor: colors.dimsky,

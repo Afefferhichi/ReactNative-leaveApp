@@ -92,7 +92,12 @@ class SideBar extends Component {
               return (
                 <>
                   {item.item_key === "collapse-icon" && (
-                    <Button transparent color="black" onPress={this._onPress}>
+                    <Button
+                      style={{ alignSelf: "flex-end" }}
+                      transparent
+                      color="black"
+                      onPress={this._onPress}
+                    >
                       <Icon
                         style={{
                           color: "black",

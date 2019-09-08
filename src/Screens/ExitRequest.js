@@ -17,6 +17,7 @@ import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { constants, colors } from "../common";
 import { ExitRequestStore, SessionStore } from "../Stores";
+import {Actions} from 'react-native-router-flux';
 
 const woman_image_url =
   "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
@@ -413,7 +414,7 @@ class ExitRequest extends Component {
                       if (result) {
                         ExitRequestStore.set(input, () => {
                           alert("Saved successfully!");
-                          this.props.navigation.goBack();
+                          Actions.pop();
                         });
                       } else {
                         alert("An error occurred while saving");
