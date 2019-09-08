@@ -21,9 +21,8 @@ const constants = {
     SICKNESS: "Sickness"
   },
 
-  USER: {login: "Mahdi.Turki", password: "123"}, // normal user,
-  MANAGER: {login: "Sameh.Ouederni", password: "123aze"}, // manager,
-
+  USER: { login: "Mahdi.Turki", password: "123" }, // normal user,
+  MANAGER: { login: "Sameh.Ouederni", password: "123aze" } // manager,
 };
 
 export { constants };

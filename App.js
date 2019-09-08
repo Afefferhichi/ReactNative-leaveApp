@@ -80,6 +80,24 @@ const appDrawerNavigator = createDrawerNavigator(
         )
       }
     },
+    LeaveRequest: {
+      screen: LeaveRequest,
+      navigationOptions: {
+        drawerLabel: "LeaveRequest",
+        drawerIcon: (
+          <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        )
+      }
+    },
+    ExitRequest: {
+      screen: ExitRequest,
+      navigationOptions: {
+        drawerLabel: "ExitRequest",
+        drawerIcon: (
+          <Icon name="md-list" size={28} style={{ color: colors.white }} />
+        )
+      }
+    },
     ShowHistory: {
       screen: ShowHistory,
       navigationOptions: {
@@ -102,25 +120,6 @@ const appDrawerNavigator = createDrawerNavigator(
         )
       }
     },
-    ExitRequest: {
-      screen: ExitRequest,
-      navigationOptions: {
-        drawerLabel: "ExitRequest",
-        drawerIcon: (
-          <Icon name="md-list" size={28} style={{ color: colors.white }} />
-        )
-      }
-    },
-    LeaveRequest: {
-      screen: LeaveRequest,
-      navigationOptions: {
-        drawerLabel: "LeaveRequest",
-        drawerIcon: (
-          <Icon name="md-list" size={28} style={{ color: colors.white }} />
-        )
-      }
-    },
-
     Setting: {
       screen: Setting,
       navigationOptions: {

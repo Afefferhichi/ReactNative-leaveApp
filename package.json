@@ -16,6 +16,7 @@
     "color": "^3.1.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
+    "native-base": "^2.13.7",
     "react": "16.8.6",
     "react-apollo": "^2.4.1",
     "react-hooks-render-props": "^0.2.0",
@@ -32,6 +33,7 @@
     "react-native-range-datepicker": "^1.9.1",
     "react-native-reanimated": "^1.2.0",
     "react-native-responsive-screen": "^1.2.2",
+    "react-native-router-flux": "^4.0.6",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^3.11.1",
     "teaset": "^0.7.0"

@@ -96,7 +96,7 @@ class ExitRequest extends Component {
   };
 
   showTimePicker = async () => {
-    const {fromTime} = this.state;
+    const { fromTime } = this.state;
     if (Platform.OS === "ios") {
       this.setState({
         isPickerVisible: true,
@@ -149,7 +149,7 @@ class ExitRequest extends Component {
   };
 
   onConfirmDateIOS = date => {
-    const {dateNum} = this.state;
+    const { dateNum } = this.state;
     let fromDate, recoveryDate;
     if (dateNum === 1) {
       fromDate = `${date.getFullYear()}-${date.getMonth() +

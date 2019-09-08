@@ -77,9 +77,7 @@ class Setting extends Component {
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={{ color: colors.black }}>
-              {SessionStore.isLoggedIn() &&
-                SessionStore.userName()
-              }
+              {SessionStore.isLoggedIn() && SessionStore.userName()}
             </Text>
           </View>
           <TouchableOpacity

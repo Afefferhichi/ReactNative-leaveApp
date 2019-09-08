@@ -61,7 +61,7 @@ class ExitDetail extends Component {
   }
 
   showDatePicker = async dateNum => {
-    const {fromDate, recoveryDate} = this.state;
+    const { fromDate, recoveryDate } = this.state;
     if (Platform.OS === "ios") {
       this.setState({
         dateNum: dateNum,
@@ -70,8 +70,7 @@ class ExitDetail extends Component {
       });
     } else {
       let selected_date = new Date(
-        (dateNum === 1 ? fromDate : recoveryDate) ||
-          +new Date()
+        (dateNum === 1 ? fromDate : recoveryDate) || +new Date()
       );
 
       try {
@@ -96,7 +95,7 @@ class ExitDetail extends Component {
   };
 
   showTimePicker = async () => {
-    const {fromTime} = this.state;
+    const { fromTime } = this.state;
     if (Platform.OS === "ios") {
       this.setState({
         isPickerVisible: true,
@@ -149,7 +148,7 @@ class ExitDetail extends Component {
   };
 
   onConfirmDateIOS = date => {
-    const {dateNum} = this.state;
+    const { dateNum } = this.state;
     let fromDate, recoveryDate;
     if (dateNum === 1) {
       fromDate = `${date.getFullYear()}-${date.getMonth() +

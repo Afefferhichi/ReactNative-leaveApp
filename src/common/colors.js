@@ -14,7 +14,7 @@ const colors = {
   lightyellow: "#F6E8B1",
   white: "#ffffff",
   yellow: "#ffff00",
-  green: "#00ff00",
+  green: "#00ff00"
 };
 
 export { colors };

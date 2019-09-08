@@ -9,3 +9,5 @@ export * from "./Login";
 export * from "./Profile";
 export * from "./Setting";
 export * from "./ShowHistory";
+export * from "./Welcome";
+export * from "./LandingPage";

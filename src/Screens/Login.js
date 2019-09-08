@@ -8,10 +8,11 @@ import {
 } from "react-native";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import { Actions } from "react-native-router-flux";
 
 import { Input, constants, colors } from "../common";
 import { SessionStore } from "../Stores";
-import { StackActions, NavigationActions } from 'react-navigation';
+import { StackActions, NavigationActions } from "react-navigation";
 
 const LOGIN = gql(`
   query employee($login: String!, $password: String!) {
@@ -41,23 +42,23 @@ class Login extends Component {
     try {
       SessionStore.isLoggedIn(async _loggedIn => {
         await this.setState({ isCheckedLogin: true });
-        if (_loggedIn) {
-          setTimeout(async () => {
-            await this.setState({ loggedIn: false });
-            this.resetRoute("appDrawerNavigator");
-          }, 500);
-
-        }
+        // if (_loggedIn) {
+        //   setTimeout(async () => {
+        //     await this.setState({ loggedIn: false });
+        //     this.resetRoute("appDrawerNavigator");
+        //   }, 500);
+        //
+        // }
       });
     } catch (e) {
       // error reading value
     }
   }
 
-  resetRoute = (routeName) => {
+  resetRoute = routeName => {
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName })],
+      actions: [NavigationActions.navigate({ routeName })]
     });
     this.props.navigation.dispatch(resetAction);
   };
@@ -149,8 +150,8 @@ class Login extends Component {
                             password: null
                           });
 
-                          this.resetRoute("appDrawerNavigator");
-
+                          //this.resetRoute("appDrawerNavigator");
+                          Actions.jump("MainView");
                         });
                       } catch (e) {
                         // saving error

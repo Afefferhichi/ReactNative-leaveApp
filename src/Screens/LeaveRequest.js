@@ -38,7 +38,12 @@ class LeaveRequest extends Component {
   }
 
   render() {
-    const { showCalendar, startDate, endDate, startDateIsHalf, endDateIsHalf
+    const {
+      showCalendar,
+      startDate,
+      endDate,
+      startDateIsHalf,
+      endDateIsHalf
     } = this.state;
     return (
       <View style={{ flex: 1, height: "100%", backgroundColor: colors.white }}>
@@ -55,7 +60,7 @@ class LeaveRequest extends Component {
                 startDate: _startDate,
                 endDate: _endDate,
                 startDateIsHalf: _startDateIsHalf,
-                endDateIsHal: _endDateIsHalf,
+                endDateIsHal: _endDateIsHalf
               });
             }}
             startDate={startDate}
@@ -196,9 +201,6 @@ class LeaveRequest extends Component {
           </View>
 
           <TouchableOpacity
-            onShowUnderlay={() => {
-              alert("onShowUnderlay button !");
-            }}
             style={{
               width: "70%",
               height: 39,
