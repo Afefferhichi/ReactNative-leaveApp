@@ -1,21 +1,10 @@
 import React, { Component } from "react";
-import {
-  Image,
-  Picker,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Picker, Text, TextInput, View } from "react-native";
+import { Button, Container, Content, ListItem } from "native-base";
 import Icon from "react-native-vector-icons/Ionicons";
-import { HalfdayCalendar } from "react-native-halfday-calendar";
-
-import { colors, constants } from "../common";
+import { colors, constants, HalfdayCalendar, MyInfoCard } from "../common";
 import { SessionStore } from "../Stores";
 
-const woman_image_url =
-  "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 class LeaveRequest extends Component {
   static navigationOptions = {
     title: "Leave Request"
@@ -46,7 +35,7 @@ class LeaveRequest extends Component {
       endDateIsHalf
     } = this.state;
     return (
-      <View style={{ flex: 1, height: "100%", backgroundColor: colors.white }}>
+      <Container>
         {showCalendar && (
           <HalfdayCalendar
             onConfirm={async (
@@ -55,13 +44,15 @@ class LeaveRequest extends Component {
               _startDateIsHalf,
               _endDateIsHalf
             ) => {
-              await this.setState({
-                showCalendar: false,
-                startDate: _startDate,
-                endDate: _endDate,
-                startDateIsHalf: _startDateIsHalf,
-                endDateIsHal: _endDateIsHalf
-              });
+              setTimeout(async () => {
+                await this.setState({
+                  showCalendar: false,
+                  startDate: _startDate,
+                  endDate: _endDate,
+                  startDateIsHalf: _startDateIsHalf,
+                  endDateIsHal: _endDateIsHalf
+                });
+              }, 100);
             }}
             startDate={startDate}
             endDate={endDate}
@@ -70,81 +61,51 @@ class LeaveRequest extends Component {
             onCancel={() => this.setState({ showCalendar: false })}
           />
         )}
+        <Content padder>
+          <ListItem>
+            <MyInfoCard />
+          </ListItem>
 
-        <ScrollView style={{ height: "90%" }}>
-          <View
+          <ListItem
+            button
             style={{
-              backgroundColor: colors.white,
-              padding: 10,
-              margin: 10,
-              flexDirection: "row"
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-start"
             }}
+            onPress={() => this.setState({ showCalendar: true })}
           >
-            <Image
-              source={{
-                uri: woman_image_url
-              }}
-              style={{
-                width: 70,
-                height: 80,
-                backgroundColor: colors.whitegray,
-                borderRadius: 18
-              }}
-            />
-            <View style={{ marginLeft: 20, alignSelf: "center" }}>
-              <Text style={{ color: colors.black }}>
-                Welcome {SessionStore.userName()}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              backgroundColor: colors.dimsky,
-              padding: 10,
-              margin: 10,
-              borderRadius: 10,
-              flexDirection: "row"
-            }}
-          >
-            <Icon name="md-cog" size={30} />
-            <Text style={{ color: colors.black, marginLeft: 10 }}>
-              This absence is currently approved. Tap here to request for a
-              change.
-            </Text>
-          </View>
-          <View
-            style={{ borderTopWidth: 1, borderBottomWidth: 1, padding: 10 }}
-          >
+            <Text style={{ width: "25%", fontWeight: "bold" }}>From - To</Text>
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "flex-start"
-              }}
+              style={{ width: "70%", marginLeft: 10, flexDirection: "row" }}
             >
-              <Text style={{ fontWeight: "bold" }}>From - To</Text>
-              <TouchableOpacity
-                style={{ marginLeft: 15, flexDirection: "row" }}
-                onPress={() => this.setState({ showCalendar: true })}
-              >
-                <Icon name="md-calendar" size={25} />
-                {this.state.startDate && (
-                  <Text style={{ lineHeight: 25, marginLeft: 10 }}>
-                    {this.state.startDate} - {this.state.endDate}
-                  </Text>
-                )}
-              </TouchableOpacity>
+              <Icon name="md-calendar" size={25} />
+              {this.state.startDate && (
+                <Text style={{ lineHeight: 25, marginLeft: 10 }}>
+                  {this.state.startDate} - {this.state.endDate}
+                </Text>
+              )}
             </View>
-          </View>
+          </ListItem>
 
           {/*  */}
-          <View
-            style={{ borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10 }}
-          >
-            <Text style={{ fontWeight: "bold" }}>Reason</Text>
-            <View style={{ alignItems: "center" }}>
+          <ListItem>
+            <View
+              style={{
+                width: "100%",
+                height: 30,
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between"
+              }}
+            >
+              <Text
+                style={{ lineHeight: 30, width: "25%", fontWeight: "bold" }}
+              >
+                Reason
+              </Text>
               <Picker
-                style={{ width: "80%", borderWidth: 1 }}
+                style={{ width: "75%", borderWidth: 1, top: -10 }}
                 onValueChange={value =>
                   this.setState({ selectedSpecialDay: value })
                 }
@@ -168,53 +129,52 @@ class LeaveRequest extends Component {
                 />
               </Picker>
             </View>
-          </View>
+          </ListItem>
           {/*  */}
-          <View
-            style={{ borderTopWidth: 0, borderBottomWidth: 1, paddingLeft: 10 }}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontWeight: "bold" }}>Token:</Text>
-              <Text>0.00 Days</Text>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontWeight: "bold" }}>Remaning:</Text>
-              <Text>44.00 Days</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontWeight: "bold" }}>Note:</Text>
-              {/* <Text>0.00 Days</Text> */}
-            </View>
+          <ListItem style={{ flexDirection: "row" }}>
+            <Text style={{ width: "25%", fontWeight: "bold" }}>Remaining:</Text>
+            <Text style={{ width: "70%", marginLeft: 5 }}>
+              {SessionStore.getRemainingCongeSolde()} Days
+            </Text>
+          </ListItem>
+          <ListItem last noBorder style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                verticalAlign: "top",
+                height: "100%",
+                width: "25%",
+                fontWeight: "bold"
+              }}
+            >
+              Note:
+            </Text>
             <TextInput
               multiline={true}
               style={{
+                textAlignVertical: "top",
+                width: "70%",
+                marginLeft: 5,
                 marginTop: 5,
-                width: "90%",
                 height: 80,
-                borderRadius: 10,
-                backgroundColor: colors.lightsky,
+                borderRadius: 2,
+                borderWidth: 1,
+                borderColor: colors.whitegray,
                 alignSelf: "center",
                 marginBottom: 5
               }}
             />
-          </View>
+          </ListItem>
 
-          <TouchableOpacity
-            style={{
-              width: "70%",
-              height: 39,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: colors.lightblue,
-              marginVertical: 50,
-              alignSelf: "center"
-            }}
+          <Button
+            style={{ marginHorizontal: 15 }}
+            block
+            primary
+            onPress={() => alert("here")}
           >
             <Text style={{ color: colors.white }}>Send Request</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
+          </Button>
+        </Content>
+      </Container>
     );
   }
 }

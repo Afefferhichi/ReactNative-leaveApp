@@ -23,10 +23,15 @@ class AbsenceConfirm extends Component {
     Actions.pop();
   };
 
+  render2() {
+    return (<Text>Here...</Text>);
+  };
+
   render() {
     return (
       <View
         style={{
+          backgroundColor: colors.white,
           margin: 10
         }}
       >

@@ -1,6 +1,14 @@
 const constants = {
   DEMO_MODE: true,
 
+  DATE_FORMAT: "ddd, MMM Do YYYY",
+
+  CongeState: {
+    APPROVED: "APPROVED",
+    PENDING: "PENDING",
+    REFUSED: "REFUSED"
+  },
+
   SortieState: {
     APPROVED: "APPROVED",
     PENDING: "PENDING",

@@ -11,6 +11,7 @@ const colors = {
   lightsky: "#ABC8E2",
   dimsky: "#C4D7ED",
   whitegray: "#dcdcdc",
+  lighergray: "#f5f5f5",
   lightyellow: "#F6E8B1",
   white: "#ffffff",
   yellow: "#ffff00",

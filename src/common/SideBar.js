@@ -69,12 +69,7 @@ class SideBar extends Component {
 
   _onPress = async item_key => {
     Actions.drawerClose();
-
-    // Actions.currentScene !== "account" &&
-    //   item_key === "account" &&
-    //   Actions.account(Account);
-
-    Actions.jump(item_key);
+    Actions.currentScene !== item_key && Actions[item_key].call();
   };
 
   render() {

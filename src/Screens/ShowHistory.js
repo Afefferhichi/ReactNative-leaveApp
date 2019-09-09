@@ -1,60 +1,121 @@
 import React, { Component } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
-import { DayDetail } from "../common";
-import Icon from "react-native-vector-icons/Ionicons";
-import { colors } from "../common";
+import { Text } from "react-native";
+import { Container, Content } from "native-base";
+import { constants, DayDetail, MyInfoCard } from "../common";
+import { HelperStore, SessionStore } from "../Stores";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+import moment from "moment";
+
+const GET_EMPLOYEE = gql`
+  query employee($id: Int!) {
+    employee(empId: $id) {
+      id
+      firstName
+      lastName
+      conges {
+        congeState
+        end_Date
+        start_Date
+        half_Day
+        id
+        motif
+        reason
+      }
+      sorties {
+        employeeId
+        sortieState
+        id
+        motif
+        recovery_Date
+        sortie_Date
+        sortieTime
+      }
+    }
+  }
+`;
 
 class ShowHistory extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "History of All Requests"
+    };
+  };
+
   render() {
     return (
-      <View>
-        <ScrollView>
-          <View
-            style={{
-              backgroundColor: colors.dimsky,
-              padding: 10,
-              margin: 10,
-              flexDirection: "row"
-            }}
-          >
-            <Image
-              source={{
-                uri:
-                  "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-              }}
-              style={{
-                width: 90,
-                height: 100,
-                backgroundColor: colors.dimsky,
-                borderRadius: 15
-              }}
-            />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ color: colors.white }}>Welcome @username</Text>
-            </View>
-          </View>
+      <Container>
+        <Content padder>
+          <MyInfoCard />
 
           {/*  */}
-          <DayDetail
-            DayHeader="Sikness"
-            Time1="12-21-2018"
-            Time2="12-23-2018"
-            Time3="PANDING"
-          />
-          <DayDetail
-            DayHeader="Special Permit"
-            Time1="12-21-2018"
-            Time2="08-21-2018"
-            Time3="ACCEPTED"
-          />
-          <DayDetail
-            DayHeader="Holiday"
-            Time1="12-21-2018"
-            Time2="07-14-2018"
-            Time3="REFUSED"
-          />
-        </ScrollView>
-      </View>
+          <Query query={GET_EMPLOYEE} variables={{ id: SessionStore.userId() }}>
+            {({ loading, error, data }) => {
+              if (loading) {
+                return <Text>Loading...</Text>;
+              }
+              if (error) {
+                return <Text>An error occurred</Text>;
+              }
+              if (!data) {
+                return <Text>An error occurred</Text>;
+              }
+
+              const employees = data.employees || [data.employee];
+
+              const { sorties, conges } = HelperStore.getSortiesAndConges(
+                employees
+              );
+
+              return (
+                <>
+                  {conges &&
+                    conges.map(conge => {
+                      return (
+                        <DayDetail
+                          DayHeader={"Leave: " + conge.motif}
+                          Caption1={
+                            " " +
+                            moment(conge.start_Date).format(
+                              constants.DATE_FORMAT
+                            )
+                          }
+                          Caption2={
+                            " " +
+                            moment(conge.end_Date).format(constants.DATE_FORMAT)
+                          }
+                          Caption3={" " + conge.congeState}
+                        />
+                      );
+                    })}
+
+                  {sorties &&
+                    sorties.map(sortie => {
+                      return (
+                        <DayDetail
+                          DayHeader={"Exit: " + sortie.motif}
+                          Caption1={
+                            " " +
+                            moment(sortie.sortie_Date).format(
+                              constants.DATE_FORMAT
+                            )
+                          }
+                          Caption2={
+                            " " +
+                            moment(sortie.recovery_Date).format(
+                              constants.DATE_FORMAT
+                            )
+                          }
+                          Caption3={" " + sortie.sortieState}
+                        />
+                      );
+                    })}
+                </>
+              );
+            }}
+          </Query>
+        </Content>
+      </Container>
     );
   }
 }

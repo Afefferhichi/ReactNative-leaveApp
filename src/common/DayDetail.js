@@ -1,43 +1,51 @@
 import React, { Component } from "react";
 import { Text, View } from "react-native";
+import { Card, CardItem } from "native-base";
 import Icon from "react-native-vector-icons/Ionicons";
 import { colors } from "./colors";
 
 class DayDetail extends Component {
+
   render() {
+    const {Caption1, Caption2, Caption3 } = this.props;
     return (
-      <View>
-        <View
-          style={{
-            height: 30,
-            width: "100%",
-            backgroundColor: colors.lightgray,
-            justifyContent: "center"
-          }}
-        >
-          <Text style={{ alignSelf: "center" }}>{this.props.DayHeader}</Text>
-        </View>
-        <View
+      <Card>
+        <CardItem style={{ backgroundColor: colors.lighergray }} header cardBody>
+          <Text
+            style={{
+              alignSelf: "center",
+              color: colors.black,
+              fontSize: 16,
+              height: 30,
+              lineHeight: 30,
+              paddingHorizontal: 10
+            }}
+          >
+            {this.props.DayHeader}
+          </Text>
+        </CardItem>
+        <CardItem
           style={{
             borderTopWidth: 0.5,
             borderBottomWidth: 0.5,
             borderColor: colors.lightgray,
             padding: 15,
-            flexDirection: "row"
+            flexDirection: "row",
+            justifyContent: "space-between"
           }}
         >
           <View style={{ flexDirection: "column" }}>
             <View style={{ flexDirection: "row" }}>
               <Text>Start Date:</Text>
-              <Text>{this.props.Time1}</Text>
+              <Text>{Caption1}</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               <Text>End Date:</Text>
-              <Text>{this.props.Time2}</Text>
+              <Text>{Caption2}</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               <Text>State:</Text>
-              <Text>{this.props.Time3}</Text>
+              <Text>{Caption3}</Text>
             </View>
           </View>
           <View
@@ -47,8 +55,7 @@ class DayDetail extends Component {
               justifyContent: "center",
               alignItems: "center",
               borderWidth: 1,
-              borderRadius: 50,
-              marginLeft: 130
+              borderRadius: 50
             }}
           >
             <Icon
@@ -58,8 +65,8 @@ class DayDetail extends Component {
               size={22}
             />
           </View>
-        </View>
-      </View>
+        </CardItem>
+      </Card>
     );
   }
 }

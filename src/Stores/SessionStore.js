@@ -8,7 +8,7 @@ class SessionStoreClass {
   preCheck = value => {
     const ret = value;
     if (ret) {
-      ret.isAdmin = ret.id === 1 || ret.id === 2;
+      ret.isAdmin = ret.id == 1 || ret.id == 2;
     }
     return ret;
   };
@@ -35,8 +35,8 @@ class SessionStoreClass {
     }
   }
 
-  getLoginInformation() {
-    return this.value;
+  getRemainingCongeSolde() {
+    return this.value ? this.value.remainingCongeSolde : 0;
   }
 
   isAdmin() {
@@ -46,6 +46,9 @@ class SessionStoreClass {
   userName() {
     if (!this.value || !this.value.firstName) return "";
     return `${this.value.firstName} ${this.value.lastName}`;
+  }
+  userId() {
+    return this.value ? this.value.id : "";
   }
 
   async logout(afterLogoutCallback) {

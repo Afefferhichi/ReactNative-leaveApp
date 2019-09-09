@@ -19,7 +19,8 @@ const LOGIN = gql(`
     login(login: $login, password: $password) {
       id,
       firstName,
-      lastName
+      lastName,
+      remainingCongeSolde
     }
   }
 `);
@@ -31,7 +32,8 @@ class Login extends Component {
     hasErrors: false,
     requesting: false,
     ...(constants.DEMO_MODE
-      ? { login: constants.MANAGER.login, password: constants.MANAGER.password }
+      ? { login: constants.USER.login, password: constants.USER.password }
+      // ? { login: constants.MANAGER.login, password: constants.MANAGER.password }
       : { login: "", password: "" }),
     loginError: "",
     isCheckedLogin: false,
