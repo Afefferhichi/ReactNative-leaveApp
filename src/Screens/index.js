@@ -1,4 +1,5 @@
-export * from "./AbsenceConfirm";
+export * from "./AbsenceConfirmConge";
+export * from "./AbsenceConfirmSortie";
 export * from "./AbsenceHistory";
 export * from "./AbsenceTeamList";
 export * from "./ActivityFeed";

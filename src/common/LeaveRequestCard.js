@@ -37,16 +37,20 @@ class LeaveRequestCard extends Component {
       {
         title: "Approve",
         onPress: () => {
-          const approveData = { conge, mode: "Approve" };
+          const approveData = { confirmObj: conge, confirmKind: "CONGE", mode: constants.CongeState.APPROVED };
           setTimeout(() => {
-            Actions.AbsenceConfirm(approveData);
+            Actions.AbsenceConfirmConge(approveData);
           }, 100);
         }
       },
       {
         title: "Reject",
-        onPress: () =>
-          setTimeout(() => Actions.AbsenceConfirm({ mode: "REJECT" }), 100)
+        onPress: () => {
+          const rejectData = { confirmObj: conge, confirmKind: "CONGE", mode: constants.CongeState.REFUSED };
+          setTimeout(() => {
+            Actions.AbsenceConfirmConge(rejectData);
+          }, 100);
+        }
       }
     ];
     let cancelItem = { title: "Cancel" };
@@ -138,7 +142,7 @@ class LeaveRequestCard extends Component {
                     <Text style={[styles.common, { fontWeight: "bold" }]}>
                       Status:{" "}
                     </Text>
-                    <Text style={styles.common}>{conge.congeState}</Text>
+                    <Text style={styles.common}>{conge.congeState.humanize()}</Text>
                   </View>
                 </View>
                 <View

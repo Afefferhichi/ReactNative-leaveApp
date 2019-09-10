@@ -85,7 +85,7 @@ class ActivityFeed extends Component {
       refreshing: false
     };
 
-    this.publicRefetch = ()=>{ alert('test') };
+    this.publicRefetch = ()=>{ alert("Something is went wrong. Contact app vendor.") };
     if (Platform.OS === "android") {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }

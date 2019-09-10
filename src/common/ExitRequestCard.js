@@ -30,18 +30,26 @@ class ExitRequestCard extends Component {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
   // ============== Confirmation ===============
-  showConfirmationButtons = () => {
+  showConfirmationButtons = sortie => {
     ActionSheet.hide();
     let items = [
       {
         title: "Approve",
-        onPress: () =>
-          setTimeout(() => Actions.AbsenceConfirm({ mode: "APPROVE" }), 100)
+        onPress: () => {
+          const approveData = { confirmObj: sortie, confirmKind: "SORTIE", mode: constants.SortieState.APPROVED };
+          setTimeout(() => {
+            Actions.AbsenceConfirm(approveData);
+          }, 100);
+        }
       },
       {
         title: "Reject",
-        onPress: () =>
-          setTimeout(() => Actions.AbsenceConfirm({ mode: "REJECT" }), 100)
+        onPress: () => {
+          const rejectData = { confirmObj: sortie, confirmKind: "SORTIE", mode: constants.SortieState.REFUSED };
+          setTimeout(() => {
+            Actions.AbsenceConfirm(rejectData);
+          }, 100);
+        }
       }
     ];
     let cancelItem = { title: "Cancel" };
@@ -134,7 +142,7 @@ class ExitRequestCard extends Component {
                     <Text style={[styles.common, { fontWeight: "bold" }]}>
                       Status:{" "}
                     </Text>
-                    <Text style={styles.common}>{sortie.sortieState}</Text>
+                    <Text style={styles.common}>{sortie.sortieState.humanize()}</Text>
                   </View>
                 </View>
                 <View
@@ -287,7 +295,7 @@ class ExitRequestCard extends Component {
                   marginLeft: 5,
                   borderRadius: 3
                 }}
-                onPress={() => this.showConfirmationButtons()}
+                onPress={() => this.showConfirmationButtons(sortie)}
               >
                 <Icon
                   name="md-menu"

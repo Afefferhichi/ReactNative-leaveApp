@@ -11,7 +11,7 @@
  *      AppStackNavigator:createStackNavigator (
  *        ActivityFeed  : Component,
  *        AbsenceHistory  : Component,
- *        AbsenceConfirm  : Component,
+ *        AbsenceConfirmConge  : Component,
  *        ShowHistory : Component,
  *        ExitDetail  : Component,
  *        ExitRequest : Component,
@@ -34,7 +34,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 
-import { AbsenceConfirm } from "./src/Screens/AbsenceConfirm";
+import { AbsenceConfirmConge } from "./src/Screens/AbsenceConfirmConge";
 
 import {
   AbsenceHistory,
@@ -58,7 +58,7 @@ const AppStackNavigator = createStackNavigator(
   {
     ActivityFeed,
     AbsenceHistory,
-    AbsenceConfirm,
+    AbsenceConfirm: AbsenceConfirmConge,
     ShowHistory,
     ExitDetail,
     ExitRequest,

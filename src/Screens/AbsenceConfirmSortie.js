@@ -1,15 +1,9 @@
 import React, { Component } from "react";
-import {
-  Alert,
-  DeviceEventEmitter,
-  Image,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Alert, Image, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { colors, constants } from "../common";
 import { Actions } from "react-native-router-flux";
-import { Card, CardItem, Container, Content, Text, Button } from "native-base";
+import { Button, Card, CardItem, Container, Content, Text } from "native-base";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import moment from "moment";
@@ -25,14 +19,17 @@ const APPROVE_REQUEST_CONGE = gql`
 const image_url =
   "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 
-class AbsenceConfirm extends Component {
+class AbsenceConfirmSortie extends Component {
   constructor() {
     super();
   }
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("mode")
+      title:
+        navigation.getParam("mode") === constants.CongeState.APPROVED
+          ? "Approve"
+          : "Reject"
     };
   };
 
@@ -44,7 +41,7 @@ class AbsenceConfirm extends Component {
   };
 
   render() {
-    const { conge } = this.props;
+    const { confirmObj } = this.props;
     return (
       <Container>
         <Content padder>
@@ -75,7 +72,9 @@ class AbsenceConfirm extends Component {
                     fontWeight: "600"
                   }}
                 >
-                  {`${conge.employee.firstName} ${conge.employee.lastName}`}
+                  {`${confirmObj.employee.firstName} ${
+                    confirmObj.employee.lastName
+                  }`}
                 </Text>
                 <View
                   style={{
@@ -93,7 +92,7 @@ class AbsenceConfirm extends Component {
                       borderRadius: 3
                     }}
                   >
-                    {conge.congeState.humanize()}
+                    {confirmObj.congeState.humanize()}
                   </Text>
                   <Text>-></Text>
                   <Text
@@ -107,7 +106,9 @@ class AbsenceConfirm extends Component {
                       borderRadius: 3
                     }}
                   >
-                    Approve
+                    {this.props.mode === constants.CongeState.APPROVED
+                      ? "Approve"
+                      : "Reject"}
                   </Text>
                 </View>
               </View>
@@ -115,7 +116,7 @@ class AbsenceConfirm extends Component {
               <View style={{ flexDirection: "row", top: -20, right: -5 }}>
                 <Icon name="md-clock" size={14} />
                 <Text style={{ fontSize: 13, top: -2, left: 5 }}>
-                  {moment.duration(conge.start_Date).humanize()}
+                  {moment.duration(confirmObj.start_Date).humanize()}
                 </Text>
               </View>
             </CardItem>
@@ -125,7 +126,7 @@ class AbsenceConfirm extends Component {
                   Start Date
                 </Text>
                 <Text style={{ width: "60%" }}>
-                  {moment(conge.start_Date).format(constants.DATE_FORMAT)}
+                  {moment(confirmObj.start_Date).format(constants.DATE_FORMAT)}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
@@ -133,22 +134,24 @@ class AbsenceConfirm extends Component {
                   End Date
                 </Text>
                 <Text style={{ width: "60%" }}>
-                  {moment(conge.end_Date).format(constants.DATE_FORMAT)}
+                  {moment(confirmObj.end_Date).format(constants.DATE_FORMAT)}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>Reason</Text>
-                <Text style={{ width: "60%" }}>{conge.reason.humanize()}</Text>
+                <Text style={{ width: "60%" }}>
+                  {confirmObj.reason.humanize()}
+                </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>Status</Text>
                 <Text style={{ width: "60%" }}>
-                  {conge.congeState.humanize()}
+                  {confirmObj.congeState.humanize()}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>Note</Text>
-                <Text style={{ width: "60%" }}>{conge.motif}</Text>
+                <Text style={{ width: "60%" }}>{confirmObj.motif}</Text>
               </View>
             </CardItem>
             <CardItem cardBody>
@@ -165,10 +168,7 @@ class AbsenceConfirm extends Component {
                 <Button
                   primary
                   block
-                  onPress={() => {
-                    DeviceEventEmitter.emit("OnShowActivityFeed");
-                    Actions.pop();
-                  }}
+                  onPress={() => Actions.pop()}
                   style={{
                     width: "50%",
                     height: 33,
@@ -210,9 +210,34 @@ class AbsenceConfirm extends Component {
                           uppercase={false}
                           onPress={() => {
                             const variables = {
-                              input: { congeState: "APPROVED" },
-                              id: conge.id
+                              input: {
+                                ...(this.props.confirmKind === "CONGE"
+                                  ? this.props.mode ===
+                                    constants.CongeState.APPROVED
+                                    ? {
+                                        congeState:
+                                          constants.CongeState.APPROVED
+                                      }
+                                    : {
+                                        congeState: constants.CongeState.REFUSED
+                                      }
+                                  : {}),
+                                ...(this.props.confirmKind === "SORTIE"
+                                  ? this.props.mode ===
+                                    constants.SortieState.APPROVED
+                                    ? {
+                                        sortieState:
+                                          constants.SortieState.APPROVED
+                                      }
+                                    : {
+                                        sortieState:
+                                          constants.SortieState.REFUSED
+                                      }
+                                  : {})
+                              },
+                              id: confirmObj.id
                             };
+
                             approveMutation({ variables })
                               .then(res => {
                                 const result = res
@@ -223,15 +248,19 @@ class AbsenceConfirm extends Component {
                                     : false
                                   : false;
                                 if (result) {
-                                  Alert.alert("", "Approved successfully!", [
-                                    {
-                                      text: "OK",
-                                      onPress: () => {
-                                        DeviceEventEmitter.emit("OnShowActivityFeed");
-                                        Actions.pop();
+                                  Alert.alert(
+                                    "",
+                                    this.props.mode ===
+                                      constants.CongeState.APPROVED
+                                      ? "Approved successfully!"
+                                      : "Rejected successfully!",
+                                    [
+                                      {
+                                        text: "OK",
+                                        onPress: () => Actions.pop()
                                       }
-                                    }
-                                  ]);
+                                    ]
+                                  );
                                 } else {
                                   alert("An error occurred while approving");
                                 }
@@ -263,4 +292,4 @@ class AbsenceConfirm extends Component {
   }
 }
 
-export { AbsenceConfirm };
+export { AbsenceConfirmSortie };

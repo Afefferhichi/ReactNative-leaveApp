@@ -15,7 +15,8 @@ import {
   Stack
 } from "react-native-router-flux";
 import {
-  AbsenceConfirm,
+  AbsenceConfirmConge,
+  AbsenceConfirmSortie,
   AbsenceTeamList,
   ActivityFeed,
   ExitDetail,
@@ -89,9 +90,14 @@ class Routes extends Component {
                   component={ActivityFeed}
                 />
                 <Scene
-                  key="AbsenceConfirm"
+                  key="AbsenceConfirmConge"
                   title="Activity Feed"
-                  component={AbsenceConfirm}
+                  component={AbsenceConfirmConge}
+                />
+                <Scene
+                  key="AbsenceConfirmSortie"
+                  title="Activity Feed"
+                  component={AbsenceConfirmSortie}
                 />
                 <Scene
                   key="ExitRequest"
@@ -115,7 +121,7 @@ class Routes extends Component {
                 />
                 <Scene key="Setting" title="Setting" component={Setting} />
                 <Scene key="LandingPage" hideNavbar component={LandingPage} />
-                <Scene key="AbsenceConfirm" component={AbsenceConfirm} />
+                <Scene key="AbsenceConfirm" component={AbsenceConfirmConge} />
                 <Scene key="ExitDetail" component={ExitDetail} />
               </Stack>
             </Router>
