@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Alert, Image, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  DeviceEventEmitter,
+  Image,
+  TouchableOpacity,
+  View
+} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { colors, constants } from "../common";
 import { Actions } from "react-native-router-flux";
@@ -159,7 +165,10 @@ class AbsenceConfirm extends Component {
                 <Button
                   primary
                   block
-                  onPress={() => this.onConfirm()}
+                  onPress={() => {
+                    DeviceEventEmitter.emit("OnShowActivityFeed");
+                    Actions.pop();
+                  }}
                   style={{
                     width: "50%",
                     height: 33,
@@ -217,7 +226,10 @@ class AbsenceConfirm extends Component {
                                   Alert.alert("", "Approved successfully!", [
                                     {
                                       text: "OK",
-                                      onPress: () => Actions.pop()
+                                      onPress: () => {
+                                        DeviceEventEmitter.emit("OnShowActivityFeed");
+                                        Actions.pop();
+                                      }
                                     }
                                   ]);
                                 } else {

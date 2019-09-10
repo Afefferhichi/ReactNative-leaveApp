@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, UIManager, RefreshControl } from "react-native";
+import { Platform, UIManager, RefreshControl, DeviceEventEmitter } from "react-native";
 import { Container, Content, Text } from "native-base";
 import { ApolloProvider, Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -84,33 +84,41 @@ class ActivityFeed extends Component {
     this.state = {
       refreshing: false
     };
+
+    this.publicRefetch = ()=>{ alert('test') };
     if (Platform.OS === "android") {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }
 
   componentDidMount(): void {
+    DeviceEventEmitter.removeAllListeners("OnShowActivityFeed");
+    DeviceEventEmitter.addListener("OnShowActivityFeed", ()=>{
+      this.publicRefetch();
+    });
   }
 
-  onRefresh = () => {
-    this.setState({refreshing: false})
-  };
+
+  componentWillUnmount(): void {
+    DeviceEventEmitter.removeAllListeners("OnShowActivityFeed");
+  }
 
   // ============== Confirmation:End ===============
-  _onRefresh = () => {
-    this.setState({ refreshing: true });
-  };
   render() {
     return (
       <ApolloProvider client={client}>
         <Container>
           <Query
+            _pollInterval={2000}
+            /* Please don't set the pollInterval as much as possible */
             query={SessionStore.isAdmin() ? GET_EMPLOYEES : GET_EMPLOYEE}
             variables={
               SessionStore.isAdmin() ? {} : { id: SessionStore.userId() }
             }
           >
             {({ loading, error, data, refetch  }) => {
+
+              this.publicRefetch = refetch;
               if (loading) {
                 return <Text>Loading...</Text>;
               }

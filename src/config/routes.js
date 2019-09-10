@@ -5,6 +5,7 @@
 
  */
 import React, { Component } from "react";
+import {DeviceEventEmitter} from "react-native";
 import { Icon } from "native-base";
 import {
   Actions,
@@ -80,7 +81,9 @@ class Routes extends Component {
             <Router hideNavBar>
               <Stack key="drawerRoot">
                 <Scene key="Welcome" component={Welcome} />
-                <Scene
+                <Scene onEnter={()=>{
+                  DeviceEventEmitter.emit("OnShowActivityFeed")
+                }}
                   key="ActivityFeed"
                   title="Activity Feed"
                   component={ActivityFeed}

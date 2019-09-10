@@ -3,7 +3,7 @@ import { Card, CardItem, Text, View } from "native-base";
 import { colors, constants } from "./";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ActionSheet } from "teaset";
-import { Actions } from "react-native-router-flux";
+import { Actions, Lightbox } from "react-native-router-flux";
 import {
   LayoutAnimation,
   Platform,
@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { SessionStore } from "../Stores";
 import moment from "moment";
+import Popover from "teaset/components/Popover/Popover";
 
 class LeaveRequestCard extends Component {
   constructor() {
@@ -30,14 +31,16 @@ class LeaveRequestCard extends Component {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
   // ============== Confirmation ===============
-  showConfirmationButtons = (conge) => {
+  showConfirmationButtons = conge => {
     ActionSheet.hide();
     let items = [
       {
         title: "Approve",
         onPress: () => {
-          const approveData = {conge, mode: "Approve"};
-          setTimeout(() => Actions.AbsenceConfirm( approveData ), 100);
+          const approveData = { conge, mode: "Approve" };
+          setTimeout(() => {
+            Actions.AbsenceConfirm(approveData);
+          }, 100);
         }
       },
       {
