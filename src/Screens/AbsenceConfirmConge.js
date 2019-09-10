@@ -1,15 +1,9 @@
 import React, { Component } from "react";
-import {
-  Alert,
-  DeviceEventEmitter,
-  Image,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Alert, Image, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { colors, constants } from "../common";
 import { Actions } from "react-native-router-flux";
-import { Card, CardItem, Container, Content, Text, Button } from "native-base";
+import { Button, Card, CardItem, Container, Content, Text } from "native-base";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import moment from "moment";
@@ -32,7 +26,10 @@ class AbsenceConfirmConge extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("mode") === constants.CongeState.APPROVED ? "Approve" : "Reject"
+      title:
+        navigation.getParam("mode") === constants.CongeState.APPROVED
+          ? "Approve"
+          : "Reject"
     };
   };
 
@@ -44,11 +41,11 @@ class AbsenceConfirmConge extends Component {
   };
 
   render() {
-    const { confirmObj } = this.props;
+    const { conge } = this.props;
     return (
       <Container>
         <Content padder>
-          <Card>
+          <Card noShadow>
             <CardItem
               style={{ flexDirection: "row", justifyContent: "space-around" }}
             >
@@ -75,8 +72,8 @@ class AbsenceConfirmConge extends Component {
                     fontWeight: "600"
                   }}
                 >
-                  {`${confirmObj.employee.firstName} ${
-                    confirmObj.employee.lastName
+                  {`${conge.employee.firstName} ${
+                    conge.employee.lastName
                   }`}
                 </Text>
                 <View
@@ -95,7 +92,7 @@ class AbsenceConfirmConge extends Component {
                       borderRadius: 3
                     }}
                   >
-                    {confirmObj.congeState.humanize()}
+                    {conge.congeState.humanize()}
                   </Text>
                   <Text>-></Text>
                   <Text
@@ -109,7 +106,9 @@ class AbsenceConfirmConge extends Component {
                       borderRadius: 3
                     }}
                   >
-                    {this.props.mode === constants.CongeState.APPROVED ? "Approve" : "Reject" }
+                    {this.props.mode === constants.CongeState.APPROVED
+                      ? "Approve"
+                      : "Reject"}
                   </Text>
                 </View>
               </View>
@@ -117,7 +116,7 @@ class AbsenceConfirmConge extends Component {
               <View style={{ flexDirection: "row", top: -20, right: -5 }}>
                 <Icon name="md-clock" size={14} />
                 <Text style={{ fontSize: 13, top: -2, left: 5 }}>
-                  {moment.duration(confirmObj.start_Date).humanize()}
+                  Created at
                 </Text>
               </View>
             </CardItem>
@@ -127,7 +126,7 @@ class AbsenceConfirmConge extends Component {
                   Start Date
                 </Text>
                 <Text style={{ width: "60%" }}>
-                  {moment(confirmObj.start_Date).format(constants.DATE_FORMAT)}
+                  {moment(conge.start_Date).format(constants.DATE_FORMAT)}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
@@ -135,24 +134,24 @@ class AbsenceConfirmConge extends Component {
                   End Date
                 </Text>
                 <Text style={{ width: "60%" }}>
-                  {moment(confirmObj.end_Date).format(constants.DATE_FORMAT)}
+                  {moment(conge.end_Date).format(constants.DATE_FORMAT)}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>Reason</Text>
                 <Text style={{ width: "60%" }}>
-                  {confirmObj.reason.humanize()}
+                  {conge.reason.humanize()}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>Status</Text>
                 <Text style={{ width: "60%" }}>
-                  {confirmObj.congeState.humanize()}
+                  {conge.congeState.humanize()}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 5 }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>Note</Text>
-                <Text style={{ width: "60%" }}>{confirmObj.motif}</Text>
+                <Text style={{ width: "60%" }}>{conge.motif}</Text>
               </View>
             </CardItem>
             <CardItem cardBody>
@@ -212,31 +211,16 @@ class AbsenceConfirmConge extends Component {
                           onPress={() => {
                             const variables = {
                               input: {
-                                ...(this.props.confirmKind === "CONGE"
-                                  ? this.props.mode ===
-                                    constants.CongeState.APPROVED
-                                    ? {
-                                        congeState:
-                                          constants.CongeState.APPROVED
-                                      }
-                                    : {
-                                        congeState: constants.CongeState.REFUSED
-                                      }
-                                  : {}),
-                                ...(this.props.confirmKind === "SORTIE"
-                                  ? this.props.mode ===
-                                    constants.SortieState.APPROVED
-                                    ? {
-                                        sortieState:
-                                          constants.SortieState.APPROVED
-                                      }
-                                    : {
-                                        sortieState:
-                                          constants.SortieState.REFUSED
-                                      }
-                                  : {})
+                                ...(this.props.mode ===
+                                constants.CongeState.APPROVED
+                                  ? {
+                                      congeState: constants.CongeState.APPROVED
+                                    }
+                                  : {
+                                      congeState: constants.CongeState.REFUSED
+                                    })
                               },
-                              id: confirmObj.id
+                              id: conge.id
                             };
 
                             approveMutation({ variables })

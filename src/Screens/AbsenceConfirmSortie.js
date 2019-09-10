@@ -8,10 +8,10 @@ import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import moment from "moment";
 
-const APPROVE_REQUEST_CONGE = gql`
-  mutation upd($input: congeInput!, $id: Int!) {
-    updateConge(conge: $input, congeId: $id) {
-      congeState
+const APPROVE_REQUEST_SORTIE = gql`
+  mutation upds($input: sortieInput!, $id: Int!) {
+    updateSortie(sortie: $input, sortieId: $id) {
+      sortieState
     }
   }
 `;
@@ -27,7 +27,7 @@ class AbsenceConfirmSortie extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title:
-        navigation.getParam("mode") === constants.CongeState.APPROVED
+        navigation.getParam("mode") === constants.SortieState.APPROVED
           ? "Approve"
           : "Reject"
     };
@@ -41,11 +41,11 @@ class AbsenceConfirmSortie extends Component {
   };
 
   render() {
-    const { confirmObj } = this.props;
+    const { sortie, mode } = this.props;
     return (
       <Container>
         <Content padder>
-          <Card>
+          <Card noShadow>
             <CardItem
               style={{ flexDirection: "row", justifyContent: "space-around" }}
             >
@@ -72,9 +72,7 @@ class AbsenceConfirmSortie extends Component {
                     fontWeight: "600"
                   }}
                 >
-                  {`${confirmObj.employee.firstName} ${
-                    confirmObj.employee.lastName
-                  }`}
+                  {`${sortie.employee.firstName} ${sortie.employee.lastName}`}
                 </Text>
                 <View
                   style={{
@@ -92,7 +90,7 @@ class AbsenceConfirmSortie extends Component {
                       borderRadius: 3
                     }}
                   >
-                    {confirmObj.congeState.humanize()}
+                    {sortie.sortieState.humanize()}
                   </Text>
                   <Text>-></Text>
                   <Text
@@ -106,7 +104,7 @@ class AbsenceConfirmSortie extends Component {
                       borderRadius: 3
                     }}
                   >
-                    {this.props.mode === constants.CongeState.APPROVED
+                    {mode === constants.SortieState.APPROVED
                       ? "Approve"
                       : "Reject"}
                   </Text>
@@ -116,42 +114,46 @@ class AbsenceConfirmSortie extends Component {
               <View style={{ flexDirection: "row", top: -20, right: -5 }}>
                 <Icon name="md-clock" size={14} />
                 <Text style={{ fontSize: 13, top: -2, left: 5 }}>
-                  {moment.duration(confirmObj.start_Date).humanize()}
+                  Created at
                 </Text>
               </View>
             </CardItem>
             <CardItem bordered style={{ flexDirection: "column" }}>
               <View style={{ flexDirection: "row" }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>
-                  Start Date
+                  Exit Date
                 </Text>
                 <Text style={{ width: "60%" }}>
-                  {moment(confirmObj.start_Date).format(constants.DATE_FORMAT)}
+                  {moment(sortie.sortie_Date).format(constants.DATE_FORMAT)}
                 </Text>
               </View>
-              <View style={{ flexDirection: "row", marginTop: 5 }}>
+              <View style={{ marginTop: 5, flexDirection: "row" }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>
-                  End Date
+                  Recovery Date
                 </Text>
                 <Text style={{ width: "60%" }}>
-                  {moment(confirmObj.end_Date).format(constants.DATE_FORMAT)}
+                  {moment(sortie.recovery_Date).format(constants.DATE_FORMAT)}
                 </Text>
               </View>
-              <View style={{ flexDirection: "row", marginTop: 5 }}>
-                <Text style={{ width: "40%", fontWeight: "bold" }}>Reason</Text>
+              <View style={{ marginTop: 5, flexDirection: "row" }}>
+                <Text style={{ width: "40%", fontWeight: "bold" }}>
+                  Exit Time
+                </Text>
                 <Text style={{ width: "60%" }}>
-                  {confirmObj.reason.humanize()}
+                  {sortie.sortieTime.humanize()}
                 </Text>
               </View>
-              <View style={{ flexDirection: "row", marginTop: 5 }}>
-                <Text style={{ width: "40%", fontWeight: "bold" }}>Status</Text>
+              <View style={{ marginTop: 5, flexDirection: "row" }}>
+                <Text style={{ width: "40%", fontWeight: "bold" }}>
+                  Exit Status
+                </Text>
                 <Text style={{ width: "60%" }}>
-                  {confirmObj.congeState.humanize()}
+                  {sortie.sortieState.humanize()}
                 </Text>
               </View>
-              <View style={{ flexDirection: "row", marginTop: 5 }}>
+              <View style={{ marginTop: 5, flexDirection: "row" }}>
                 <Text style={{ width: "40%", fontWeight: "bold" }}>Note</Text>
-                <Text style={{ width: "60%" }}>{confirmObj.motif}</Text>
+                <Text style={{ width: "60%" }}>{sortie.motif}</Text>
               </View>
             </CardItem>
             <CardItem cardBody>
@@ -189,7 +191,7 @@ class AbsenceConfirmSortie extends Component {
                   </Text>
                 </Button>
 
-                <Mutation mutation={APPROVE_REQUEST_CONGE}>
+                <Mutation mutation={APPROVE_REQUEST_SORTIE}>
                   {(approveMutation, { loading, error, data }) => {
                     return (
                       <Button
@@ -211,38 +213,25 @@ class AbsenceConfirmSortie extends Component {
                           onPress={() => {
                             const variables = {
                               input: {
-                                ...(this.props.confirmKind === "CONGE"
-                                  ? this.props.mode ===
-                                    constants.CongeState.APPROVED
-                                    ? {
-                                        congeState:
-                                          constants.CongeState.APPROVED
-                                      }
-                                    : {
-                                        congeState: constants.CongeState.REFUSED
-                                      }
-                                  : {}),
-                                ...(this.props.confirmKind === "SORTIE"
-                                  ? this.props.mode ===
-                                    constants.SortieState.APPROVED
-                                    ? {
-                                        sortieState:
-                                          constants.SortieState.APPROVED
-                                      }
-                                    : {
-                                        sortieState:
-                                          constants.SortieState.REFUSED
-                                      }
-                                  : {})
+                                ...(mode === constants.SortieState.APPROVED
+                                  ? {
+                                      sortieState:
+                                        constants.SortieState.APPROVED
+                                    }
+                                  : {
+                                      sortieState: constants.SortieState.REFUSED
+                                    })
                               },
-                              id: confirmObj.id
+                              id: sortie.id
                             };
+
+                            // alert(JSON.stringify(variables)); return;
 
                             approveMutation({ variables })
                               .then(res => {
                                 const result = res
                                   ? res.data
-                                    ? res.data.updateConge
+                                    ? res.data.updateSortie
                                       ? !0
                                       : false
                                     : false
@@ -250,8 +239,7 @@ class AbsenceConfirmSortie extends Component {
                                 if (result) {
                                   Alert.alert(
                                     "",
-                                    this.props.mode ===
-                                      constants.CongeState.APPROVED
+                                    mode === constants.SortieState.APPROVED
                                       ? "Approved successfully!"
                                       : "Rejected successfully!",
                                     [
@@ -285,6 +273,9 @@ class AbsenceConfirmSortie extends Component {
                 </Mutation>
               </View>
             </CardItem>
+
+            {/*
+             */}
           </Card>
         </Content>
       </Container>

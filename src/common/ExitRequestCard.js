@@ -36,18 +36,18 @@ class ExitRequestCard extends Component {
       {
         title: "Approve",
         onPress: () => {
-          const approveData = { confirmObj: sortie, confirmKind: "SORTIE", mode: constants.SortieState.APPROVED };
+          const approveData = { sortie, mode: constants.SortieState.APPROVED };
           setTimeout(() => {
-            Actions.AbsenceConfirm(approveData);
+            Actions.AbsenceConfirmSortie(approveData);
           }, 100);
         }
       },
       {
         title: "Reject",
         onPress: () => {
-          const rejectData = { confirmObj: sortie, confirmKind: "SORTIE", mode: constants.SortieState.REFUSED };
+          const rejectData = { sortie, mode: constants.SortieState.REFUSED };
           setTimeout(() => {
-            Actions.AbsenceConfirm(rejectData);
+            Actions.AbsenceConfirmSortie(rejectData);
           }, 100);
         }
       }

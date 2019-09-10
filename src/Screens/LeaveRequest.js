@@ -237,8 +237,9 @@ class LeaveRequest extends Component {
                             : false
                           : false;
                         if (result) {
-                          Alert.alert("", "Saved successfully!");
-                          Actions.pop();
+                          Alert.alert("", "Saved successfully!", [
+                            { text: "OK", onPress: () => Actions.popTo("ActivityFeed") }
+                          ]);
                         } else {
                           alert("An error occurred while saving");
                         }

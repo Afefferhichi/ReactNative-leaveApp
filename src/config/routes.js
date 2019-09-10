@@ -91,12 +91,10 @@ class Routes extends Component {
                 />
                 <Scene
                   key="AbsenceConfirmConge"
-                  title="Activity Feed"
                   component={AbsenceConfirmConge}
                 />
                 <Scene
                   key="AbsenceConfirmSortie"
-                  title="Activity Feed"
                   component={AbsenceConfirmSortie}
                 />
                 <Scene

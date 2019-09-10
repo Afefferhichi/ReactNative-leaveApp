@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Platform, UIManager, RefreshControl, DeviceEventEmitter } from "react-native";
+import {
+  Platform,
+  UIManager,
+  RefreshControl,
+  DeviceEventEmitter
+} from "react-native";
 import { Container, Content, Text } from "native-base";
 import { ApolloProvider, Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -85,7 +90,9 @@ class ActivityFeed extends Component {
       refreshing: false
     };
 
-    this.publicRefetch = ()=>{ alert("Something is went wrong. Contact app vendor.") };
+    this.publicRefetch = () => {
+      alert("Something is went wrong. Contact app vendor.");
+    };
     if (Platform.OS === "android") {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
@@ -93,11 +100,10 @@ class ActivityFeed extends Component {
 
   componentDidMount(): void {
     DeviceEventEmitter.removeAllListeners("OnShowActivityFeed");
-    DeviceEventEmitter.addListener("OnShowActivityFeed", ()=>{
+    DeviceEventEmitter.addListener("OnShowActivityFeed", () => {
       this.publicRefetch();
     });
   }
-
 
   componentWillUnmount(): void {
     DeviceEventEmitter.removeAllListeners("OnShowActivityFeed");
@@ -116,11 +122,10 @@ class ActivityFeed extends Component {
               SessionStore.isAdmin() ? {} : { id: SessionStore.userId() }
             }
           >
-            {({ loading, error, data, refetch  }) => {
-
+            {({ loading, error, data, refetch }) => {
               this.publicRefetch = refetch;
               if (loading) {
-                return <Text>Loading...</Text>;
+                return <Text style={{ left: 20, top: 20 }}>Loading...</Text>;
               }
 
               if (error) {
@@ -150,26 +155,29 @@ class ActivityFeed extends Component {
                     <>
                       {conges &&
                         conges.map(conge => {
-                          if (nCount++ > 0) {
-                            nCount = 0;
-                            return;
-                          }
                           if (
                             conge.congeState === constants.CongeState.PENDING
                           ) {
+                            if (nCount++ > 0) {
+                              return;
+                            }
                             return <LeaveRequestCard conge={conge} />;
                           }
                         })}
 
-                      {sorties &&
-                        sorties.map(sortie => {
-                          if (nCount++ > 0) return;
-                          if (
-                            sortie.sortieState === constants.SortieState.PENDING
-                          ) {
-                            return <ExitRequestCard sortie={sortie} />;
-                          }
-                        })}
+                      {
+                        ((nCount = 0),
+                        sorties &&
+                          sorties.map(sortie => {
+                            if (
+                              sortie.sortieState ===
+                              constants.SortieState.PENDING
+                            ) {
+                              if (nCount++ > 0) return;
+                              return <ExitRequestCard sortie={sortie} />;
+                            }
+                          }))
+                      }
                     </>
                   </Content>
                 );

@@ -13,7 +13,10 @@ class ProfileCard extends Component {
 
   render() {
     return (
-      <ListItem avatar>
+      <ListItem
+        avatar button
+        onPress={() => this.showHistoryScreen(this.props.employee_id)}
+       >
         <Left>
           <Thumbnail source={this.props.source} small />
         </Left>
@@ -22,21 +25,11 @@ class ProfileCard extends Component {
           <Text style={{ color: colors.black }}>{this.props.status}</Text>
         </Body>
 
-        <Right>
-          <TouchableOpacity
-            style={{ top: 5 }}
-            transparent
-            onPress={() => this.showHistoryScreen(this.props.employee_id)}
-          >
-            <Icon
-              name="md-arrow-dropright"
-              size={30}
-              style={{
-                paddingLeft: 10,
-                paddingRight: 20
-              }}
-            />
-          </TouchableOpacity>
+        <Right style={{flexDirection: "column", justifyContent: "center"}}>
+          <Icon
+            name="ios-arrow-forward"
+            size={20}
+          />
         </Right>
       </ListItem>
     );

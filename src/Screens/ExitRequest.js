@@ -270,7 +270,11 @@ class ExitRequest extends Component {
                 />
                 <Text>Date</Text>
               </View>
-              <Text style={{ lineHeight: 50, marginLeft: 30, color: colors.red }}>{recoveryDate}</Text>
+              <Text
+                style={{ lineHeight: 50, marginLeft: 30, color: colors.red }}
+              >
+                {recoveryDate}
+              </Text>
             </View>
           </ListItem>
           {/*  */}
@@ -326,7 +330,10 @@ class ExitRequest extends Component {
           <Mutation mutation={ADD_EXIT_DETAIL}>
             {(createsortMutation, { data }) => (
               <Button
-                style={{ marginHorizontal: 15, backgroundColor: colors.waterblue }}
+                style={{
+                  marginHorizontal: 15,
+                  backgroundColor: colors.waterblue
+                }}
                 block
                 primary
                 onPress={async () => {
@@ -357,8 +364,9 @@ class ExitRequest extends Component {
                         : false;
                       if (result) {
                         ExitRequestStore.set(input, () => {
-                          Alert.alert("", "Saved successfully!");
-                          Actions.pop();
+                          Alert.alert("", "Saved successfully!", [
+                            { text: "OK", onPress: () => Actions.pop() }
+                          ]);
                         });
                       } else {
                         Alert.alert("", "An error occurred while saving");
@@ -376,7 +384,9 @@ class ExitRequest extends Component {
                     });
                 }}
               >
-                <Text style={{ color: colors.white, fontSize: 15 }}>Send Request</Text>
+                <Text style={{ color: colors.white, fontSize: 15 }}>
+                  Send Request
+                </Text>
               </Button>
             )}
           </Mutation>

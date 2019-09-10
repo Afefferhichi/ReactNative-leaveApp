@@ -35,7 +35,7 @@ class Setting extends Component {
       <Container>
 
         <Content padder>
-          <Card noShadow>
+          <Card transparent >
             <CardItem>
               <MyInfoCard />
               <TouchableOpacity
@@ -57,6 +57,7 @@ class Setting extends Component {
               </TouchableOpacity>
             </CardItem>
           </Card>
+
         </Content>
 
       </Container>

@@ -3,7 +3,7 @@ import { Card, CardItem, Text, View } from "native-base";
 import { colors, constants } from "./";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ActionSheet } from "teaset";
-import { Actions, Lightbox } from "react-native-router-flux";
+import { Actions } from "react-native-router-flux";
 import {
   LayoutAnimation,
   Platform,
@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { SessionStore } from "../Stores";
 import moment from "moment";
-import Popover from "teaset/components/Popover/Popover";
 
 class LeaveRequestCard extends Component {
   constructor() {
@@ -37,7 +36,11 @@ class LeaveRequestCard extends Component {
       {
         title: "Approve",
         onPress: () => {
-          const approveData = { confirmObj: conge, confirmKind: "CONGE", mode: constants.CongeState.APPROVED };
+          const approveData = {
+            conge,
+            confirmKind: "CONGE",
+            mode: constants.CongeState.APPROVED
+          };
           setTimeout(() => {
             Actions.AbsenceConfirmConge(approveData);
           }, 100);
@@ -46,7 +49,11 @@ class LeaveRequestCard extends Component {
       {
         title: "Reject",
         onPress: () => {
-          const rejectData = { confirmObj: conge, confirmKind: "CONGE", mode: constants.CongeState.REFUSED };
+          const rejectData = {
+            conge,
+            confirmKind: "CONGE",
+            mode: constants.CongeState.REFUSED
+          };
           setTimeout(() => {
             Actions.AbsenceConfirmConge(rejectData);
           }, 100);
@@ -98,7 +105,7 @@ class LeaveRequestCard extends Component {
                 borderRightColor: colors.lightgray
               }}
             >
-              <Icon name="md-time" size={29} style={{ marginLeft: 10 }} />
+              <Icon name="md-calendar" size={29} style={{ marginLeft: 10 }} />
             </View>
 
             {
@@ -142,7 +149,9 @@ class LeaveRequestCard extends Component {
                     <Text style={[styles.common, { fontWeight: "bold" }]}>
                       Status:{" "}
                     </Text>
-                    <Text style={styles.common}>{conge.congeState.humanize()}</Text>
+                    <Text style={styles.common}>
+                      {conge.congeState.humanize()}
+                    </Text>
                   </View>
                 </View>
                 <View

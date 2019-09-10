@@ -32,7 +32,7 @@ class Login extends Component {
     requesting: false,
     ...(constants.DEMO_MODE
       // ? { login: constants.USER.login, password: constants.USER.password }
-      ? { login: constants.MANAGER.login, password: constants.MANAGER.password }
+      // ? { login: constants.MANAGER.login, password: constants.MANAGER.password }
       : { login: "", password: "" }),
     loginError: "",
     isCheckedLogin: false,
