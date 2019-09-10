@@ -90,7 +90,7 @@ class AbsenceTeamList extends Component {
                       Platform.OS === "android"
                         ? {
                             borderWidth: 1,
-                            borderColor: colors.lightgray,
+                            borderColor: colors.whitegray,
                             borderRadius: 50,
                             height: 35,
                             padding: 0,
