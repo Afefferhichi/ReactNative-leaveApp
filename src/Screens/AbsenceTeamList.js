@@ -84,7 +84,7 @@ class AbsenceTeamList extends Component {
                 <Item>
                   <Icon active name="search" />
                   <Input
-                    placeholder="Search by name"
+                    placeholder="Search by any keyword"
                     autoCorrect={false}
                     style={
                       Platform.OS === "android"
