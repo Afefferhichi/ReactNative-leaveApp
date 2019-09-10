@@ -115,12 +115,14 @@ class ActivityFeed extends Component {
 
                 if (employees.length > 0) {
                   const { sorties, conges } = HelperStore.getSortiesAndConges(
-                    employees, 1
+                    employees
                   );
+                  let nCount = 0;
                   return (
                     <>
                       {conges &&
                         conges.map(conge => {
+                          if (nCount++ > 0) {nCount = 0; return;}
                           if (
                             conge.congeState === constants.CongeState.PENDING
                           ) {
@@ -130,6 +132,7 @@ class ActivityFeed extends Component {
 
                       {sorties &&
                         sorties.map(sortie => {
+                          if (nCount++ > 0) return;
                           if (
                             sortie.sortieState === constants.SortieState.PENDING
                           ) {

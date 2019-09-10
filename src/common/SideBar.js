@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FlatList, Platform } from "react-native";
+import { Image, FlatList, Platform, Dimensions } from "react-native";
 import {
   Badge,
   Button,
@@ -12,14 +12,12 @@ import {
   Text
 } from "native-base";
 import { Actions } from "react-native-router-flux";
+import { SessionStore } from "../Stores";
+
+const deviceHeight = Dimensions.get("window").height;
+const deviceWidth = Dimensions.get("window").width;
 
 const datas = [
-  {
-    name: "Collapse",
-    item_key: "collapse-icon",
-    icon: "md-home",
-    bg: "#4DCAE0"
-  },
   {
     name: "Activity Feed",
     item_key: "ActivityFeed",
@@ -58,6 +56,8 @@ const datas = [
   }
 ];
 
+const drawerCover = require("../../assets/icons/logo2.jpg");
+
 class SideBar extends Component {
   constructor(props) {
     super(props);
@@ -79,11 +79,34 @@ class SideBar extends Component {
           bounces={false}
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
         >
+          <Button
+            style={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}
+            transparent
+            color="black"
+            onPress={this._onPress}
+          >
+            <Icon
+              style={{
+                color: "black",
+                fontWeight: "bold",
+                marginLeft: 18
+              }}
+              color="black"
+              name="menu"
+            />
+          </Button>
+          <Image style={styles.drawerCover} source={drawerCover} />
           <FlatList
             data={datas}
             extraData={this.state}
             keyExtractor={(item, index) => String(index)}
             renderItem={({ item }) => {
+              if (
+                item.item_key === "AbsenceTeamList" &&
+                !SessionStore.isAdmin()
+              ) {
+                return <></>;
+              }
               return (
                 <>
                   {item.item_key === "collapse-icon" && (
@@ -158,6 +181,13 @@ const styles = {
     fontWeight: "400",
     textAlign: "center",
     marginTop: Platform.OS === "android" ? -3 : undefined
+  },
+  drawerCover: {
+    alignSelf: "stretch",
+    height: deviceHeight / 3.5,
+    width: null,
+    position: "relative",
+    marginBottom: 15
   }
 };
 

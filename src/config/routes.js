@@ -73,7 +73,7 @@ class Routes extends Component {
               <Icon style={{ color: colors.waterblue }} name="menu" />
             }
             hideNavBar
-            style={{ left: 6 }}
+            style={{ left: 0 }}
             drawerPosition="Left"
             type="reset"
           >

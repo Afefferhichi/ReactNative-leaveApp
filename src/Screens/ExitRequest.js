@@ -1,26 +1,25 @@
 import React, { Component } from "react";
 import {
+  Alert,
   DatePickerAndroid,
-  Image,
   Picker,
   Platform,
-  ScrollView,
   Text,
   TextInput,
   TimePickerAndroid,
-  TouchableOpacity,
   View
 } from "react-native";
+
+import { Button, Container, Content, ListItem } from "native-base";
+
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/Ionicons";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { constants, colors } from "../common";
+import { colors, constants, MyInfoCard } from "../common";
 import { ExitRequestStore, SessionStore } from "../Stores";
-import {Actions} from 'react-native-router-flux';
+import { Actions } from "react-native-router-flux";
 
-const woman_image_url =
-  "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 const ADD_EXIT_DETAIL = gql`
   mutation createsort($input: sortieInput!) {
     createSortie(sortie: $input) {
@@ -48,7 +47,7 @@ class ExitRequest extends Component {
       fromDate: null, // From Date
       recoveryDate: null, // Recovery Date
       dateNum: null,
-      sortieTime: null, // Exit Time
+      sortieTime: constants.SortieTime.HALF_HOUR, // Exit Time
       note: null, // Note
       iosDefaultDate: new Date(),
       mutationCalled: false,
@@ -186,208 +185,153 @@ class ExitRequest extends Component {
     } = this.state;
 
     return (
-      <Mutation mutation={ADD_EXIT_DETAIL}>
-        {(createsortMutation, { data }) => (
-          <View style={{ backgroundColor: colors.white }}>
-            <ScrollView style={{ height: "95%" }}>
-              <View
-                style={{
-                  backgroundColor: colors.white,
-                  padding: 10,
-                  margin: 10,
-                  flexDirection: "row"
-                }}
-              >
-                <Image
-                  source={{
-                    uri: woman_image_url
-                  }}
-                  style={{
-                    width: 70,
-                    height: 80,
-                    backgroundColor: colors.whitegray,
-                    borderRadius: 18
-                  }}
-                />
-                <View style={{ marginLeft: 10, alignSelf: "center" }}>
-                  <Text style={{ color: colors.black }}>
-                    Welcome {SessionStore.userName()}
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  backgroundColor: colors.dimsky,
-                  padding: 10,
-                  margin: 10,
-                  flexDirection: "row",
-                  borderRadius: 10
-                }}
-              >
-                <Icon name="md-cog" size={30} />
-                <Text style={{ color: colors.black, marginLeft: 10 }}>
-                  This absence is currently approved. Tap here to request for a
-                  change.
-                </Text>
-              </View>
-              <View
-                style={{
-                  borderTopWidth: 1,
-                  borderBottomWidth: 1,
-                  padding: 10
-                }}
-              >
-                <Text style={{ fontWeight: "bold" }}>From </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-around"
-                  }}
-                >
-                  <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
-                  >
-                    <Icon
-                      onPress={() => this.showTimePicker()}
-                      size={30}
-                      name="md-time"
-                    />
-                    <Text>Time</Text>
-                  </View>
-                  <Text style={{ color: colors.lightblue }}>{fromTime}</Text>
-                  <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
-                  >
-                    <Icon
-                      onPress={() => this.showDatePicker(1)}
-                      size={30}
-                      name="md-calendar"
-                    />
-                    <Text>Date</Text>
-                  </View>
-                  <Text style={{ color: colors.lightblue }}>{fromDate}</Text>
+      <Container>
+        <Content padder>
+          <ListItem>
+            <MyInfoCard />
+          </ListItem>
 
-                  {Platform.OS === "ios" && (
-                    <DateTimePicker
-                      date={iosDefaultDate}
-                      mode={iosDatetimePickerMode}
-                      isVisible={isPickerVisible}
-                      onConfirm={
-                        iosDatetimePickerMode === "time"
-                          ? this.onConfirmTimeIOS
-                          : this.onConfirmDateIOS
-                      }
-                      onCancel={this.onCancelIOS}
-                    />
-                  )}
-                </View>
-              </View>
-              {/*  */}
-              <View
-                style={{
-                  borderTopWidth: 0,
-                  borderBottomWidth: 1,
-                  padding: 10
-                }}
-              >
-                <Text style={{ fontWeight: "bold" }}>Recovery Date </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-around"
-                  }}
-                >
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginLeft: "-15%"
-                    }}
-                  >
-                    <Icon
-                      onPress={() => this.showDatePicker(2)}
-                      size={30}
-                      name="md-calendar"
-                    />
-                    <Text>Date</Text>
-                  </View>
-                  <Text style={{ color: colors.red }}>{recoveryDate}</Text>
-                </View>
-              </View>
-              {/*  */}
-              <View
-                style={{
-                  borderTopWidth: 0,
-                  borderBottomWidth: 1,
-                  paddingLeft: 10
-                }}
-              >
-                <Text style={{ fontWeight: "bold" }}>Exit Time</Text>
-                <View style={{ alignItems: "center" }}>
-                  <Picker
-                    style={{ width: "80%", borderWidth: 1 }}
-                    onValueChange={value =>
-                      this.setState({ sortieTime: value })
-                    }
-                    selectedValue={sortieTime}
-                  >
-                    <Picker.Item label="" value={""} />
-                    <Picker.Item
-                      label="30min"
-                      value={constants.SortieTime.HALF_HOUR}
-                    />
-                    <Picker.Item
-                      label="1h"
-                      value={constants.SortieTime.ONE_HOUR}
-                    />
-                    <Picker.Item
-                      label="1h:30min"
-                      value={constants.SortieTime.ONE_AND_HALF_HOUR}
-                    />
-                    <Picker.Item
-                      label="2hrs"
-                      value={constants.SortieTime.TWO_HOURS}
-                    />
-                  </Picker>
-                </View>
-              </View>
-              {/*  */}
-              <View
-                style={{
-                  borderTopWidth: 0,
-                  borderBottomWidth: 1,
-                  paddingLeft: 10
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ fontWeight: "bold" }}>Note:</Text>
-                  {/* <Text>0.00 Days</Text> */}
-                </View>
-                <TextInput
-                  multiline={true}
-                  value={note}
-                  onChangeText={text => this.setState({ note: text })}
-                  style={{
-                    marginTop: 5,
-                    width: "90%",
-                    height: 80,
-                    borderRadius: 5,
-                    backgroundColor: colors.dimsky,
-                    alignSelf: "center",
-                    marginBottom: 5,
-                    textAlignVertical: "top",
-                    padding: 5
-                  }}
+          <ListItem>
+            <Text
+              style={{
+                width: "30%",
+                height: "100%",
+                fontWeight: "bold"
+              }}
+            >
+              From{" "}
+            </Text>
+            <View
+              style={{
+                width: "70%",
+                height: "100%",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}
+            >
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Icon
+                  onPress={() => this.showTimePicker()}
+                  size={30}
+                  name="md-time"
                 />
+                <Text>Time</Text>
               </View>
+              <Text style={{ color: colors.lightblue }}>{fromTime}</Text>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Icon
+                  onPress={() => this.showDatePicker(1)}
+                  size={30}
+                  name="md-calendar"
+                />
+                <Text>Date</Text>
+              </View>
+              <Text style={{ color: colors.lightblue }}>{fromDate}</Text>
 
-              <TouchableOpacity
-                title="Send Request"
+              {Platform.OS === "ios" && (
+                <DateTimePicker
+                  date={iosDefaultDate}
+                  mode={iosDatetimePickerMode}
+                  isVisible={isPickerVisible}
+                  onConfirm={
+                    iosDatetimePickerMode === "time"
+                      ? this.onConfirmTimeIOS
+                      : this.onConfirmDateIOS
+                  }
+                  onCancel={this.onCancelIOS}
+                />
+              )}
+            </View>
+          </ListItem>
+          {/*  */}
+          <ListItem>
+            <Text style={{ height: "100%", width: "30%", fontWeight: "bold" }}>
+              {"Recovery\nDate"}
+            </Text>
+            <View
+              style={{
+                height: "100%",
+                width: "70%",
+                flexDirection: "row",
+                alignItems: "flex-start"
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Icon
+                  onPress={() => this.showDatePicker(2)}
+                  size={30}
+                  name="md-calendar"
+                />
+                <Text>Date</Text>
+              </View>
+              <Text style={{ lineHeight: 50, marginLeft: 30, color: colors.red }}>{recoveryDate}</Text>
+            </View>
+          </ListItem>
+          {/*  */}
+          <ListItem>
+            <Text style={{ height: "100%", width: "30%", fontWeight: "bold" }}>
+              Exit Time
+            </Text>
+            <View style={{ height: 23, width: "65%", alignItems: "center" }}>
+              <Picker
+                style={{ width: "100%", borderWidth: 1, left: -8, top: -15 }}
+                onValueChange={value => this.setState({ sortieTime: value })}
+                selectedValue={sortieTime}
+              >
+                <Picker.Item
+                  label="30min"
+                  value={constants.SortieTime.HALF_HOUR}
+                />
+                <Picker.Item label="1h" value={constants.SortieTime.ONE_HOUR} />
+                <Picker.Item
+                  label="1h:30min"
+                  value={constants.SortieTime.ONE_AND_HALF_HOUR}
+                />
+                <Picker.Item
+                  label="2hrs"
+                  value={constants.SortieTime.TWO_HOURS}
+                />
+              </Picker>
+            </View>
+          </ListItem>
+          {/*  */}
+          <ListItem>
+            <Text style={{ width: "30%", height: "100%", fontWeight: "bold" }}>
+              Note:
+            </Text>
+            <TextInput
+              multiline={true}
+              value={note}
+              onChangeText={text => this.setState({ note: text })}
+              style={{
+                width: "70%",
+                height: 80,
+                textAlignVertical: "top",
+                marginTop: 5,
+                borderRadius: 2,
+                borderWidth: 1,
+                borderColor: colors.whitegray,
+                alignSelf: "center",
+                marginBottom: 5
+              }}
+            />
+          </ListItem>
+
+          <Mutation mutation={ADD_EXIT_DETAIL}>
+            {(createsortMutation, { data }) => (
+              <Button
+                style={{ marginHorizontal: 15 }}
+                block
+                primary
                 onPress={async () => {
                   if (!recoveryDate || !fromDate || !sortieTime || !note) {
-                    alert("Please enter the valid values");
+                    Alert.alert("", "Please enter the valid values");
                     return;
                   }
                   const input = {
@@ -413,11 +357,11 @@ class ExitRequest extends Component {
                         : false;
                       if (result) {
                         ExitRequestStore.set(input, () => {
-                          alert("Saved successfully!");
+                          Alert.alert("", "Saved successfully!");
                           Actions.pop();
                         });
                       } else {
-                        alert("An error occurred while saving");
+                        Alert.alert("", "An error occurred while saving");
                       }
                     })
                     .catch(err => {
@@ -428,28 +372,16 @@ class ExitRequest extends Component {
                           ? "There was a network problem"
                           : "Unknown error occurred"
                         : "Unknown error occurred";
-                      alert(result);
+                      Alert.alert("", result);
                     });
-                }}
-                onShowUnderlay={() => {
-                  alert("onShowUnderlay button !");
-                }}
-                style={{
-                  width: "70%",
-                  height: 39,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: colors.lightblue,
-                  marginVertical: 50,
-                  alignSelf: "center"
                 }}
               >
                 <Text style={{ color: colors.white }}>Send Request</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-        )}
-      </Mutation>
+              </Button>
+            )}
+          </Mutation>
+        </Content>
+      </Container>
     );
   }
 }

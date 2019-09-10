@@ -1,23 +1,18 @@
 import React, { Component } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  TextInput,
-  View
-} from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { Container, Content } from "native-base";
+
 import { ProfileCard } from "../common";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { colors } from "../common";
-import {Actions} from 'react-native-router-flux';
+import { Actions } from "react-native-router-flux";
 
 const manIcon = require("../../assets/icons/Capture.png");
 
 const FETCH_EMPLOYEES = gql`
   query {
     employees {
+      id
       firstName
       lastName
     }
@@ -27,6 +22,7 @@ const FETCH_EMPLOYEES = gql`
 const AbsenceTeamItem = ({ item, onPress }) => {
   return (
     <ProfileCard
+      employee_id={item.id}
       name={`${item.firstName} ${item.lastName}`}
       status="Employee"
       onPress={onPress}
@@ -36,59 +32,42 @@ const AbsenceTeamItem = ({ item, onPress }) => {
 };
 
 class AbsenceTeamList extends Component {
-  _keyExtractor = (item, index) => item.firstName;
-  _renderItem = ({ item }) => (
-    <AbsenceTeamItem
-      onPress={() => Actions.AbsenceHistory()}
-      item={item}
-    />
-  );
-
   constructor(props) {
     super(props);
   }
 
+  _keyExtractor = (item, index) => item.firstName;
+
+  _renderItem = ({ item }) => (
+    <AbsenceTeamItem onPress={() => Actions.AbsenceHistory()} item={item} />
+  );
+
   render() {
     return (
-      <View>
-
-        <View>
-          <Query query={FETCH_EMPLOYEES} variables={{}}>
-            {({ loading, error, data }) => {
-              if (loading) return <ActivityIndicator size="large" />;
-              if (error)
-                return <Text>An error occurred while retrieving data</Text>;
-              return (
-                <View>
-                  <FlatList
-                    data={data.employees}
-                    extraData={data}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderItem}
-                  />
-                </View>
-              );
-            }}
-          </Query>
-        </View>
-      </View>
+      <Query query={FETCH_EMPLOYEES} variables={{}}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <ActivityIndicator style={{marginTop: 20}} size="large" />;
+          }
+          if (error) {
+            return <Text>An error occurred while retrieving data</Text>;
+          }
+          return (
+            <Container>
+              <Content>
+                <FlatList
+                  data={data.employees.filter(emp=>emp.id > 2)}
+                  extraData={data}
+                  keyExtractor={this._keyExtractor}
+                  renderItem={this._renderItem}
+                />
+              </Content>
+            </Container>
+          );
+        }}
+      </Query>
     );
   }
 }
-
-const styles = {
-  searchInput: {
-    backgroundColor: colors.white,
-    width: "90%",
-    alignSelf: "center",
-    borderColor: colors.lightgray,
-    borderWidth: 1,
-    marginTop: 5,
-    marginBottom: 5,
-    borderRadius: 20,
-    height: 40,
-    justifyContent: "center"
-  }
-};
 
 export { AbsenceTeamList };

@@ -14,14 +14,14 @@ class HelperClass {
         };
         employee.sorties &&
           sorties.push(
-            ...employee.sorties.map(sortie => ({
+            ...(employee.sorties.map(sortie => ({
               ...sortie,
               employee: new_emp
-            }))
+            })))
           );
         employee.conges &&
           conges.push(
-            ...employee.conges.map(conge => ({ ...conge, employee: new_emp }))
+            ...(employee.conges.map(conge => ({ ...conge, employee: new_emp })))
           );
       });
 
@@ -34,7 +34,10 @@ class HelperClass {
         new Date(conge2.start_date) - new Date(conge1.start_date)
     );
 
-    return { sorties: sorties.slice(0, limit), conges: conges.splice(0, limit) };
+    return {
+      sorties: sorties.slice(0, limit),
+      conges: conges.slice(0, limit)
+    };
   };
 }
 

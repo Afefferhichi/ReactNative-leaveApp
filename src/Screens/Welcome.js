@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+
+import { AuthLogo } from "../common";
 
 class Welcome extends Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class Welcome extends Component {
   render() {
     return (
       <View style={styles.welcomeContainer}>
-        <Text>Welcome</Text>
+        <AuthLogo />
       </View>
     );
   }

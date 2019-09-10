@@ -1,9 +1,29 @@
 import React, { Component } from "react";
-import { Picker, Text, TextInput, View } from "react-native";
+import { Alert, Picker, Text, TextInput, View } from "react-native";
 import { Button, Container, Content, ListItem } from "native-base";
 import Icon from "react-native-vector-icons/Ionicons";
 import { colors, constants, HalfdayCalendar, MyInfoCard } from "../common";
 import { SessionStore } from "../Stores";
+import moment from "moment";
+
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+import { Actions } from "react-native-router-flux";
+
+const UPDATE_CONGE = gql`
+  mutation createcong($input: congeInput!) {
+    createConge(conge: $input) {
+      congeState
+      start_Date
+      end_Date
+      employeeId
+      half_Day
+      id
+      motif
+      reason
+    }
+  }
+`;
 
 class LeaveRequest extends Component {
   static navigationOptions = {
@@ -15,14 +35,15 @@ class LeaveRequest extends Component {
     this.state = {
       date: "",
       date1: "",
-      selectedSpecialDay: "",
+      reason: "",
       rangeStarted: false,
       startDate: null,
       endDate: null,
       startDateIsHalf: null,
       endDateIsHalf: null,
       markedDates: {},
-      showCalendar: false
+      showCalendar: false,
+      note: ""
     };
   }
 
@@ -32,27 +53,27 @@ class LeaveRequest extends Component {
       startDate,
       endDate,
       startDateIsHalf,
-      endDateIsHalf
+      endDateIsHalf,
+      reason,
+      note
     } = this.state;
     return (
       <Container>
         {showCalendar && (
           <HalfdayCalendar
             onConfirm={async (
-              _startDate,
-              _endDate,
-              _startDateIsHalf,
-              _endDateIsHalf
+              startDate,
+              endDate,
+              startDateIsHalf,
+              endDateIsHalf
             ) => {
-              setTimeout(async () => {
-                await this.setState({
-                  showCalendar: false,
-                  startDate: _startDate,
-                  endDate: _endDate,
-                  startDateIsHalf: _startDateIsHalf,
-                  endDateIsHal: _endDateIsHalf
-                });
-              }, 100);
+              await this.setState({
+                showCalendar: false,
+                startDate,
+                endDate: endDate || startDate,
+                startDateIsHalf,
+                endDateIsHalf
+              });
             }}
             startDate={startDate}
             endDate={endDate}
@@ -80,10 +101,22 @@ class LeaveRequest extends Component {
               style={{ width: "70%", marginLeft: 10, flexDirection: "row" }}
             >
               <Icon name="md-calendar" size={25} />
-              {this.state.startDate && (
-                <Text style={{ lineHeight: 25, marginLeft: 10 }}>
-                  {this.state.startDate} - {this.state.endDate}
-                </Text>
+              {startDate && (
+                <View style={{ flexDirection: "column" }}>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 15, marginLeft: 10 }}
+                  >
+                    {moment(startDate).format(constants.DATE_FORMAT)}{" "}
+                    {startDateIsHalf === 1 ? "AM" : "PM"}
+                    {" ~ "}
+                  </Text>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 15, marginLeft: 10 }}
+                  >
+                    {moment(endDate).format(constants.DATE_FORMAT)}{" "}
+                    {endDateIsHalf === 1 ? "AM" : "PM"}
+                  </Text>
+                </View>
               )}
             </View>
           </ListItem>
@@ -106,26 +139,24 @@ class LeaveRequest extends Component {
               </Text>
               <Picker
                 style={{ width: "75%", borderWidth: 1, top: -10 }}
-                onValueChange={value =>
-                  this.setState({ selectedSpecialDay: value })
-                }
-                selectedValue={this.state.selectedSpecialDay}
+                onValueChange={value => this.setState({ reason: value })}
+                selectedValue={reason}
               >
                 <Picker.Item
-                  label="Maternity"
-                  value={constants.LeaveReson.MATERNITY}
+                  label={constants.LeaveReson.PERSONNEL}
+                  value="PERSONNEL"
                 />
                 <Picker.Item
-                  label="Holiday"
-                  value={constants.LeaveReson.HOLIDAY}
+                  label={constants.LeaveReson.EXCEPTIONNEL}
+                  value="EXCEPTIONNEL"
                 />
                 <Picker.Item
-                  label="Permits"
-                  value={constants.LeaveReson.SPECIAL_PERMITS}
+                  label={constants.LeaveReson.MATERNITE}
+                  value="MATERNITE"
                 />
                 <Picker.Item
-                  label="Sickness"
-                  value={constants.LeaveReson.SICKNESS}
+                  label={constants.LeaveReson.HALF_DAY}
+                  value="HALF_DAY"
                 />
               </Picker>
             </View>
@@ -150,6 +181,9 @@ class LeaveRequest extends Component {
             </Text>
             <TextInput
               multiline={true}
+              asdfs
+              onChangeText={text => this.setState({ note: text })}
+              value={note}
               style={{
                 textAlignVertical: "top",
                 width: "70%",
@@ -165,14 +199,68 @@ class LeaveRequest extends Component {
             />
           </ListItem>
 
-          <Button
-            style={{ marginHorizontal: 15 }}
-            block
-            primary
-            onPress={() => alert("here")}
-          >
-            <Text style={{ color: colors.white }}>Send Request</Text>
-          </Button>
+          <Mutation mutation={UPDATE_CONGE}>
+            {(createcongeMutation, { loading, error, data }) => {
+              return (
+                <Button
+                  style={{ marginHorizontal: 15 }}
+                  block
+                  primary
+                  onPress={() => {
+                    const input = {
+                      congeState: constants.CongeState.PENDING,
+                      start_Date: startDate,
+                      end_Date: endDate,
+                      employeeId: SessionStore.userId(),
+                      half_Day:
+                        startDate === endDate
+                          ? startDateIsHalf === 1
+                            ? startDateIsHalf === 2
+                              ? constants.HALF_DAY.AFTER_NOON
+                              : constants.HALF_DAY.BEFORE_NOON
+                            : constants.HALF_DAY.BEFORE_NOON
+                          : constants.HALF_DAY.BEFORE_NOON,
+                      motif: note,
+                      reason: reason
+                    };
+                    createcongeMutation({
+                      variables: {
+                        input
+                      }
+                    })
+                      .then(res => {
+                        const result = res
+                          ? res.data
+                            ? res.data.createConge
+                              ? !0
+                              : false
+                            : false
+                          : false;
+                        if (result) {
+                          Alert.alert("", "Saved successfully!");
+                          Actions.pop();
+                        } else {
+                          alert("An error occurred while saving");
+                        }
+                      })
+                      .catch(err => {
+                        Alert.alert("" + reason, JSON.stringify(err));
+                        const result = err
+                          ? err.graphQLErrors.length !== 0
+                            ? "There was an error on Server"
+                            : err.networkError
+                            ? "There was a network problem"
+                            : "Unknown error occurred"
+                          : "Unknown error occurred";
+                        Alert.alert("", result);
+                      });
+                  }}
+                >
+                  <Text style={{ color: colors.white }}>Send Request</Text>
+                </Button>
+              );
+            }}
+          </Mutation>
         </Content>
       </Container>
     );

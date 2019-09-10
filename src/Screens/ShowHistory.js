@@ -36,6 +36,10 @@ const GET_EMPLOYEE = gql`
 `;
 
 class ShowHistory extends Component {
+  constructor(props) {
+    super(props);
+
+  }
   static navigationOptions = ({ navigation }) => {
     return {
       title: "History of All Requests"
@@ -46,10 +50,12 @@ class ShowHistory extends Component {
     return (
       <Container>
         <Content padder>
-          <MyInfoCard />
-
-          {/*  */}
-          <Query query={GET_EMPLOYEE} variables={{ id: SessionStore.userId() }}>
+          <Query
+            query={GET_EMPLOYEE}
+            variables={{
+              id: this.props.employee_id || SessionStore.userId()
+            }}
+          >
             {({ loading, error, data }) => {
               if (loading) {
                 return <Text>Loading...</Text>;
@@ -69,6 +75,10 @@ class ShowHistory extends Component {
 
               return (
                 <>
+                  <MyInfoCard userName={`${employees[0].firstName} ${employees[0].lastName}`} />
+                  {conges.length === 0 && sorties.length ===0 &&
+                    <Text>There is no data to display</Text>
+                  }
                   {conges &&
                     conges.map(conge => {
                       return (

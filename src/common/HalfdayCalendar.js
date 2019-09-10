@@ -26,11 +26,11 @@ class HalfdayCalendar extends Component {
       endDateIsHalf,
       markedDates: startDate
         ? this.getMarkedDates(
-          startDate,
-          endDate,
-          startDateIsHalf,
-          endDateIsHalf
-        )
+            startDate,
+            endDate,
+            startDateIsHalf,
+            endDateIsHalf
+          )
         : {},
       showCalendar: false
     };
@@ -68,15 +68,18 @@ class HalfdayCalendar extends Component {
         [
           {
             title: "All day",
-            onPress: () => this.selectDateWithNoon(day, ALL_DAY)
+            onPress: () =>
+              setTimeout(() => this.selectDateWithNoon(day, ALL_DAY), 100)
           },
           {
             title: "Before noon",
-            onPress: () => this.selectDateWithNoon(day, BEFORE_NOON)
+            onPress: () =>
+              setTimeout(() => this.selectDateWithNoon(day, BEFORE_NOON), 100)
           },
           {
             title: "After noon",
-            onPress: () => this.selectDateWithNoon(day, AFTER_NOON)
+            onPress: () =>
+              setTimeout(() => this.selectDateWithNoon(day, AFTER_NOON), 100)
           }
         ],
         {
@@ -234,10 +237,10 @@ class HalfdayCalendar extends Component {
             ? "center"
             : "flex-start"
           : isEnd
-            ? !isHalf
-              ? "center"
-              : "flex-end"
-            : "center",
+          ? !isHalf
+            ? "center"
+            : "flex-end"
+          : "center",
         borderRadius: 0,
         borderTopLeftRadius: isStart ? (isHalf ? 0 : 30) : 0,
         borderBottomLeftRadius: isStart ? (isHalf ? 0 : 30) : 0,
@@ -247,24 +250,24 @@ class HalfdayCalendar extends Component {
       text: isStart
         ? isHalf
           ? {
-            position: "absolute",
-            top: -4,
-            left: 0,
-            lineHeight: 32,
-            textAlign: "center",
-            width: 0,
-            height: 0,
-            ...(isBeforeNoon ? triangleLeftBottom : triangleRightTop)
-          }
+              position: "absolute",
+              top: -4,
+              left: 0,
+              lineHeight: 32,
+              textAlign: "center",
+              width: 0,
+              height: 0,
+              ...(isBeforeNoon ? triangleLeftBottom : triangleRightTop)
+            }
           : {
-            position: "absolute",
-            top: -5,
-            lineHeight: 32,
-            textAlign: "center"
-          }
+              position: "absolute",
+              top: -5,
+              lineHeight: 32,
+              textAlign: "center"
+            }
         : isEnd
-          ? isHalf
-            ? {
+        ? isHalf
+          ? {
               position: "absolute",
               top: -4,
               lineHeight: 32,
@@ -273,14 +276,14 @@ class HalfdayCalendar extends Component {
               height: 0,
               ...triangleLeftBottom
             }
-            : {
+          : {
               position: "absolute",
               top: -5,
-              ...(isWideLeft ? {left: 45} : {}),
+              ...(isWideLeft ? { left: 45 } : {}),
               lineHeight: 32,
               textAlign: "center"
             }
-          : {
+        : {
             position: "absolute",
             top: -5,
             lineHeight: 32,
@@ -293,12 +296,12 @@ class HalfdayCalendar extends Component {
   confirm = () => {
     const { startDate, endDate, startDateIsHalf, endDateIsHalf } = this.state;
     this.props.onConfirm &&
-    this.props.onConfirm(
-      startDate,
-      endDate || startDate,
-      startDateIsHalf,
-      endDateIsHalf || startDateIsHalf
-    );
+      this.props.onConfirm(
+        startDate,
+        endDate || startDate,
+        startDateIsHalf,
+        endDateIsHalf || startDateIsHalf
+      );
   };
   // =-========== Related Range Calendar : end
 
@@ -381,4 +384,4 @@ class HalfdayCalendar extends Component {
   }
 }
 
-export {HalfdayCalendar};
+export { HalfdayCalendar };
