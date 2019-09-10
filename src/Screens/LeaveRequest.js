@@ -203,7 +203,7 @@ class LeaveRequest extends Component {
             {(createcongeMutation, { loading, error, data }) => {
               return (
                 <Button
-                  style={{ marginHorizontal: 15 }}
+                  style={{ marginHorizontal: 15, backgroundColor: colors.waterblue }}
                   block
                   primary
                   onPress={() => {
@@ -244,7 +244,6 @@ class LeaveRequest extends Component {
                         }
                       })
                       .catch(err => {
-                        Alert.alert("" + reason, JSON.stringify(err));
                         const result = err
                           ? err.graphQLErrors.length !== 0
                             ? "There was an error on Server"
@@ -256,7 +255,7 @@ class LeaveRequest extends Component {
                       });
                   }}
                 >
-                  <Text style={{ color: colors.white }}>Send Request</Text>
+                  <Text style={{ color: colors.white, fontSize: 16 }}>Send Request</Text>
                 </Button>
               );
             }}

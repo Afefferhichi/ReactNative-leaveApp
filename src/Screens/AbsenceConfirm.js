@@ -1,10 +1,24 @@
 import React, { Component } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { colors } from "../common";
+import { colors, constants } from "../common";
 import { Actions } from "react-native-router-flux";
+import { Card, CardItem, Container, Content, Text, Button } from "native-base";
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+import moment from "moment";
+
+const APPROVE_REQUEST_CONGE = gql`
+  mutation upd($input: congeInput!, $id: Int!) {
+    updateConge(conge: $input, congeId: $id) {
+      congeState
+    }
+  }
+`;
+
 const image_url =
   "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
+
 class AbsenceConfirm extends Component {
   constructor() {
     super();
@@ -23,186 +37,216 @@ class AbsenceConfirm extends Component {
     Actions.pop();
   };
 
-  render2() {
-    return (<Text>Here...</Text>);
-  };
-
   render() {
+    const { conge } = this.props;
     return (
-      <View
-        style={{
-          backgroundColor: colors.white,
-          margin: 10
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            borderWidth: 1,
-            borderColor: colors.whitegray,
-            padding: 10
-          }}
-        >
-          <Image
-            source={{
-              uri: image_url
-            }}
-            style={{
-              width: 50,
-              height: 50,
-              backgroundColor: colors.lightyellow,
-              borderRadius: 50
-            }}
-          />
-
-          <View
-            style={{
-              flexDirection: "column"
-            }}
-          >
-            <Text
-              style={{
-                marginLeft: 5,
-                fontWeight: "600"
-              }}
+      <Container>
+        <Content padder>
+          <Card>
+            <CardItem
+              style={{ flexDirection: "row", justifyContent: "space-around" }}
             >
-              Heart, Jennifer
-            </Text>
-            <View
-              style={{
-                flexDirection: "row"
-              }}
-            >
-              <Text
-                style={{
-                  backgroundColor: colors.gray,
-                  color: colors.white,
-                  paddingVertical: 1,
-                  paddingHorizontal: 5,
-                  marginHorizontal: 5,
-                  borderRadius: 3
+              <Image
+                source={{
+                  uri: image_url
                 }}
-              >
-                Pending
-              </Text>
-              <Text>-></Text>
-              <Text
                 style={{
-                  backgroundColor: colors.cyanblue,
-                  color: colors.white,
-                  paddingVertical: 1,
-                  paddingHorizontal: 5,
-                  marginHorizontal: 5,
-                  borderRadius: 3
-                }}
-              >
-                Approve
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ flexDirection: "row" }}>
-            <Icon name="md-clock" size={14} />
-            <Text style={{ fontSize: 11, marginLeft: 5 }}>199 days ago</Text>
-          </View>
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            borderWidth: 1,
-            borderColor: colors.whitegray,
-            borderTopWidth: 0,
-            padding: 10
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between"
-            }}
-          >
-            <Image
-              source={{
-                uri:
-                  "https://s7img.ftdi.com/is/image/ProvideCommerce/PF_19_R299_LAY_SHP_V2?$proflowers-tile-wide-mv-new$"
-              }}
-              style={{
-                width: 50,
-                height: 50,
-                backgroundColor: colors.whitegray,
-                borderRadius: 50
-              }}
-            />
-
-            <View
-              style={{
-                width: "100%",
-                paddingRight: 110
-              }}
-            >
-              <TextInput
-                multiline={true}
-                style={{
-                  width: "100%",
-                  height: 100,
-                  marginLeft: 10,
-                  borderWidth: 1,
-                  borderColor: colors.whitegray,
-                  textAlignVertical: "top"
+                  width: 50,
+                  height: 50,
+                  backgroundColor: colors.lightyellow,
+                  borderRadius: 50
                 }}
               />
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            borderWidth: 1,
-            borderColor: colors.whitegray,
-            borderTopWidth: 0,
-            padding: 3
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => this.onConfirm()}
-            style={{
-              width: "50%",
-              height: 33,
-              backgroundColor: colors.white,
-              alignItems: "center",
-              borderColor: colors.red,
-              borderWidth: 1,
-              borderRadius: 1
-            }}
-          >
-            <Text style={{ height: 33, color: colors.red, lineHeight: 28 }}>
-              Cancel
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.onCancel()}
-            style={{
-              width: "50%",
-              height: 33,
-              backgroundColor: colors.red,
-              alignItems: "center",
-              borderColor: colors.red,
-              borderWidth: 1,
-              borderRadius: 1
-            }}
-          >
-            <Text
-              style={{ height: 33, color: colors.whitegray, lineHeight: 28 }}
-            >
-              OK
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+
+              <View
+                style={{
+                  flexDirection: "column"
+                }}
+              >
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    fontWeight: "600"
+                  }}
+                >
+                  {`${conge.employee.firstName} ${conge.employee.lastName}`}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row"
+                  }}
+                >
+                  <Text
+                    style={{
+                      backgroundColor: colors.lightgray,
+                      color: colors.white,
+                      fontSize: 12,
+                      paddingVertical: 1,
+                      paddingHorizontal: 5,
+                      marginHorizontal: 5,
+                      borderRadius: 3
+                    }}
+                  >
+                    {conge.congeState.humanize()}
+                  </Text>
+                  <Text>-></Text>
+                  <Text
+                    style={{
+                      backgroundColor: colors.cyanblue,
+                      color: colors.white,
+                      fontSize: 12,
+                      paddingVertical: 1,
+                      paddingHorizontal: 5,
+                      marginHorizontal: 5,
+                      borderRadius: 3
+                    }}
+                  >
+                    Approve
+                  </Text>
+                </View>
+              </View>
+
+              <View style={{ flexDirection: "row", top: -20, right: -5 }}>
+                <Icon name="md-clock" size={14} />
+                <Text style={{ fontSize: 13, top: -2, left: 5 }}>
+                  {moment.duration(conge.start_Date).humanize()}
+                </Text>
+              </View>
+            </CardItem>
+            <CardItem bordered style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ width: "40%", fontWeight: "bold" }}>
+                  Start Date
+                </Text>
+                <Text style={{ width: "60%" }}>
+                  {moment(conge.start_Date).format(constants.DATE_FORMAT)}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", marginTop: 5 }}>
+                <Text style={{ width: "40%", fontWeight: "bold" }}>
+                  End Date
+                </Text>
+                <Text style={{ width: "60%" }}>
+                  {moment(conge.end_Date).format(constants.DATE_FORMAT)}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", marginTop: 5 }}>
+                <Text style={{ width: "40%", fontWeight: "bold" }}>Reason</Text>
+                <Text style={{ width: "60%" }}>{conge.reason.humanize()}</Text>
+              </View>
+              <View style={{ flexDirection: "row", marginTop: 5 }}>
+                <Text style={{ width: "40%", fontWeight: "bold" }}>Status</Text>
+                <Text style={{ width: "60%" }}>
+                  {conge.congeState.humanize()}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", marginTop: 5 }}>
+                <Text style={{ width: "40%", fontWeight: "bold" }}>Note</Text>
+                <Text style={{ width: "60%" }}>{conge.motif}</Text>
+              </View>
+            </CardItem>
+            <CardItem cardBody>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderWidth: 1,
+                  borderColor: colors.whitegray,
+                  borderTopWidth: 0,
+                  padding: 3
+                }}
+              >
+                <Button
+                  primary
+                  block
+                  onPress={() => this.onConfirm()}
+                  style={{
+                    width: "50%",
+                    height: 33,
+                    backgroundColor: colors.white,
+                    alignItems: "center",
+                    borderColor: colors.waterblue,
+                    borderWidth: 1,
+                    borderRadius: 1
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: colors.waterblue
+                    }}
+                    uppercase={false}
+                  >
+                    Cancel
+                  </Text>
+                </Button>
+
+                <Mutation mutation={APPROVE_REQUEST_CONGE}>
+                  {(approveMutation, { loading, error, data }) => {
+                    return (
+                      <Button
+                        primary
+                        block
+                        onPress={() => this.onCancel()}
+                        style={{
+                          width: "50%",
+                          height: 33,
+                          backgroundColor: colors.waterblue,
+                          alignItems: "center",
+                          borderColor: colors.waterblue,
+                          borderWidth: 1,
+                          borderRadius: 1
+                        }}
+                      >
+                        <Text
+                          uppercase={false}
+                          onPress={() => {
+                            const variables = {
+                              input: { congeState: "APPROVED" },
+                              id: conge.id
+                            };
+                            approveMutation({ variables })
+                              .then(res => {
+                                const result = res
+                                  ? res.data
+                                    ? res.data.updateConge
+                                      ? !0
+                                      : false
+                                    : false
+                                  : false;
+                                if (result) {
+                                  Alert.alert("", "Approved successfully!", [
+                                    {
+                                      text: "OK",
+                                      onPress: () => Actions.pop()
+                                    }
+                                  ]);
+                                } else {
+                                  alert("An error occurred while approving");
+                                }
+                              })
+                              .catch(err => {
+                                const result = err
+                                  ? err.graphQLErrors.length !== 0
+                                    ? "There was an error on Server"
+                                    : err.networkError
+                                    ? "There was a network problem"
+                                    : "Unknown error occurred"
+                                  : "Unknown error occurred";
+                                Alert.alert("", result);
+                              });
+                          }}
+                        >
+                          OK
+                        </Text>
+                      </Button>
+                    );
+                  }}
+                </Mutation>
+              </View>
+            </CardItem>
+          </Card>
+        </Content>
+      </Container>
     );
   }
 }

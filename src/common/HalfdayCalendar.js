@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { ActionSheet } from "teaset";
+import {colors} from "./";
 
 const SELECTED_COLOR = "lightgreen";
 const CALENDAR_WIDTH = 360;
@@ -361,7 +362,7 @@ class HalfdayCalendar extends Component {
               width: "50%",
               height: 35,
               alignItems: "center",
-              backgroundColor: "green"
+              backgroundColor: colors.waterblue
             }}
           >
             <Text style={{ color: "white", lineHeight: 33 }}>OK</Text>
@@ -372,7 +373,7 @@ class HalfdayCalendar extends Component {
               width: "50%",
               height: 35,
               alignItems: "center",
-              borderColor: "green",
+              borderColor: colors.waterblue,
               borderWidth: 1
             }}
           >

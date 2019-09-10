@@ -39,7 +39,7 @@ query get employees
       id
       motif
       reason
-    
+
     }
     sorties{employeeId
     sortieState
@@ -48,14 +48,14 @@ query get employees
       recovery_Date,
       sortie_Date,
       sortieTime
-      
+
     }
   remainingCongeSolde
     login
     password
     teamEmployee{teamId,id,employeeId}
     initialCongeSolde
-    
+
 	}
 }
 
@@ -88,7 +88,7 @@ variables
 }}
 
                                  ********************************************
- 
+
 
 mutation createsort($input : sortieInput!) {
   createSortie(sortie: $input) {
@@ -123,7 +123,7 @@ query employee ($login: String!,$password: String!)
 
 }
 
-variables 
+variables
 
 {"login": "Sameh.Ouederni",
 "password": "123aze"}
@@ -171,9 +171,9 @@ congeState
 
 variables
 
-{"input": {    "congeState": "APPROVED"
-},
-  "id": 1049
+{
+    "input": {"congeState": "APPROVED"},
+    "id": 1049
 }
 
 
@@ -185,8 +185,8 @@ mutation upds($input : sortieInput!, $id: Int!) {
 sortieState
   }
 }
-  
-variables 
+
+variables
 
 {"input": {   "sortieState": "APPROVED"
 },

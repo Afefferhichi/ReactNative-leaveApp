@@ -30,13 +30,15 @@ class LeaveRequestCard extends Component {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
   // ============== Confirmation ===============
-  showConfirmationButtons = () => {
+  showConfirmationButtons = (conge) => {
     ActionSheet.hide();
     let items = [
       {
         title: "Approve",
-        onPress: () =>
-          setTimeout(() => Actions.AbsenceConfirm({ mode: "APPROVE" }), 100)
+        onPress: () => {
+          const approveData = {conge, mode: "Approve"};
+          setTimeout(() => Actions.AbsenceConfirm( approveData ), 100);
+        }
       },
       {
         title: "Reject",
@@ -280,7 +282,7 @@ class LeaveRequestCard extends Component {
                   marginLeft: 5,
                   borderRadius: 3
                 }}
-                onPress={() => this.showConfirmationButtons()}
+                onPress={() => this.showConfirmationButtons(conge)}
               >
                 <Icon
                   name="md-menu"

@@ -326,7 +326,7 @@ class ExitRequest extends Component {
           <Mutation mutation={ADD_EXIT_DETAIL}>
             {(createsortMutation, { data }) => (
               <Button
-                style={{ marginHorizontal: 15 }}
+                style={{ marginHorizontal: 15, backgroundColor: colors.waterblue }}
                 block
                 primary
                 onPress={async () => {
@@ -376,7 +376,7 @@ class ExitRequest extends Component {
                     });
                 }}
               >
-                <Text style={{ color: colors.white }}>Send Request</Text>
+                <Text style={{ color: colors.white, fontSize: 15 }}>Send Request</Text>
               </Button>
             )}
           </Mutation>

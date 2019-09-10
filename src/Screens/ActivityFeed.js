@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, UIManager } from "react-native";
+import { Platform, UIManager, RefreshControl } from "react-native";
 import { Container, Content, Text } from "native-base";
 import { ApolloProvider, Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -81,48 +81,71 @@ const GET_EMPLOYEE = gql`
 class ActivityFeed extends Component {
   constructor() {
     super();
-
+    this.state = {
+      refreshing: false
+    };
     if (Platform.OS === "android") {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }
 
-  // ============== Confirmation:End ===============
+  componentDidMount(): void {
+  }
 
+  onRefresh = () => {
+    this.setState({refreshing: false})
+  };
+
+  // ============== Confirmation:End ===============
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+  };
   render() {
     return (
       <ApolloProvider client={client}>
         <Container>
-          <Content padder style={{ height: "90%" }}>
-            <Query
-              query={SessionStore.isAdmin() ? GET_EMPLOYEES : GET_EMPLOYEE}
-              variables={
-                SessionStore.isAdmin() ? {} : { id: SessionStore.userId() }
+          <Query
+            query={SessionStore.isAdmin() ? GET_EMPLOYEES : GET_EMPLOYEE}
+            variables={
+              SessionStore.isAdmin() ? {} : { id: SessionStore.userId() }
+            }
+          >
+            {({ loading, error, data, refetch  }) => {
+              if (loading) {
+                return <Text>Loading...</Text>;
               }
-            >
-              {({ loading, error, data }) => {
-                if (loading) {
-                  return <Text>Loading...</Text>;
-                }
 
-                if (error) {
-                  return (
-                    <Text style={styles.login.error}>An error occurred</Text>
-                  );
-                }
+              if (error) {
+                return (
+                  <Text style={styles.login.error}>An error occurred</Text>
+                );
+              }
 
-                const employees = data.employees || [data.employee];
+              const employees = data.employees || [data.employee];
 
-                if (employees.length > 0) {
-                  const { sorties, conges } = HelperStore.getSortiesAndConges(
-                    employees
-                  );
-                  let nCount = 0;
-                  return (
+              if (employees.length > 0) {
+                const { sorties, conges } = HelperStore.getSortiesAndConges(
+                  employees
+                );
+                let nCount = 0;
+                return (
+                  <Content
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={refetch}
+                      />
+                    }
+                    padder
+                    style={{ height: "90%" }}
+                  >
                     <>
                       {conges &&
                         conges.map(conge => {
-                          if (nCount++ > 0) {nCount = 0; return;}
+                          if (nCount++ > 0) {
+                            nCount = 0;
+                            return;
+                          }
                           if (
                             conge.congeState === constants.CongeState.PENDING
                           ) {
@@ -140,13 +163,13 @@ class ActivityFeed extends Component {
                           }
                         })}
                     </>
-                  );
-                } else {
-                  return <Text>Opps, you don't have any Exit Requests.</Text>;
-                }
-              }}
-            </Query>
-          </Content>
+                  </Content>
+                );
+              } else {
+                return <Text>Opps, you don't have any Exit Requests.</Text>;
+              }
+            }}
+          </Query>
         </Container>
       </ApolloProvider>
     );
