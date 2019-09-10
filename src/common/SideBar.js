@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, FlatList, Platform, Dimensions } from "react-native";
+import { Dimensions, FlatList, Image, Platform } from "react-native";
 import {
   Badge,
   Button,
@@ -15,7 +15,6 @@ import { Actions } from "react-native-router-flux";
 import { SessionStore } from "../Stores";
 
 const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
 
 const datas = [
   {

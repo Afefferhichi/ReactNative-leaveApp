@@ -11,3 +11,14 @@ $ react-native run-android
 
 
 
+#### How to build to APK
+
+```$xslt
+$ cd android
+$ call gradlew.bat assembleRelease
+$ cd ..
+$ call sign.cmd
+```
+
+
+

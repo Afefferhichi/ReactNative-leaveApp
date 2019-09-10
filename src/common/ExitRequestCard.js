@@ -97,7 +97,7 @@ class ExitRequestCard extends Component {
                 borderRightColor: colors.lightgray
               }}
             >
-              <Icon name="md-time" size={29} style={{ marginLeft: 10 }} />
+              <Icon name="md-exit" size={29} style={{ marginLeft: 10 }} />
             </View>
 
             {

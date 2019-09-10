@@ -105,7 +105,7 @@ class LeaveRequestCard extends Component {
                 borderRightColor: colors.lightgray
               }}
             >
-              <Icon name="md-calendar" size={29} style={{ marginLeft: 10 }} />
+              <Icon name="ios-walk" size={29} style={{ marginLeft: 10 }} />
             </View>
 
             {
