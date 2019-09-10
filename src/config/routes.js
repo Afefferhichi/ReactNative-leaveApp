@@ -74,7 +74,7 @@ class Routes extends Component {
             }
             hideNavBar
             style={{ left: 0 }}
-            drawerPosition="Left"
+            drawerPosition="right"
             type="reset"
           >
             <Router hideNavBar>

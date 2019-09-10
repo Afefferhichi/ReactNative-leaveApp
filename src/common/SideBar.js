@@ -80,7 +80,7 @@ class SideBar extends Component {
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
         >
           <Button
-            style={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}
+            style={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
             transparent
             color="black"
             onPress={this._onPress}

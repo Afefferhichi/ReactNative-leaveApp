@@ -1,8 +1,16 @@
 import React, { Component } from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
-import { Container, Content } from "native-base";
+import { ActivityIndicator, FlatList, Platform, Text } from "react-native";
+import {
+  Button,
+  Container,
+  Content,
+  Header,
+  Icon,
+  Input,
+  Item
+} from "native-base";
 
-import { ProfileCard } from "../common";
+import { colors, ProfileCard } from "../common";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Actions } from "react-native-router-flux";
@@ -34,6 +42,9 @@ const AbsenceTeamItem = ({ item, onPress }) => {
 class AbsenceTeamList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      keyword: ""
+    };
   }
 
   _keyExtractor = (item, index) => item.firstName;
@@ -42,22 +53,68 @@ class AbsenceTeamList extends Component {
     <AbsenceTeamItem onPress={() => Actions.AbsenceHistory()} item={item} />
   );
 
+  searchFilterFunction = text => {
+    this.setState({ keyword: text });
+  };
+
   render() {
     return (
       <Query query={FETCH_EMPLOYEES} variables={{}}>
         {({ loading, error, data }) => {
           if (loading) {
-            return <ActivityIndicator style={{marginTop: 20}} size="large" />;
+            return <ActivityIndicator style={{ marginTop: 20 }} size="large" />;
           }
           if (error) {
             return <Text>An error occurred while retrieving data</Text>;
           }
+
+          const employees = (data.employees.map(emp => ({
+            ...emp,
+            searchString: JSON.stringify(emp).toLowerCase()
+          })));
           return (
             <Container>
+              <Header
+                androidStatusBarColor={colors.waterblue}
+                iosBarStyle="light-content"
+                style={styles.header}
+                searchBar
+                rounded
+              >
+                <Item>
+                  <Icon active name="search" />
+                  <Input
+                    placeholder="Search by name"
+                    autoCorrect={false}
+                    style={
+                      Platform.OS === "android"
+                        ? {
+                            borderWidth: 1,
+                            borderColor: colors.lightgray,
+                            borderRadius: 50,
+                            height: 35,
+                            padding: 0,
+                            paddingLeft: 15
+                          }
+                        : {}
+                    }
+                    onChangeText={text => this.searchFilterFunction(text)}
+                  />
+                  <Icon active name="people" />
+                </Item>
+                <Button transparent>
+                  <Text>Search</Text>
+                </Button>
+              </Header>
               <Content>
                 <FlatList
-                  data={data.employees.filter(emp=>emp.id > 2)}
-                  extraData={data}
+                  data={employees.filter(
+                    emp =>
+                      emp.id > 2 &&
+                      (this.state.keyword
+                        ? emp.searchString.indexOf(this.state.keyword) > -1
+                        : true)
+                  )}
                   keyExtractor={this._keyExtractor}
                   renderItem={this._renderItem}
                 />
@@ -69,5 +126,24 @@ class AbsenceTeamList extends Component {
     );
   }
 }
+
+const styles = {
+  container: {
+    backgroundColor: "#FFF"
+  },
+  header: {
+    backgroundColor: "#FFF"
+  },
+  item: {
+    flexDirection: "row"
+  },
+  text: {
+    alignSelf: "center",
+    marginBottom: 7
+  },
+  mb: {
+    marginBottom: 15
+  }
+};
 
 export { AbsenceTeamList };

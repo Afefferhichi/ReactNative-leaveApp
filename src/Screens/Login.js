@@ -12,7 +12,6 @@ import { Actions } from "react-native-router-flux";
 
 import { Input, constants, colors } from "../common";
 import { SessionStore } from "../Stores";
-import { StackActions, NavigationActions } from "react-navigation";
 
 const LOGIN = gql(`
   query employee($login: String!, $password: String!) {
@@ -32,8 +31,8 @@ class Login extends Component {
     hasErrors: false,
     requesting: false,
     ...(constants.DEMO_MODE
-      ? { login: constants.USER.login, password: constants.USER.password }
-      // ? { login: constants.MANAGER.login, password: constants.MANAGER.password }
+      // ? { login: constants.USER.login, password: constants.USER.password }
+      ? { login: constants.MANAGER.login, password: constants.MANAGER.password }
       : { login: "", password: "" }),
     loginError: "",
     isCheckedLogin: false,
