@@ -27,7 +27,7 @@ class HelperClass {
 
     sorties.sort(
       (sortie1, sortie2) =>
-        new Date(sortie2.sortie_Date) - new Date(sortie1.sortie_Date)
+        new Date(sortie2.id) - new Date(sortie1.id)
     );
     conges.sort(
       (conge1, conge2) =>

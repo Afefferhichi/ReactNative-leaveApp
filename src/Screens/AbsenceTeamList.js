@@ -112,7 +112,7 @@ class AbsenceTeamList extends Component {
                     emp =>
                       emp.id > 2 &&
                       (this.state.keyword
-                        ? emp.searchString.indexOf(this.state.keyword) > -1
+                        ? emp.searchString.indexOf(this.state.keyword.toLowerCase()) > -1
                         : true)
                   )}
                   keyExtractor={this._keyExtractor}

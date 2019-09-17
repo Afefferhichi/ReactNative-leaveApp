@@ -113,7 +113,7 @@ class ExitRequestCard extends Component {
                 }}
               >
                 <View style={{ top: -5 }}>
-                  <View
+                  {/*<View
                     style={{
                       flexDirection: "row"
                     }}
@@ -128,8 +128,8 @@ class ExitRequestCard extends Component {
                             new Date(sortie.recovery_Date)
                         )
                         .humanize()}
-                    </Text>
-                  </View>
+                        </Text>
+                        </View>*/}
                   <View style={[styles.common, { flexDirection: "row" }]}>
                     <Text style={[styles.common, { fontWeight: "bold" }]}>
                       Employee:{" "}
@@ -149,7 +149,7 @@ class ExitRequestCard extends Component {
                   style={{
                     position: "absolute",
                     zIndex: 2,
-                    top: 50,
+                    top: 28,
                     right: 0
                   }}
                 >
@@ -204,16 +204,7 @@ class ExitRequestCard extends Component {
                       <Text style={{ fontWeight: "bold" }}>Time: </Text>
                       <Text>{sortie.sortieTime.humanize()}</Text>
                     </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginLeft: 5,
-                        marginBottom: 5
-                      }}
-                    >
-                      <Text style={{ fontWeight: "bold" }}>Absence Type: </Text>
-                      <Text>???</Text>
-                    </View>
+              
                     <View
                       style={{
                         flexDirection: "row",

@@ -200,7 +200,6 @@ class LeaveRequestCard extends Component {
                         {moment(conge.start_Date).format(constants.DATE_FORMAT)}
                       </Text>
                     </View>
-
                     <View
                       style={{
                         flexDirection: "row",
@@ -208,9 +207,12 @@ class LeaveRequestCard extends Component {
                         marginBottom: 5
                       }}
                     >
-                      <Text style={{ fontWeight: "bold" }}>Absence Type: </Text>
-                      <Text>???</Text>
+                      <Text style={{ fontWeight: "bold" }}>End Date: </Text>
+                      <Text>
+                        {moment(conge.end_Date).format(constants.DATE_FORMAT)}
+                      </Text>
                     </View>
+
                     <View
                       style={{
                         flexDirection: "row",
@@ -231,18 +233,7 @@ class LeaveRequestCard extends Component {
                       <Text style={{ fontWeight: "bold" }}>Note: </Text>
                       <Text>{conge.motif}</Text>
                     </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginLeft: 5,
-                        marginBottom: 5
-                      }}
-                    >
-                      <Text style={{ fontWeight: "bold" }}>End Date: </Text>
-                      <Text>
-                        {moment(conge.end_Date).format(constants.DATE_FORMAT)}
-                      </Text>
-                    </View>
+                    
 
                     {/*  */}
                   </View>
